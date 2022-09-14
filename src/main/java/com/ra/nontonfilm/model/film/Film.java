@@ -14,7 +14,7 @@ import java.util.Collection;
 @Table(name = "film")
 public class Film {
     @Id
-    @Column(name = "code")
+    @Column(name = "film_code")
     private String code;
 
     @Column(name = "title")
@@ -32,7 +32,7 @@ public class Film {
     @Column(name = "release_date")
     private String releaseDate;
 
-    @Column(name = "onShow")
+    @Column(name = "on_show")
     private boolean onShow;
 
 }

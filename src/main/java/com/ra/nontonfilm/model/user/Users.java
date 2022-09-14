@@ -18,6 +18,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Integer id;
 
     @Column(name = "username", length = 30)
@@ -26,10 +27,12 @@ public class Users {
     @Column(name = "email", length = 50)
     private String email;
 
-    @Column(name = "password", length = 25)
+    @Column(name = "password")
     private String password;
 
-    @DateTimeFormat(pattern = "dd-mm-yyyy")
     @Column(name = "created_at")
     private Date createdAt;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 }

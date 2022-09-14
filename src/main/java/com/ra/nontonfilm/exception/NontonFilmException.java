@@ -27,8 +27,4 @@ public class NontonFilmException {
             super(msg);
         }
     }
-
-    public enum ExceptionType {
-        USER_NOT_FOUND, DUPLICATE_ENTITY
-    }
 }

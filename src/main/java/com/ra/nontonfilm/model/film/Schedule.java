@@ -17,6 +17,7 @@ import java.util.List;
 public class Schedule {
 
     @Id
+    @Column(name = "schedule_id")
     private Integer id;
 
     @Column(name = "start_time")

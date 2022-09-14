@@ -2,14 +2,14 @@ package com.ra.nontonfilm.service;
 
 import com.ra.nontonfilm.dto.model.user.UserDTO;
 
-import java.util.Optional;
-
 public interface UserService {
-    Optional<UserDTO> findByEmail(String email);
+    UserDTO findByEmail(String email);
 
     UserDTO add(UserDTO userDTO);
 
-    UserDTO update(UserDTO userDTO);
+    UserDTO updateProfile(UserDTO userDTO);
 
     UserDTO delete(UserDTO userDTO);
+
+//    UserDTO changePassword(UserDTO userDTO, String newPassword);
 }

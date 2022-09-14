@@ -13,6 +13,7 @@ import java.util.Collection;
 public class Genre {
 
     @Id
+    @Column(name = "genre_id")
     private int id;
 
     @ManyToMany(mappedBy = "genres")
