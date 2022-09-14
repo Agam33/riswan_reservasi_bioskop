@@ -1,10 +1,12 @@
-package com.ra.nontonfilm.dto.user;
+package com.ra.nontonfilm.dto.model.user;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Setter
 @Getter
@@ -14,4 +16,5 @@ public class UserDTO {
     private String username;
     private String email;
     private String password;
+    private Date createdAt;
 }

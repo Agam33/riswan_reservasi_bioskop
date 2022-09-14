@@ -3,8 +3,10 @@ package com.ra.nontonfilm.model.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -27,6 +29,7 @@ public class Users {
     @Column(name = "password", length = 25)
     private String password;
 
+    @DateTimeFormat(pattern = "dd-mm-yyyy")
     @Column(name = "created_at")
-    private String createdAt;
+    private Date createdAt;
 }

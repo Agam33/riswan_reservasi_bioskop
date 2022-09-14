@@ -1,4 +1,4 @@
-package com.ra.nontonfilm.model;
+package com.ra.nontonfilm.model.film;
 
 import com.ra.nontonfilm.model.film.Film;
 import lombok.Getter;
