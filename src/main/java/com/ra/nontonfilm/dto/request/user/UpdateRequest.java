@@ -1,4 +1,4 @@
-package com.ra.nontonfilm.dto.request;
+package com.ra.nontonfilm.dto.request.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

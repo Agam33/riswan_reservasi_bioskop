@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class Genre {
     private int id;
 
     @ManyToMany(mappedBy = "genres")
-    private Collection<Film> films;
+    private List<Film> films = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private FilmGenre genre;

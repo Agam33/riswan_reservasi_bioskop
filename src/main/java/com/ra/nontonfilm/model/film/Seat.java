@@ -9,12 +9,10 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "seat_id")
-    private Integer id;
+    private String id;
 
-    @Column(name = "booked")
-    private boolean isBooked;
-
-//    @OneToMany(mappedBy = "seats")
-//    private Studio studio;
+    @ManyToOne(targetEntity = Studio.class)
+    @JoinColumn(name = "studio_name")
+    private Studio studio;
 
 }

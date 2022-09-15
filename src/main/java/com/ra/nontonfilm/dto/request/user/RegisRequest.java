@@ -1,4 +1,4 @@
-package com.ra.nontonfilm.dto.request;
+package com.ra.nontonfilm.dto.request.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

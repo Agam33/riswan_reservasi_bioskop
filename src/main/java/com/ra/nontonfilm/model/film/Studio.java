@@ -21,7 +21,7 @@ public class Studio {
     @Column(name = "studio_id")
     private Integer id;
 
-    @Column(name = "name", length = 10)
+    @Column(name = "studio_name", length = 10)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY)

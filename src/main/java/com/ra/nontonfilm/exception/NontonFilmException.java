@@ -1,19 +1,23 @@
 package com.ra.nontonfilm.exception;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NontonFilmException {
 
-
     public static RuntimeException throwException(ExceptionType exceptionType, String msg) {
-        if(ExceptionType.USER_NOT_FOUND.equals(exceptionType)) {
-            return new EntityNotFoundException(msg);
-        } else if(ExceptionType.DUPLICATE_ENTITY.equals(exceptionType)) {
-            return new DuplicateEntityException(msg);
+        switch (exceptionType) {
+            case USER_NOT_FOUND:
+                return new EntityNotFoundException(msg);
+            case INVALID_EMAIL:
+                return new EmailValidateException(msg);
+            case DUPLICATE_ENTITY:
+                return new DuplicateEntityException(msg);
+            case FILM_NOT_FOUND:
+                return new FilmNotFoundException(msg);
+            default:
+                return new RuntimeException(msg);
         }
-        return new RuntimeException(msg);
     }
 
     public static class DuplicateEntityException extends RuntimeException {
@@ -27,4 +31,18 @@ public class NontonFilmException {
             super(msg);
         }
     }
+
+    public static class EmailValidateException extends RuntimeException {
+        public EmailValidateException(String msg) {
+            super(msg);
+        }
+    }
+
+    public static class FilmNotFoundException extends RuntimeException {
+        public FilmNotFoundException(String msg) {
+            super(msg);
+        }
+    }
+
+
 }

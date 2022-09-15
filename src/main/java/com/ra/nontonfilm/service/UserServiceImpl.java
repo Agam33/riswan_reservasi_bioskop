@@ -37,10 +37,12 @@ public class UserServiceImpl implements UserService {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
         if(user.isEmpty()) {
             Users userModel = new Users();
+            userModel.setId(userDTO.getId());
             userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             userModel.setUsername(userDTO.getUsername());
             userModel.setEmail(userDTO.getEmail());
             userModel.setCreatedAt(new Date());
+            userModel.setUpdateAt(new Date());
             userRepository.save(userModel);
             return userDTO;
         }
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
         if(user.isPresent()) {
             Users userModel = user.get();
+            userModel.setId(userDTO.getId());
             userModel.setEmail(userDTO.getEmail());
             userModel.setUsername(userDTO.getUsername());
             userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -75,17 +78,4 @@ public class UserServiceImpl implements UserService {
         throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND,
                 "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
     }
-
-//    @Override
-//    public UserDTO changePassword(UserDTO userDTO, String newPassword) {
-//        Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
-//        if(user.isPresent()) {
-//            Users userModel = user.get();
-//            userModel.setPassword(passwordEncoder.encode(newPassword));
-//            userRepository.save(userModel);
-//            return userDTO;
-//        }
-//        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND,
-//                "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
-//    }
 }

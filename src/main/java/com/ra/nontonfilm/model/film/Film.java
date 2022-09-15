@@ -3,9 +3,13 @@ package com.ra.nontonfilm.model.film;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,7 +28,7 @@ public class Film {
     @JoinTable(name = "film_genre",
                 joinColumns = @JoinColumn(name = "film_code"),
                     inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Collection<Genre> genres;
+    private List<Genre> genres = new ArrayList<>();
 
     @Column(name = "runtime")
     private Integer runtime;
@@ -34,5 +38,11 @@ public class Film {
 
     @Column(name = "on_show")
     private boolean onShow;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
 }
