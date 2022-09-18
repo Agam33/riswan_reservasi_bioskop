@@ -10,8 +10,4 @@ public class NontonFilmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NontonFilmApplication.class, args);
 	}
-
-
-
-
 }

@@ -1,12 +1,14 @@
 package com.ra.nontonfilm.model.user;
 
+import com.ra.nontonfilm.model.film.Orders;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,4 +36,7 @@ public class Users {
 
     @Column(name = "update_at")
     private Date updateAt;
+
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private List<Orders> orders = new ArrayList<>();
 }

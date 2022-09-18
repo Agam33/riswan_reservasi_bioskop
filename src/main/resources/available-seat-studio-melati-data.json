@@ -1,0 +1,152 @@
+[
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 11,
+    "seatNo": 1,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id":12,
+    "seatNo": 2,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 13,
+    "seatNo": 3,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 14,
+    "seatNo": 4,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 15,
+    "seatNo": 5,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 16,
+    "seatNo": 1,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 17,
+    "seatNo": 2,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 18,
+    "seatNo": 3,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 19,
+    "seatNo": 4,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  },
+  {
+    "_class": "com.ra.nontonfilm.model.film.AvailableSeat",
+    "id": 20,
+    "seatNo": 5,
+    "available": true,
+    "createdAt": "2022-09-16",
+    "updatedAt": "2022-09-16",
+    "seat": {
+      "id": 2,
+      "setRow": "A"
+    },
+    "studio": {
+      "id": 2
+    }
+  }
+]

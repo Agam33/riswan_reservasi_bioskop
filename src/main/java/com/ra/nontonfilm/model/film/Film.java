@@ -3,20 +3,18 @@ package com.ra.nontonfilm.model.film;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "film")
+@Entity(name = "film")
 public class Film {
+
     @Id
     @Column(name = "film_code")
     private String code;
@@ -24,17 +22,14 @@ public class Film {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "film_genre",
-                joinColumns = @JoinColumn(name = "film_code"),
-                    inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genres = new ArrayList<>();
-
     @Column(name = "runtime")
     private Integer runtime;
 
     @Column(name = "release_date")
     private String releaseDate;
+
+    @Column(name = "overview")
+    private String overview;
 
     @Column(name = "on_show")
     private boolean onShow;
@@ -45,4 +40,12 @@ public class Film {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "film_genre",
+            joinColumns = @JoinColumn(name = "film_code"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genres = new ArrayList<>();
+
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
+    private List<Schedule> schedules = new ArrayList<>();
 }

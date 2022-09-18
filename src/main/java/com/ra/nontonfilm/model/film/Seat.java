@@ -1,18 +1,19 @@
 package com.ra.nontonfilm.model.film;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
-@Entity
-@Table(name = "seat")
+@Setter
+@Getter
+@Entity(name = "seat")
 public class Seat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "seat_id")
-    private String id;
+    private Integer id;
 
-    @ManyToOne(targetEntity = Studio.class)
-    @JoinColumn(name = "studio_name")
-    private Studio studio;
-
+    @Column(name = "seat_row")
+    private String seatRow;
 }
