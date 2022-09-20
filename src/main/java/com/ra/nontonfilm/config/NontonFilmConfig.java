@@ -23,10 +23,10 @@ public class NontonFilmConfig {
         Jackson2RepositoryPopulatorFactoryBean factory = new Jackson2RepositoryPopulatorFactoryBean();
         factory.setResources(new Resource[] {
                 new ClassPathResource("genre-data.json"),
-                new ClassPathResource("studio-data.json"),
-                new ClassPathResource("seat-data.json"),
-                new ClassPathResource("available-seat-studio-mawar-data.json"),
-                new ClassPathResource("available-seat-studio-melati-data.json"),
+//                new ClassPathResource("studio-data.json"),
+//                new ClassPathResource("seat-data.json"),
+//                new ClassPathResource("available-seat-studio-mawar-data.json"),
+//                new ClassPathResource("available-seat-studio-melati-data.json"),
         });
         return factory;
     }

@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FilmRequest {
     private String title;
+    private String overview;
     private Integer runtime;
     private String releaseDate;
     private boolean onShow;

@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Getter
@@ -16,20 +18,29 @@ public class Schedule {
 
     @Id
     @Column(name = "schedule_id")
-    private Integer id;
+    private String id;
 
+    @Temporal(TemporalType.TIME)
     @Column(name = "start_time")
-    private String startTime;
+    private Date startTime;
 
+    @Temporal(TemporalType.TIME)
     @Column(name = "end_time")
-    private String endTime;
+    private Date endTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "show_at")
-    private String showAt;
+    private Date showAt;
 
     @Column(name = "price")
-    private Long price;
+    private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "film_code")
     private Film film;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "studio_id")
+    private Studio studio;
+
 }

@@ -1,6 +1,5 @@
 package com.ra.nontonfilm.model.user;
 
-import com.ra.nontonfilm.model.film.Orders;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +36,4 @@ public class Users {
     @Column(name = "update_at")
     private Date updateAt;
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<Orders> orders = new ArrayList<>();
 }

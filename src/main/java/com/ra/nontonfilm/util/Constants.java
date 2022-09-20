@@ -28,8 +28,8 @@ public class Constants {
         [3] -> clock_seq_hi_and_res
         [4] -> node
      */
-    public static String[] randomIdentifier(String username) {
-        byte[] b = username.getBytes();
+    public static String[] randomIdentifier(String s) {
+        byte[] b = s.getBytes();
         UUID uuid = UUID.nameUUIDFromBytes(b);
         return uuid.toString().split("-");
     }

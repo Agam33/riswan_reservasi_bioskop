@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import static com.ra.nontonfilm.exception.NontonFilmException.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -32,6 +34,7 @@ public class FilmServiceImpl implements FilmService {
             filmModel.setCode(filmDTO.getCode());
             filmModel.setTitle(filmDTO.getTitle());
             filmModel.setCreatedAt(new Date());
+            filmModel.setOverview(filmDTO.getOverview());
             filmModel.setRuntime(filmDTO.getRuntime());
             filmModel.setOnShow(filmDTO.isOnShow());
             filmModel.setReleaseDate(filmDTO.getReleaseDate());
@@ -69,5 +72,46 @@ public class FilmServiceImpl implements FilmService {
         }
         throw throwException(ExceptionType.FILM_NOT_FOUND, "Film tidak ada");
     }
+
+    @Override
+    public List<FilmDTO> nowPlaying() {
+        List<Film> films = filmRepository.findAll();
+        if(!films.isEmpty()) {
+            return films.stream()
+                    .filter(Film::isOnShow)
+                    .map(FilmMapper::toDto)
+                    .collect(Collectors.toList());
+        }
+        throw throwException(ExceptionType.FILM_NOT_FOUND, "Tidak ada tayangan film");
+    }
+
+    @Override
+    public List<FilmDTO> addAll(List<Film> films) {
+        return filmRepository.saveAll(films)
+                .stream()
+                .map(FilmMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public FilmDTO detailFilm(String id) {
+        Optional<Film> film = filmRepository.findById(id);
+        if(film.isPresent()) {
+            return FilmMapper.toDto(film.get());
+        }
+        throw throwException(ExceptionType.FILM_NOT_FOUND, "Film tidak ada");
+    }
+
+    @Override
+    public List<FilmDTO> findAll() {
+        List<Film> films = filmRepository.findAll();
+        if(!films.isEmpty()) {
+            return films.stream()
+                    .map(FilmMapper::toDto)
+                    .collect(Collectors.toList());
+        }
+        throw throwException(ExceptionType.FILM_NOT_FOUND, "Film tidak ada");
+    }
+
 
 }

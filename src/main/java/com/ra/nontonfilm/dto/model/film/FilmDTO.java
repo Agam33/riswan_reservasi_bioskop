@@ -14,6 +14,7 @@ import java.util.List;
 public class FilmDTO {
     private String code;
     private String title;
+    private String overview;
     private Integer runtime;
     private String releaseDate;
     private boolean onShow;

@@ -4,6 +4,8 @@ import com.ra.nontonfilm.dto.model.film.FilmDTO;
 import com.ra.nontonfilm.model.film.Film;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class FilmMapper {
 
@@ -11,10 +13,25 @@ public class FilmMapper {
         FilmDTO filmDTO = new FilmDTO();
         filmDTO.setCode(film.getCode());
         filmDTO.setTitle(film.getTitle());
+        filmDTO.setOverview(film.getOverview());
         filmDTO.setRuntime(film.getRuntime());
         filmDTO.setOnShow(film.isOnShow());
         filmDTO.setGenres(film.getGenres());
         filmDTO.setReleaseDate(film.getReleaseDate());
         return filmDTO;
+    }
+
+    public static Film toModel(FilmDTO filmDTO) {
+        Film filmModel = new Film();
+        filmModel.setCode(filmDTO.getCode());
+        filmModel.setUpdatedAt(new Date());
+        filmModel.setCreatedAt(new Date());
+        filmModel.setOverview(filmDTO.getOverview());
+        filmModel.setReleaseDate(filmDTO.getReleaseDate());
+        filmModel.setOnShow(filmDTO.isOnShow());
+        filmModel.setGenres(filmDTO.getGenres());
+        filmModel.setTitle(filmDTO.getTitle());
+        filmModel.setRuntime(filmDTO.getRuntime());
+        return filmModel;
     }
 }

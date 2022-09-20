@@ -19,16 +19,13 @@ public class Ticket {
     private String id;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private Long createdAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
-    private Date updateAt;
+    private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "available_seat_id")
-    private AvailableSeat availableSeat;
 }

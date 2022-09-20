@@ -1,5 +1,6 @@
 package com.ra.nontonfilm.model.film;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Film {
 
     @Id
     @Column(name = "film_code")
-    private String code;
+    private String filmCode;
 
     @Column(name = "title")
     private String title;
@@ -25,22 +26,23 @@ public class Film {
     @Column(name = "runtime")
     private Integer runtime;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "release_date")
-    private String releaseDate;
+    private Date releaseDate;
 
-    @Column(name = "overview")
+    @Column(name = "overview", columnDefinition = "TEXT")
     private String overview;
 
-    @Column(name = "on_show")
-    private boolean onShow;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "film_genre",
             joinColumns = @JoinColumn(name = "film_code"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
@@ -48,4 +50,10 @@ public class Film {
 
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
     private List<Schedule> schedules = new ArrayList<>();
+
+
+    @PrePersist
+    public void onCreate() {
+        updatedAt = new Date();
+    }
 }

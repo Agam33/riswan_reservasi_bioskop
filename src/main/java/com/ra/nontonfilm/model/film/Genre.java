@@ -1,5 +1,6 @@
 package com.ra.nontonfilm.model.film;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class Genre {
     @Column(name = "genre_id")
     private int id;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "genres")
     private List<Film> films = new ArrayList<>();
 
