@@ -23,7 +23,7 @@
     <li><b>studio</b>: belum dipakai pada challenge ini.</li>
     <li><b>seat_studio</b>: dibuat menggunakan anotasi @JoinTable</li>
 </ul>
-table selain daftar diatas hanya pemanis.
+table selain daftar diatas hanya pemanis. Schema akan diupdate sesuai dengan kebutuhan.
 <hr>
 
 ## Response ##
@@ -52,6 +52,18 @@ table selain daftar diatas hanya pemanis.
             ...
         }
     ]
+}
+```
+```
+{
+    "statusCode": 200,
+    "timeStamp": "2022-09-23 00:00:00",
+    "message": "success",
+    "data": {
+        "filmCode": "film-001",
+        "title": "Pengabdi Mantan 1",
+        ...
+    }
 }
 ```
 <hr>
@@ -128,10 +140,21 @@ table selain daftar diatas hanya pemanis.
 }
 ```
 8. Menghapus user: <br><br>
-<i>api/v1/user/delete?email={email}</i>
+<i>/api/v1/user/delete?email={email}</i>
 
 ----
+Tambahan : 
 
+* Menambahkan schedule ke film tertentu: <br><br>
+<i>/api/v1/films/addSchedule</i>
+```
+{
+    "filmId": "{filmId}",
+    "startTime": "{HH:mm}",
+    "showAt": "{yyyy-MM-dd}",
+    "price": 0
+}
+```
 
 
 
