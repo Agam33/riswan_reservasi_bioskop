@@ -1,48 +1,68 @@
 package com.ra.nontonfilm.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NontonFilmException {
 
-    public static RuntimeException throwException(ExceptionType exceptionType, String msg) {
+    public static RuntimeException throwException(ExceptionType exceptionType, HttpStatus statusCode, String msg) {
         switch (exceptionType) {
             case USER_NOT_FOUND:
-                return new EntityNotFoundException(msg);
+                return new EntityNotFoundException(statusCode, msg);
             case INVALID_EMAIL:
-                return new EmailValidateException(msg);
+                return new EmailValidateException(statusCode, msg);
             case DUPLICATE_ENTITY:
-                return new DuplicateEntityException(msg);
+                return new DuplicateEntityException(statusCode, msg);
             case FILM_NOT_FOUND:
-                return new FilmNotFoundException(msg);
+                return new FilmNotFoundException(statusCode, msg);
             default:
                 return new RuntimeException(msg);
         }
     }
 
+    @Setter
+    @Getter
     public static class DuplicateEntityException extends RuntimeException {
-        public DuplicateEntityException(String msg) {
+        private HttpStatus statusCode;
+        private String msg;
+        public DuplicateEntityException(HttpStatus statusCode, String msg) {
             super(msg);
+            this.statusCode = statusCode;
         }
     }
 
+    @Setter
+    @Getter
     public static class EntityNotFoundException extends RuntimeException {
-        public EntityNotFoundException(String msg) {
+        private HttpStatus statusCode;
+        private String msg;
+        public EntityNotFoundException(HttpStatus statusCode, String msg) {
             super(msg);
+            this.statusCode = statusCode;
         }
     }
-
+    @Setter
+    @Getter
     public static class EmailValidateException extends RuntimeException {
-        public EmailValidateException(String msg) {
+        private HttpStatus statusCode;
+        private String msg;
+        public EmailValidateException(HttpStatus statusCode, String msg) {
             super(msg);
+            this.statusCode = statusCode;
         }
     }
 
+    @Setter
+    @Getter
     public static class FilmNotFoundException extends RuntimeException {
-        public FilmNotFoundException(String msg) {
+        private HttpStatus statusCode;
+        private String msg;
+        public FilmNotFoundException(HttpStatus statusCode, String msg) {
             super(msg);
+            this.statusCode = statusCode;
         }
     }
-
-
 }

@@ -10,7 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "studio")
+@Table(name = "studio",
+    indexes = @Index(name = "idx_studio_name", columnList = "studio_name", unique = true))
 public class Studio {
 
     @Id

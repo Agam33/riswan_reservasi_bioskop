@@ -1,5 +1,6 @@
 package com.ra.nontonfilm.model.film;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ra.nontonfilm.model.film.embedded.SeatNo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.List;
 public class Seat {
 
     @EmbeddedId
-    private SeatNo seatNo;
+    private SeatNo id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -25,11 +26,8 @@ public class Seat {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "seats", fetch = FetchType.LAZY)
     private List<Studio> studios = new ArrayList<>();
 
-    @PrePersist
-    public void onCreate() {
-        updatedAt = new Date();
-    }
 }

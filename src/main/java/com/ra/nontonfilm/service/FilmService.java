@@ -1,6 +1,7 @@
 package com.ra.nontonfilm.service;
 
 import com.ra.nontonfilm.dto.model.film.FilmDTO;
+import com.ra.nontonfilm.dto.model.film.ScheduleDTO;
 import com.ra.nontonfilm.model.film.Film;
 
 import java.util.List;
@@ -11,9 +12,7 @@ public interface FilmService {
     FilmDTO delete(String filmCode);
     List<FilmDTO> nowPlaying();
     List<FilmDTO> addAll(List<Film> films);
-
     FilmDTO detailFilm(String id);
-
     List<FilmDTO> findAll();
-
+    void addSchedule(String filmId, ScheduleDTO scheduleDTO);
 }

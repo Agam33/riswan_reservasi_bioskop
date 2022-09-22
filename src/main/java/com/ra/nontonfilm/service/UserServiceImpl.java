@@ -6,7 +6,9 @@ import com.ra.nontonfilm.exception.ExceptionType;
 import com.ra.nontonfilm.exception.NontonFilmException;
 import com.ra.nontonfilm.model.user.Users;
 import com.ra.nontonfilm.repository.UserRepository;
+import com.ra.nontonfilm.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
         if(user.isPresent()) {
             return UserMapper.toDto(user.get());
         }
-        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND,
+        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
     }
 
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(userModel);
             return userDTO;
         }
-        throw NontonFilmException.throwException(ExceptionType.DUPLICATE_ENTITY,
+        throw NontonFilmException.throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT,
                 "User dengan email "+userDTO.getEmail() + " sudah ada");
     }
 
@@ -55,27 +57,24 @@ public class UserServiceImpl implements UserService {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
         if(user.isPresent()) {
             Users userModel = user.get();
-            userModel.setId(userDTO.getId());
-            userModel.setEmail(userDTO.getEmail());
             userModel.setUsername(userDTO.getUsername());
-            userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             userModel.setUpdateAt(new Date());
             userRepository.save(userModel);
             return userDTO;
         }
-        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND,
+        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
     }
 
     @Override
-    public UserDTO delete(UserDTO userDTO) {
-        Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
+    public UserDTO deleteByEmail(String email) {
+        Optional<Users> user = userRepository.findUserByEmail(email);
         if(user.isPresent()) {
             Users userModel = user.get();
             userRepository.delete(userModel);
-            return userDTO;
+            return UserMapper.toDto(userModel);
         }
-        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND,
-                "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
+        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+                "User dengan email " + email + " tidak ditemukan");
     }
 }

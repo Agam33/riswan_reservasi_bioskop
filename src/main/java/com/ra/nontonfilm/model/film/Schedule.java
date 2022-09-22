@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,6 +33,14 @@ public class Schedule {
 
     @Column(name = "price")
     private BigDecimal price;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "film_code")

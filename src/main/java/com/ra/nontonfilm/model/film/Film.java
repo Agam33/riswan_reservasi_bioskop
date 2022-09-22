@@ -26,6 +26,9 @@ public class Film {
     @Column(name = "runtime")
     private Integer runtime;
 
+    @Column(name = "on_show")
+    private boolean onShow;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "release_date")
     private Date releaseDate;
@@ -50,10 +53,4 @@ public class Film {
 
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
     private List<Schedule> schedules = new ArrayList<>();
-
-
-    @PrePersist
-    public void onCreate() {
-        updatedAt = new Date();
-    }
 }

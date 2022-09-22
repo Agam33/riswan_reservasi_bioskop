@@ -8,6 +8,7 @@ import com.ra.nontonfilm.exception.ExceptionType;
 import com.ra.nontonfilm.service.UserService;
 import com.ra.nontonfilm.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import static com.ra.nontonfilm.exception.NontonFilmException.*;
@@ -25,16 +26,16 @@ public class UserController {
     public ResponseEntity<?> add(@RequestBody RegisRequest regisRequest) {
         try {
             if(!Constants.validateEmail(regisRequest.getEmail()))
-                throw throwException(ExceptionType.INVALID_EMAIL, "Periksa kembali email");
+                throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Periksa kembali email");
 
             userService.add(addUser(regisRequest));
 
-            return ResponseEntity.ok(new Response(false,
-                    "added", null));
+            return ResponseEntity.ok(new Response<>(HttpStatus.CREATED.value(), new Date(),
+                    "created", null));
         } catch (EntityNotFoundException
                  | EmailValidateException
                  | DuplicateEntityException e) {
-            return ResponseEntity.ok(new ResponseError(true, new Date(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseError(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), e.getMessage()));
         }
     }
 
@@ -42,30 +43,30 @@ public class UserController {
     public ResponseEntity<?> update(@RequestBody UserDTO userDTO) {
         try {
             if(!Constants.validateEmail(userDTO.getEmail()))
-                throw throwException(ExceptionType.INVALID_EMAIL, "Periksa kembali email");
+                throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Periksa kembali email");
 
             userService.updateProfile(userDTO);
-            return ResponseEntity.ok(new Response(false,
+            return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "updated", null));
         } catch (EntityNotFoundException
                  | EmailValidateException e) {
-            return ResponseEntity.ok(new ResponseError(true, new Date(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseError(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), e.getMessage()));
         }
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> deleteByEmail(@RequestParam("email") String email) {
         try {
-            if(!Constants.validateEmail(userDTO.getEmail()))
-                throw throwException(ExceptionType.INVALID_EMAIL, "Periksa kembali email");
+            if(!Constants.validateEmail(email))
+                throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Periksa kembali email");
 
-            userService.delete(userDTO);
-            return ResponseEntity.ok(new Response(false,
+            userService.deleteByEmail(email);
+            return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "deleted",
                     null));
         } catch (EntityNotFoundException
                 | EmailValidateException e) {
-            return ResponseEntity.ok(new ResponseError(true, new Date(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseError(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), e.getMessage()));
         }
     }
 

@@ -11,7 +11,7 @@ public class FilmMapper {
 
     public static FilmDTO toDto(Film film) {
         FilmDTO filmDTO = new FilmDTO();
-        filmDTO.setCode(film.getCode());
+        filmDTO.setFilmCode(film.getFilmCode());
         filmDTO.setTitle(film.getTitle());
         filmDTO.setOverview(film.getOverview());
         filmDTO.setRuntime(film.getRuntime());
@@ -23,7 +23,7 @@ public class FilmMapper {
 
     public static Film toModel(FilmDTO filmDTO) {
         Film filmModel = new Film();
-        filmModel.setCode(filmDTO.getCode());
+        filmModel.setFilmCode(filmDTO.getFilmCode());
         filmModel.setUpdatedAt(new Date());
         filmModel.setCreatedAt(new Date());
         filmModel.setOverview(filmDTO.getOverview());

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, Integer> {
+    Studio findStudioByName(String name);
 }

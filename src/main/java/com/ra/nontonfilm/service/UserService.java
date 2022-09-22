@@ -9,6 +9,7 @@ public interface UserService {
 
     UserDTO updateProfile(UserDTO userDTO);
 
-    UserDTO delete(UserDTO userDTO);
+    UserDTO deleteByEmail(String email);
+
 
 }
