@@ -130,6 +130,8 @@ table selain daftar diatas hanya pemanis.
 8. Menghapus user: <br><br>
 <i>api/v1/user/delete?email={email}</i>
 
+----
+
 
 
 
