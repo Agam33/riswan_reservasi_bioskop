@@ -14,7 +14,6 @@ import com.ra.bioskop.repository.GenreRepository;
 import com.ra.bioskop.repository.StudioRepository;
 import com.ra.bioskop.service.FilmService;
 import com.ra.bioskop.util.Constants;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ra.bioskop.exception.NontonFilmException.*;
+import static com.ra.bioskop.exception.BioskopException.*;
 
 @RestController
 @RequestMapping("/api/v1/films")
@@ -175,6 +174,7 @@ public class FilmController {
         scheduleDTO.setFilmId(scheduleRequest.getFilmId());
         scheduleDTO.setShowAt(scheduleRequest.getShowAt());
         scheduleDTO.setStartTime(scheduleRequest.getStartTime());
+        scheduleDTO.setEndTime(scheduleRequest.getEndTime());
         scheduleDTO.setPrice(scheduleRequest.getPrice());
         return scheduleDTO;
     }

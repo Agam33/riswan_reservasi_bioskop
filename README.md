@@ -127,11 +127,38 @@ table selain daftar diatas hanya pemanis. Schema akan diupdate sesuai dengan keb
 
 5. Menampilkan jadwal dari film tertentu: <br><br>
 <i>/api/v1/films/detail/schedule?id={filmId}</i><br><br>
+```
+{
+    "statusCode": 202,
+    "timeStamp": "2022-09-22 18:55:49",
+    "message": "success",
+    "data": {
+        "filmId": "film-7313",
+        "title": "Fall (2022)",
+        "runtime": 110,
+        "onShow": true,
+        "overview": "Untuk sahabat Becky dan Hunter, hidup adalah tentang menaklukkan ketakutan dan mendorong batas. Tetapi setelah mereka mendaki 2.000 kaki ke puncak menara radio terpencil yang ditinggalkan, mereka menemukan diri mereka terdampar tanpa jalan turun. Sekarang keterampilan panjat ahli Becky dan Hunter akan diuji saat mereka mati-matian berjuang untuk bertahan hidup dari unsur-unsur, kurangnya persediaan, dan ketinggian yang menyebabkan vertigo.",
+        "schedules": [
+            {
+                "startTime": "20:00:00",
+                "endTime": "22:16:00",
+                "showAt": "2022-09-23",
+                "price": 50000.00
+            },
+            {
+                "startTime": "14:00:00",
+                "endTime": "16:16:00",
+                "showAt": "2022-09-23",
+                "price": 50000.00
+            }
+        ]
+    }
+```
 
-6. Menambahkan user: <br><br>
+7. Menambahkan user: <br><br>
 <i>/api/v1/user/add</i><br><br>
 
-7. Mengupdate user: <br><br>
+8. Mengupdate user: <br><br>
 <i>/api/v1/user/update</i>
 ```
 {
@@ -151,6 +178,7 @@ Tambahan :
 {
     "filmId": "{filmId}",
     "startTime": "{HH:mm}",
+    "endTime": "{HH:mm}",
     "showAt": "{yyyy-MM-dd}",
     "price": 0
 }

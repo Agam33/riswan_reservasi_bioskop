@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import static com.ra.bioskop.exception.NontonFilmException.*;
+import static com.ra.bioskop.exception.BioskopException.*;
 
 import java.util.Date;
 

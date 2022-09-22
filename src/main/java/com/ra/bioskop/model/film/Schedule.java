@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -17,22 +20,20 @@ import java.util.Date;
 @Table(name = "schedule")
 public class Schedule {
 
+    @JsonIgnore
     @Id
     @Column(name = "schedule_id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "start_time")
-    private Date startTime;
+    @Column(name = "start_time", columnDefinition = "TIME")
+    private LocalTime startTime;
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "end_time")
-    private Date endTime;
+    @Column(name = "end_time", columnDefinition = "TIME")
+    private LocalTime endTime;
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "show_at")
-    private Date showAt;
+    @Column(name = "show_at", columnDefinition = "DATE")
+    private LocalDate showAt;
 
     @Column(name = "price")
     private BigDecimal price;

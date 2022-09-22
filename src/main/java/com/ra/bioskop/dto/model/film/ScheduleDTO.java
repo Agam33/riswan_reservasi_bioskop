@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -14,8 +17,10 @@ import java.util.Date;
 public class ScheduleDTO {
     private String filmId;
     @JsonFormat(pattern = "HH:mm")
-    private Date startTime;
+    private LocalTime startTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime endTime;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date showAt;
+    private LocalDate showAt;
     private BigDecimal price;
 }

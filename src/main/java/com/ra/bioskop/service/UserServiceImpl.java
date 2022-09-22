@@ -3,7 +3,7 @@ package com.ra.bioskop.service;
 import com.ra.bioskop.dto.mapper.UserMapper;
 import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.exception.ExceptionType;
-import com.ra.bioskop.exception.NontonFilmException;
+import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.model.user.Users;
 import com.ra.bioskop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         if(user.isPresent()) {
             return UserMapper.toDto(user.get());
         }
-        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+        throw BioskopException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
     }
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(userModel);
             return userDTO;
         }
-        throw NontonFilmException.throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT,
+        throw BioskopException.throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT,
                 "User dengan email "+userDTO.getEmail() + " sudah ada");
     }
 
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(userModel);
             return userDTO;
         }
-        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+        throw BioskopException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
     }
 
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(userModel);
             return UserMapper.toDto(userModel);
         }
-        throw NontonFilmException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+        throw BioskopException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
     }
 }

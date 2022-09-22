@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NontonFilmException {
+public class BioskopException {
 
     public static RuntimeException throwException(ExceptionType exceptionType, HttpStatus statusCode, String msg) {
         switch (exceptionType) {

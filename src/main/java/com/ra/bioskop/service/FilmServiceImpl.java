@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import static com.ra.bioskop.exception.NontonFilmException.*;
+import static com.ra.bioskop.exception.BioskopException.*;
 
 import java.util.Date;
 import java.util.List;
@@ -124,10 +124,9 @@ public class FilmServiceImpl implements FilmService {
         if(film.isPresent()) {
             Film filmModel = film.get();
             Schedule schedule = new Schedule();
-            schedule.setId(getScheduleId(filmModel.getFilmCode()));
             schedule.setShowAt(scheduleDTO.getShowAt());
             schedule.setStartTime(scheduleDTO.getStartTime());
-            schedule.setEndTime(new Date());
+            schedule.setEndTime(scheduleDTO.getEndTime());
             schedule.setPrice(scheduleDTO.getPrice());
             schedule.setCreatedAt(new Date());
             schedule.setUpdatedAt(new Date());
