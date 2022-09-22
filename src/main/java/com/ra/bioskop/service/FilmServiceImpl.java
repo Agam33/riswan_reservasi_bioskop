@@ -1,6 +1,7 @@
 package com.ra.bioskop.service;
 
 import com.ra.bioskop.dto.mapper.FilmMapper;
+import com.ra.bioskop.dto.model.film.FilmAndScheduleDTO;
 import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.dto.model.film.ScheduleDTO;
 import com.ra.bioskop.exception.ExceptionType;
@@ -45,7 +46,7 @@ public class FilmServiceImpl implements FilmService {
             filmModel.setGenres(filmDTO.getGenres());
             return FilmMapper.toDto(filmRepository.save(filmModel));
         }
-        throw throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT, "Film sudah ada.");
+        throw throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT, "film sudah ada.");
     }
 
     @Override
@@ -107,7 +108,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<FilmDTO> findAll() {
+    public List<FilmDTO> getAllFilm() {
         List<Film> films = filmRepository.findAll();
         if(!films.isEmpty()) {
             return films.stream()
@@ -118,20 +119,32 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public void addSchedule(String filmId, ScheduleDTO scheduleDTO) {
-        Optional<Film> film = filmRepository.findById(filmId);
+    public ScheduleDTO addSchedule(ScheduleDTO scheduleDTO) {
+        Optional<Film> film = filmRepository.findById(scheduleDTO.getFilmId());
         if(film.isPresent()) {
             Film filmModel = film.get();
             Schedule schedule = new Schedule();
             schedule.setId(getScheduleId(filmModel.getFilmCode()));
-            schedule.setFilm(filmModel);
             schedule.setShowAt(scheduleDTO.getShowAt());
             schedule.setStartTime(scheduleDTO.getStartTime());
+            schedule.setEndTime(new Date());
             schedule.setPrice(scheduleDTO.getPrice());
             schedule.setCreatedAt(new Date());
             schedule.setUpdatedAt(new Date());
 
-            scheduleRepository.save(schedule);
+            filmModel.getSchedules().add(schedule);
+            schedule.setFilm(filmModel);
+            filmRepository.save(filmModel);
+            return scheduleDTO;
+        }
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada");
+    }
+
+    @Override
+    public FilmAndScheduleDTO getDetailFilmAndSchedule(String filmId) {
+        Optional<Film> film = filmRepository.findById(filmId);
+        if(film.isPresent()) {
+            return FilmMapper.filmAndScheduleDTO(film.get());
         }
         throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada");
     }
@@ -139,9 +152,6 @@ public class FilmServiceImpl implements FilmService {
     private String getScheduleId(String filmCode) {
         String[] codes = Constants.randomIdentifier(filmCode);
         StringBuilder scheduleId = new StringBuilder();
-        return scheduleId
-                .append("sc-")
-                .append(codes[4])
-                .toString();
+        return scheduleId.append("sc-").append(codes[4]).append("-").append(codes[0]).toString();
     }
 }

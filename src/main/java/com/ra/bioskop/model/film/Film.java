@@ -1,5 +1,6 @@
 package com.ra.bioskop.model.film;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,10 +37,12 @@ public class Film {
     @Column(name = "overview", columnDefinition = "TEXT")
     private String overview;
 
+    @JsonFormat
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
+    @JsonFormat
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
@@ -51,6 +54,7 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres = new ArrayList<>();
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package com.ra.bioskop.dto.request.film;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleRequest {
+    private String filmId;
+    @JsonFormat(pattern = "HH:mm")
     private Date startTime;
-    private Date endTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date showAt;
     private BigDecimal price;
 }

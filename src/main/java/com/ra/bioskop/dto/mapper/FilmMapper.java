@@ -1,5 +1,6 @@
 package com.ra.bioskop.dto.mapper;
 
+import com.ra.bioskop.dto.model.film.FilmAndScheduleDTO;
 import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.model.film.Film;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,17 @@ public class FilmMapper {
         filmDTO.setGenres(film.getGenres());
         filmDTO.setReleaseDate(film.getReleaseDate());
         return filmDTO;
+    }
+
+    public static FilmAndScheduleDTO filmAndScheduleDTO(Film filmModel) {
+        FilmAndScheduleDTO filmAndSchedule = new FilmAndScheduleDTO();
+        filmAndSchedule.setFilmId(filmModel.getFilmCode());
+        filmAndSchedule.setOnShow(filmModel.isOnShow());
+        filmAndSchedule.setOverview(filmModel.getOverview());
+        filmAndSchedule.setRuntime(filmModel.getRuntime());
+        filmAndSchedule.setSchedules(filmModel.getSchedules());
+        filmAndSchedule.setTitle(filmModel.getTitle());
+        return filmAndSchedule;
     }
 
     public static Film toModel(FilmDTO filmDTO) {

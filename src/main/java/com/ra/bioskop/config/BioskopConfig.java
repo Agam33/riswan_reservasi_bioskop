@@ -14,7 +14,6 @@ public class BioskopConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     /*
         pre-populate database
      */

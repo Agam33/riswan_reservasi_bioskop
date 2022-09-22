@@ -27,14 +27,10 @@ public class Ticket {
     private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "studio_id")
-    private Studio studio;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users users;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "on_show_id")
+    private OnShow onShow;
 }

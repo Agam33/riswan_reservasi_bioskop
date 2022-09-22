@@ -1,5 +1,6 @@
 package com.ra.bioskop.service;
 
+import com.ra.bioskop.dto.model.film.FilmAndScheduleDTO;
 import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.dto.model.film.ScheduleDTO;
 import com.ra.bioskop.model.film.Film;
@@ -13,6 +14,7 @@ public interface FilmService {
     List<FilmDTO> nowPlaying();
     List<FilmDTO> addAll(List<Film> films);
     FilmDTO detailFilm(String id);
-    List<FilmDTO> findAll();
-    void addSchedule(String filmId, ScheduleDTO scheduleDTO);
+    List<FilmDTO> getAllFilm();
+    ScheduleDTO addSchedule(ScheduleDTO scheduleDTO);
+    FilmAndScheduleDTO getDetailFilmAndSchedule(String filmId);
 }

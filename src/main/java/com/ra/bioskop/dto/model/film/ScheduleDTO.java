@@ -1,11 +1,10 @@
 package com.ra.bioskop.dto.model.film;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,14 +12,10 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class ScheduleDTO {
-    @Temporal(TemporalType.TIME)
+    private String filmId;
+    @JsonFormat(pattern = "HH:mm")
     private Date startTime;
-
-    @Temporal(TemporalType.TIME)
-    private Date endTime;
-
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date showAt;
-
     private BigDecimal price;
 }

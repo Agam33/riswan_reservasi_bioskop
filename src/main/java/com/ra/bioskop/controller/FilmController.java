@@ -14,6 +14,7 @@ import com.ra.bioskop.repository.GenreRepository;
 import com.ra.bioskop.repository.StudioRepository;
 import com.ra.bioskop.service.FilmService;
 import com.ra.bioskop.util.Constants;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,18 @@ public class FilmController {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
                     "success",
-                    filmService.findAll()));
+                    filmService.getAllFilm()));
+        } catch (FilmNotFoundException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+        }
+    }
+
+    @GetMapping("/detail{id}/schedule")
+    public ResponseEntity<?> getDetailFilmAndSchedule(
+            @RequestParam(value = "id") String id) {
+        try {
+            return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
+                    "success", filmService.getDetailFilmAndSchedule(id)));
         } catch (FilmNotFoundException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
@@ -121,10 +133,14 @@ public class FilmController {
     }
 
     @PostMapping("/addSchedule")
-    public ResponseEntity<?> addSchedule(@RequestParam(value = "filmId") String filmId,
-                                         @RequestBody ScheduleRequest scheduleRequest) {
-
-        return ResponseEntity.ok(new ResponseError());
+    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
+        try {
+            return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
+                    "success",
+                    filmService.addSchedule(scheduleRequestToDTO(scheduleRequest))));
+        } catch (FilmNotFoundException e) {
+            return ResponseEntity.ok(new ResponseError(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), e.getMessage()));
+        }
     }
 
     private FilmDTO filmRequestToDto(FilmRequest filmRequest) {
@@ -156,10 +172,10 @@ public class FilmController {
 
     private ScheduleDTO scheduleRequestToDTO(ScheduleRequest scheduleRequest) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setFilmId(scheduleRequest.getFilmId());
         scheduleDTO.setShowAt(scheduleRequest.getShowAt());
         scheduleDTO.setStartTime(scheduleRequest.getStartTime());
-        scheduleDTO.setEndTime(scheduleDTO.getEndTime());
-        scheduleDTO.setPrice(scheduleDTO.getPrice());
+        scheduleDTO.setPrice(scheduleRequest.getPrice());
         return scheduleDTO;
     }
 }
