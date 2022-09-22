@@ -1,41 +1,41 @@
 [
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 1,
     "genre": "COMEDY"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 2,
     "genre": "ADVENTURE"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 3,
     "genre": "CRIME"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 4,
     "genre": "HORROR"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 5,
     "genre": "THRILLER"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 6,
     "genre": "DRAMA"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 7,
     "genre": "FANTASY"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Genre",
+    "_class": "com.ra.bioskop.model.film.Genre",
     "id": 8,
     "genre": "UNKNOWN"
   }

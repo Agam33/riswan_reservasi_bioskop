@@ -1,6 +1,6 @@
 [
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 1,
       "seatRow": "A"
@@ -9,7 +9,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 2,
       "seatRow": "A"
@@ -18,7 +18,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 3,
       "seatRow": "A"
@@ -27,7 +27,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 4,
       "seatRow": "A"
@@ -36,7 +36,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 5,
       "seatRow": "A"
@@ -45,7 +45,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 1,
       "seatRow": "B"
@@ -54,7 +54,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 2,
       "seatRow": "B"
@@ -63,7 +63,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 3,
       "seatRow": "B"
@@ -72,7 +72,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 4,
       "seatRow": "B"
@@ -81,7 +81,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 5,
       "seatRow": "B"
@@ -90,7 +90,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 1,
       "seatRow": "C"
@@ -99,7 +99,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 2,
       "seatRow": "C"
@@ -108,7 +108,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 3,
       "seatRow": "C"
@@ -117,7 +117,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 4,
       "seatRow": "C"
@@ -126,7 +126,7 @@
     "updatedAt": "2022-22-16"
   },
   {
-    "_class": "com.ra.nontonfilm.model.film.Seat",
+    "_class": "com.ra.bioskop.model.film.Seat",
     "id": {
       "seatNo": 5,
       "seatRow": "C"
