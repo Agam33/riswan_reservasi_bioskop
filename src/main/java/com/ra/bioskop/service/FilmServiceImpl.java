@@ -138,7 +138,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public FilmAndScheduleDTO getDetailFilmAndSchedule(String filmId) {
+    public FilmAndScheduleDTO getFilmSchedule(String filmId) {
         Optional<Film> film = filmRepository.findById(filmId);
         if(film.isPresent()) {
             return FilmMapper.toFilmAndScheduleDTO(film.get());

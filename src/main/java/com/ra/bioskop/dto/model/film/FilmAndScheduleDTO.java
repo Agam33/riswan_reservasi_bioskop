@@ -13,8 +13,5 @@ import java.util.List;
 public class FilmAndScheduleDTO {
     private String filmId;
     private String title;
-    private Integer runtime;
-    private boolean onShow;
-    private String overview;
     private List<Schedule> schedules;
 }

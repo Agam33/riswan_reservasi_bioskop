@@ -16,5 +16,5 @@ public interface FilmService {
     FilmDTO detailFilm(String id);
     List<FilmDTO> getAllFilm();
     ScheduleDTO addSchedule(ScheduleDTO scheduleDTO);
-    FilmAndScheduleDTO getDetailFilmAndSchedule(String filmId);
+    FilmAndScheduleDTO getFilmSchedule(String filmId);
 }

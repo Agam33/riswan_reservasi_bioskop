@@ -21,7 +21,6 @@ public class Schedule {
     @JsonIgnore
     @Id
     @Column(name = "schedule_id")
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column(name = "start_time", columnDefinition = "TIME")

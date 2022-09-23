@@ -25,9 +25,6 @@ public class FilmMapper {
     public static FilmAndScheduleDTO toFilmAndScheduleDTO(Film filmModel) {
         FilmAndScheduleDTO filmAndSchedule = new FilmAndScheduleDTO();
         filmAndSchedule.setFilmId(filmModel.getFilmCode());
-        filmAndSchedule.setOnShow(filmModel.isOnShow());
-        filmAndSchedule.setOverview(filmModel.getOverview());
-        filmAndSchedule.setRuntime(filmModel.getRuntime());
         filmAndSchedule.setSchedules(filmModel.getSchedules());
         filmAndSchedule.setTitle(filmModel.getTitle());
         return filmAndSchedule;

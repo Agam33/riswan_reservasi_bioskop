@@ -53,8 +53,8 @@ public class FilmController {
     public ResponseEntity<?> getDetailFilmAndSchedule(
             @RequestParam(value = "id") String id) {
         try {
-            return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
-                    "success", filmService.getDetailFilmAndSchedule(id)));
+            return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
+                    "success", filmService.getFilmSchedule(id)));
         } catch (FilmNotFoundException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }

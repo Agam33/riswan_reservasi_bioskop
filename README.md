@@ -130,29 +130,27 @@ table selain daftar diatas hanya pemanis. Schema akan diupdate sesuai dengan keb
 ```
 {
     "statusCode": 202,
-    "timeStamp": "2022-09-22 18:55:49",
+    "timeStamp": "2022-09-23 08:57:14",
     "message": "success",
     "data": {
         "filmId": "film-7313",
         "title": "Fall (2022)",
-        "runtime": 110,
-        "onShow": true,
-        "overview": "Untuk sahabat Becky dan Hunter, hidup adalah tentang menaklukkan ketakutan dan mendorong batas. Tetapi setelah mereka mendaki 2.000 kaki ke puncak menara radio terpencil yang ditinggalkan, mereka menemukan diri mereka terdampar tanpa jalan turun. Sekarang keterampilan panjat ahli Becky dan Hunter akan diuji saat mereka mati-matian berjuang untuk bertahan hidup dari unsur-unsur, kurangnya persediaan, dan ketinggian yang menyebabkan vertigo.",
         "schedules": [
-            {
-                "startTime": "20:00:00",
-                "endTime": "22:16:00",
-                "showAt": "2022-09-23",
-                "price": 50000.00
-            },
             {
                 "startTime": "14:00:00",
                 "endTime": "16:16:00",
                 "showAt": "2022-09-23",
                 "price": 50000.00
+            },
+            {
+                "startTime": "20:00:00",
+                "endTime": "22:16:00",
+                "showAt": "2022-09-23",
+                "price": 50000.00
             }
         ]
     }
+}
 ```
 
 7. Menambahkan user: <br><br>
