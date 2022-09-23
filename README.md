@@ -76,7 +76,7 @@ table selain daftar diatas hanya pemanis. Schema akan diupdate sesuai dengan keb
     "message": "film tidak ada"
 }
 ```
-## Business Logic Pada Challenge 4 ##
+## Business Logic pada Challenge 4 ##
 1. Menambahkan film baru:<br><br>
 <i>/api/v1/films/add</i>
 ```
@@ -179,6 +179,46 @@ Tambahan :
     "endTime": "{HH:mm}",
     "showAt": "{yyyy-MM-dd}",
     "price": 0
+}
+```
+* Mengambil semua film <br><br>
+<i>/api/v1/films</i>
+```
+{
+    "statusCode": 202,
+    "timeStamp": "2022-09-23 09:12:10",
+    "message": "success",
+    "data": [
+        {
+            "filmCode": "film-7313",
+            "title": "Fall (2022)",
+            "overview": "Untuk sahabat Becky dan Hunter, hidup adalah tentang menaklukkan ketakutan dan mendorong batas. Tetapi setelah mereka mendaki 2.000 kaki ke puncak menara radio terpencil yang ditinggalkan, mereka menemukan diri mereka terdampar tanpa jalan turun. Sekarang keterampilan panjat ahli Becky dan Hunter akan diuji saat mereka mati-matian berjuang untuk bertahan hidup dari unsur-unsur, kurangnya persediaan, dan ketinggian yang menyebabkan vertigo.",
+            "runtime": 110,
+            "releaseDate": "2022-09-09T00:00:00.000+00:00",
+            "onShow": true,
+            "genres": [
+                {
+                    "id": 2,
+                    "genre": "ADVENTURE"
+                }
+            ]
+        },
+        {
+            "filmCode": "film-5805",
+            "title": "The Black Phone (2022)",
+            "overview": "Finney Blake, a shy but clever 13-year-old boy, is abducted by a sadistic killer and trapped in a soundproof basement where screaming is of little use. When a disconnected phone on the wall begins to ring, Finney discovers that he can hear the voices of the killer’s previous victims. And they are dead set on making sure that what happened to them doesn’t happen to Finney.",
+            "runtime": 110,
+            "releaseDate": "2022-09-09T00:00:00.000+00:00",
+            "onShow": false,
+            "genres": [
+                {
+                    "id": 3,
+                    "genre": "CRIME"
+                }
+            ]
+        },
+        ...
+    ]
 }
 ```
 
