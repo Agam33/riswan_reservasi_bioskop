@@ -113,9 +113,9 @@ public class FilmController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteFilm(@RequestParam(value = "id") String id) {
         try {
+            filmService.delete(id);
             return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
-                    "success",
-                    filmService.delete(id)));
+                    "success", null));
         } catch (FilmNotFoundException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
@@ -138,7 +138,7 @@ public class FilmController {
                     "success",
                     filmService.addSchedule(scheduleRequestToDTO(scheduleRequest))));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), e.getMessage()));
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
     }
 
