@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import static com.ra.bioskop.exception.BioskopException.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -124,6 +127,7 @@ public class FilmServiceImpl implements FilmService {
         if(film.isPresent()) {
             Film filmModel = film.get();
             Schedule schedule = new Schedule();
+            schedule.setId(getScheduleId(filmModel.getFilmCode(), scheduleDTO.getStartTime(), scheduleDTO.getShowAt()));
             schedule.setShowAt(scheduleDTO.getShowAt());
             schedule.setStartTime(scheduleDTO.getStartTime());
             schedule.setEndTime(scheduleDTO.getEndTime());
@@ -148,9 +152,9 @@ public class FilmServiceImpl implements FilmService {
         throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada");
     }
 
-    private String getScheduleId(String filmCode) {
-        String[] codes = Constants.randomIdentifier(filmCode);
+    private String getScheduleId(String filmCode, LocalTime startTime, LocalDate showAt) {
+        String[] codes = Constants.randomIdentifier(filmCode + startTime.toString() + showAt.getDayOfWeek());
         StringBuilder scheduleId = new StringBuilder();
-        return scheduleId.append("sc-").append(codes[4]).append("-").append(codes[0]).toString();
+        return scheduleId.append("sc-").append(codes[3]).append("-").append(codes[4]).toString();
     }
 }

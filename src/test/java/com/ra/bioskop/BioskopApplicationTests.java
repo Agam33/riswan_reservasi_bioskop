@@ -36,6 +36,7 @@ class BioskopApplicationTests {
 
 	@Test
 	void testTime() {
-//		LocalDateTime localDateTime = LocalDateTime.now();
+		LocalTime localDateTime = LocalTime.now();
+		System.out.println(localDateTime.toString());
 	}
 }
