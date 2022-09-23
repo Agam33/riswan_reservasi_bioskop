@@ -22,7 +22,7 @@ public class FilmMapper {
         return filmDTO;
     }
 
-    public static FilmAndScheduleDTO filmAndScheduleDTO(Film filmModel) {
+    public static FilmAndScheduleDTO toFilmAndScheduleDTO(Film filmModel) {
         FilmAndScheduleDTO filmAndSchedule = new FilmAndScheduleDTO();
         filmAndSchedule.setFilmId(filmModel.getFilmCode());
         filmAndSchedule.setOnShow(filmModel.isOnShow());

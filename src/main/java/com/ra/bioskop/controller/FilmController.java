@@ -104,7 +104,7 @@ public class FilmController {
         try {
              return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
                      "success",
-                     filmService.updateName(filmUpdateRequest.getCode(), filmUpdateRequest.getNewName())));
+                     filmService.updateName(filmUpdateRequest.getFilmCode(), filmUpdateRequest.getNewName())));
         } catch (FilmNotFoundException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }

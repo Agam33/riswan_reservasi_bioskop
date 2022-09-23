@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class FilmUpdateRequest {
-    private String code;
+    private String filmCode;
     private String newName;
 }

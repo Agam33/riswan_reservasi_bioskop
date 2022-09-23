@@ -1,13 +1,10 @@
 package com.ra.bioskop;
 
-import com.ra.bioskop.dto.model.film.ScheduleDTO;
 import com.ra.bioskop.model.film.FilmGenre;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.UUID;
 
 @SpringBootTest

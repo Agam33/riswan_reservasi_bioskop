@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import static com.ra.bioskop.exception.BioskopException.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -56,12 +55,7 @@ public class FilmServiceImpl implements FilmService {
     public FilmDTO updateName(String filmId, String newName) {
         Optional<Film> film = filmRepository.findById(filmId);
         if(film.isPresent()) {
-            Film filmModel = new Film();
-            filmModel.setFilmCode(film.get().getFilmCode());
-            filmModel.setRuntime(film.get().getRuntime());
-            filmModel.setOnShow(film.get().isOnShow());
-            filmModel.setReleaseDate(film.get().getReleaseDate());
-            filmModel.setCreatedAt(film.get().getCreatedAt());
+            Film filmModel = film.get();
             filmModel.setUpdatedAt(new Date());
             filmModel.setTitle(newName);
             filmRepository.save(filmModel);
@@ -147,7 +141,7 @@ public class FilmServiceImpl implements FilmService {
     public FilmAndScheduleDTO getDetailFilmAndSchedule(String filmId) {
         Optional<Film> film = filmRepository.findById(filmId);
         if(film.isPresent()) {
-            return FilmMapper.filmAndScheduleDTO(film.get());
+            return FilmMapper.toFilmAndScheduleDTO(film.get());
         }
         throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada");
     }
