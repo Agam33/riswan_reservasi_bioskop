@@ -32,5 +32,5 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "on_show_id")
-    private OnShow onShow;
+    private Show show;
 }

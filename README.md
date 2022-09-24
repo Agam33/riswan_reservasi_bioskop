@@ -5,25 +5,13 @@
 2. [Response](#Response)
 3. [Business Logic Pada Challenge 4](#Business-Logic-Pada-Challenge-4)
 
-
-## Database Schema Challenge 4 ##
+## Database Schema Challenge 5 ##
 <hr>
-<img src="https://user-images.githubusercontent.com/59663235/191777997-1c538aa0-d2c6-4bc8-8bfa-8c94105afabe.png" alt="ERD-ch4"/>
+<img src="https://user-images.githubusercontent.com/59663235/192108213-84bbbfb9-cfb6-4748-a730-8465a04d1718.png" alt="ERD-ch4"/>
 <br>
-<p>Berikut table yang digunakan untuk keperluan challenge 4: </p>
 <ul>
-    <li><b>film</b>: film table di isi lewat <i>/api/v1/films/addAll atau /api/v1/films/add</i></li>
-    <li><b>film_genre</b>: dibuat menggunakan anotasi @JoinTable</li>
-    <li><b>genre</b>: table genre di isi secara otomatis ketika aplikasi dijalankan. 
-    <br> Pada file <i>genre-data.json</i> data-data table diinput dan dimasukan ke database
-    menggunakan <b>Jackson2RepositoryPopulatorFactoryBean</b>.</li>
-    <li><b>seat</b>: sama dengan genre, table seat di isi ketika aplikasi dijalankan.</li>
-    <li><b>schedule</b>: di isi melalui <i>/api/v1/films/addSchedule</i></li>
-    <li><b>users</b>: di isi melalui <i>/api/v1/user/add</i></li>
-    <li><b>studio</b>: belum dipakai pada challenge ini.</li>
-    <li><b>seat_studio</b>: dibuat menggunakan anotasi @JoinTable</li>
 </ul>
-table selain daftar diatas hanya pemanis. Schema akan diupdate sesuai dengan kebutuhan.
+Schema akan diupdate sesuai dengan kebutuhan.
 <hr>
 
 ## Response ##

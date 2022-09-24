@@ -18,7 +18,6 @@ import java.util.Date;
 @Table(name = "schedule")
 public class Schedule {
 
-    @JsonIgnore
     @Id
     @Column(name = "schedule_id")
     private String id;
