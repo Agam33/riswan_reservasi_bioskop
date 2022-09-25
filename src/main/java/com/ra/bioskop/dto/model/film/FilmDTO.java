@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -17,7 +17,7 @@ public class FilmDTO {
     private String title;
     private String overview;
     private Integer runtime;
-    private Date releaseDate;
+    private LocalDate releaseDate;
     private boolean onShow;
     private List<Genre> genres = new ArrayList<>();
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,22 +31,22 @@ public class Film {
     @Column(name = "on_show")
     private boolean onShow;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "release_date")
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     @Column(name = "overview", columnDefinition = "TEXT")
     private String overview;
 
-    @JsonFormat
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Column(name = "rating")
+    private Double rating;
 
     @JsonFormat
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
+    @JsonFormat
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
@@ -57,4 +58,11 @@ public class Film {
     @JsonIgnore
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "film_language",
+            joinColumns = @JoinColumn(name = "film_code"),
+            inverseJoinColumns = @JoinColumn(name = "language_id"))
+    private List<Language> languages = new ArrayList<>();
 }

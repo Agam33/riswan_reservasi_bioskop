@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +21,9 @@ public class Seat {
     @EmbeddedId
     private SeatNo id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDate createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "seats", fetch = FetchType.LAZY)

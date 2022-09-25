@@ -35,14 +35,12 @@ public class Schedule {
     private BigDecimal price;
 
     @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

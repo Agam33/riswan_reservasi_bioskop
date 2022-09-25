@@ -12,7 +12,7 @@ public class Constants {
 
     /*
         @Param email
-        @Result true
+        @return true
      */
     public static boolean validateEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);

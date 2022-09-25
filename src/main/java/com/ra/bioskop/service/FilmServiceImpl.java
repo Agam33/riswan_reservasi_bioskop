@@ -40,7 +40,7 @@ public class  FilmServiceImpl implements FilmService {
             Film filmModel = new Film();
             filmModel.setFilmCode(filmDTO.getFilmCode());
             filmModel.setTitle(filmDTO.getTitle());
-            filmModel.setCreatedAt(new Date());
+            filmModel.setCreatedAt(LocalDate.now());
             filmModel.setOverview(filmDTO.getOverview());
             filmModel.setRuntime(filmDTO.getRuntime());
             filmModel.setOnShow(filmDTO.isOnShow());
@@ -56,7 +56,7 @@ public class  FilmServiceImpl implements FilmService {
         Optional<Film> film = filmRepository.findById(filmId);
         if(film.isPresent()) {
             Film filmModel = film.get();
-            filmModel.setUpdatedAt(new Date());
+            filmModel.setUpdatedAt(LocalDate.now());
             filmModel.setTitle(newName);
             filmRepository.save(filmModel);
             return FilmMapper.toDto(filmModel);
@@ -126,8 +126,8 @@ public class  FilmServiceImpl implements FilmService {
             schedule.setStartTime(scheduleDTO.getStartTime());
             schedule.setEndTime(scheduleDTO.getEndTime());
             schedule.setPrice(scheduleDTO.getPrice());
-            schedule.setCreatedAt(new Date());
-            schedule.setUpdatedAt(new Date());
+            schedule.setCreatedAt(LocalDate.now());
+            schedule.setUpdatedAt(LocalDate.now());
 
             filmModel.getSchedules().add(schedule);
             schedule.setFilm(filmModel);

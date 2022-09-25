@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -13,7 +14,7 @@ public class FilmRequest {
     private String title;
     private String overview;
     private Integer runtime;
-    private Date releaseDate;
+    private LocalDate releaseDate;
     private boolean onShow;
     private Integer genre;
 }

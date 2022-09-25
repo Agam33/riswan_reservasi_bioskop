@@ -1,9 +1,9 @@
 # Reservasi Bioskop #
 
 ## Daftar isi ##
-1. [Database Schema Challenge 4](#Database-Schema-Challenge-4)
+1. [Database Schema Challenge 5](#Database-Schema-Challenge-4)
 2. [Response](#Response)
-3. [Business Logic Pada Challenge 4](#Business-Logic-Pada-Challenge-4)
+3. [Business Logic Pada Challenge 5](#Business-Logic-Pada-Challenge-4)
 
 ## Database Schema Challenge 5 ##
 <hr>
@@ -64,7 +64,7 @@ Schema akan diupdate sesuai dengan kebutuhan.
     "message": "film tidak ada"
 }
 ```
-## Business Logic pada Challenge 4 ##
+## Business Logic pada Challenge 5 ##
 1. Menambahkan film baru:<br><br>
 <i>/api/v1/films/add</i>
 ```

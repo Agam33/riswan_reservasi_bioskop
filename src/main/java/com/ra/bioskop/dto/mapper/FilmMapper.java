@@ -5,7 +5,7 @@ import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.model.film.Film;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Component
 public class FilmMapper {
@@ -33,8 +33,8 @@ public class FilmMapper {
     public static Film toModel(FilmDTO filmDTO) {
         Film filmModel = new Film();
         filmModel.setFilmCode(filmDTO.getFilmCode());
-        filmModel.setUpdatedAt(new Date());
-        filmModel.setCreatedAt(new Date());
+        filmModel.setUpdatedAt(LocalDate.now());
+        filmModel.setCreatedAt(LocalDate.now());
         filmModel.setOverview(filmDTO.getOverview());
         filmModel.setReleaseDate(filmDTO.getReleaseDate());
         filmModel.setOnShow(filmDTO.isOnShow());
