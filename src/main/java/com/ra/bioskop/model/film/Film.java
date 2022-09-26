@@ -1,6 +1,5 @@
 package com.ra.bioskop.model.film;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -40,13 +39,13 @@ public class Film {
     @Column(name = "rating")
     private Double rating;
 
-    @JsonFormat
-    @Column(name = "created_at")
-    private LocalDate createdAt;
+    @JsonIgnore
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
-    @JsonFormat
-    @Column(name = "updated_at")
-    private LocalDate updatedAt;
+    @JsonIgnore
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)

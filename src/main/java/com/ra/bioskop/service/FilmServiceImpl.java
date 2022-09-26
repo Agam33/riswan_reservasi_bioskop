@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import static com.ra.bioskop.exception.BioskopException.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class  FilmServiceImpl implements FilmService {
             Film filmModel = new Film();
             filmModel.setFilmCode(filmDTO.getFilmCode());
             filmModel.setTitle(filmDTO.getTitle());
-            filmModel.setCreatedAt(LocalDate.now());
+            filmModel.setCreatedAt(LocalDateTime.now());
             filmModel.setOverview(filmDTO.getOverview());
             filmModel.setRuntime(filmDTO.getRuntime());
             filmModel.setOnShow(filmDTO.isOnShow());
@@ -56,7 +57,7 @@ public class  FilmServiceImpl implements FilmService {
         Optional<Film> film = filmRepository.findById(filmId);
         if(film.isPresent()) {
             Film filmModel = film.get();
-            filmModel.setUpdatedAt(LocalDate.now());
+            filmModel.setUpdatedAt(LocalDateTime.now());
             filmModel.setTitle(newName);
             filmRepository.save(filmModel);
             return FilmMapper.toDto(filmModel);
@@ -126,8 +127,8 @@ public class  FilmServiceImpl implements FilmService {
             schedule.setStartTime(scheduleDTO.getStartTime());
             schedule.setEndTime(scheduleDTO.getEndTime());
             schedule.setPrice(scheduleDTO.getPrice());
-            schedule.setCreatedAt(LocalDate.now());
-            schedule.setUpdatedAt(LocalDate.now());
+            schedule.setCreatedAt(LocalDateTime.now());
+            schedule.setUpdatedAt(LocalDateTime.now());
 
             filmModel.getSchedules().add(schedule);
             schedule.setFilm(filmModel);

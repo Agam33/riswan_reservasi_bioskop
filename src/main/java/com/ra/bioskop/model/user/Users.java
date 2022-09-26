@@ -35,4 +35,6 @@ public class Users {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_at")
     private Date updateAt;
+
+
 }

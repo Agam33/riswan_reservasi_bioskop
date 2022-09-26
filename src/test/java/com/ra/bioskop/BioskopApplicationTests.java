@@ -4,6 +4,7 @@ import com.ra.bioskop.model.film.FilmGenre;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -33,7 +34,8 @@ class BioskopApplicationTests {
 
 	@Test
 	void testTime() {
-		LocalTime localDateTime = LocalTime.now();
-		System.out.println(localDateTime.toString());
+//		LocalTime localDateTime = LocalTime.now();
+		System.out.print("LocalDateTime: ");
+		System.out.println(LocalDateTime.now() + " //");
 	}
 }

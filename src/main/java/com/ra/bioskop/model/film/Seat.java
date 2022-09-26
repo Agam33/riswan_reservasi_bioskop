@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -21,8 +20,12 @@ public class Seat {
     @EmbeddedId
     private SeatNo id;
 
+    @JsonIgnore
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDate createdAt;
 
+    @JsonIgnore
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDate updatedAt;
 
     @JsonIgnore

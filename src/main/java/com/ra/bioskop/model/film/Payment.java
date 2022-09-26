@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,11 +17,9 @@ public class Payment {
     @Id
     private String id;
 
+    private boolean status;
+
     private BigDecimal amount;
-
-    private LocalDate createdAt;
-
-    private LocalDate updatedAt;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Booking booking;

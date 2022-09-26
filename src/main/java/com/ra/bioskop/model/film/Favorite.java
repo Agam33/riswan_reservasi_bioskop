@@ -1,8 +1,8 @@
 package com.ra.bioskop.model.film;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -16,14 +16,19 @@ public class Favorite {
     @Id
     private BigInteger id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "film_code")
-    private Film filmCode;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "film_code")
+//    private Film filmCode;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    private LocalDate updateAt;
+    @JsonIgnore
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDate createdAt;
+
+    @JsonIgnore
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    private LocalDate updatedAt;
 }

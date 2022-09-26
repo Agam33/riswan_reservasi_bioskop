@@ -8,8 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -35,12 +35,12 @@ public class Schedule {
     private BigDecimal price;
 
     @JsonIgnore
-    @Column(name = "created_at")
-    private LocalDate createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
     @JsonIgnore
-    @Column(name = "updated_at")
-    private LocalDate updatedAt;
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
