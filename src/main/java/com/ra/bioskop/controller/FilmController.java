@@ -49,7 +49,7 @@ public class FilmController {
         }
     }
 
-    @GetMapping("/detail{id}/schedule")
+    @GetMapping("/detail/schedule")
     public ResponseEntity<?> getDetailFilmAndSchedule(
             @RequestParam(value = "id") String id) {
         try {
@@ -93,9 +93,10 @@ public class FilmController {
             return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
                     "success",
                     filmService.add(filmRequestToDto(filmRequest))));
-        } catch (FilmNotFoundException
-                 | DuplicateEntityException e) {
-            return ResponseEntity.ok(new ResponseError(HttpStatus.NO_CONTENT.value(), new Date(), e.getMessage()));
+        } catch (FilmNotFoundException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+        } catch (DuplicateEntityException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
     }
 

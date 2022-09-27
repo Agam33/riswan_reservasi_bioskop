@@ -12,7 +12,7 @@
 	<artifactId>nontonfilm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nontonfilm</name>
-	<description>chapter 4 - 8</description>
+	<description>Reservasi Bioskop chapter 4 - 8</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -25,7 +25,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -45,6 +48,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.11</version>
 		</dependency>
 	</dependencies>
 

@@ -6,19 +6,9 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
-    private static final String EMAIL_PATTERN =  "^[_A-Za-z0-9-+]" +
+    public static final String EMAIL_PATTERN =  "^[_A-Za-z0-9-+]" +
             "(.[_A-Za-z0-9-]+)@" + "[A-Za-z0-9-]+(.[A-Za-z0-9]+)" +
             "(.[A-Za-z]{2,})$";
-
-    /*
-        @Param email
-        @return true
-     */
-    public static boolean validateEmail(String email) {
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 
     /*
         Random Identifier result :

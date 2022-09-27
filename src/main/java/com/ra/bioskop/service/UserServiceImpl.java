@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -42,8 +43,8 @@ public class UserServiceImpl implements UserService {
             userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             userModel.setUsername(userDTO.getUsername());
             userModel.setEmail(userDTO.getEmail());
-            userModel.setCreatedAt(new Date());
-            userModel.setUpdateAt(new Date());
+            userModel.setCreatedAt(LocalDateTime.now());
+            userModel.setUpdatedAt(LocalDateTime.now());
             userRepository.save(userModel);
             return userDTO;
         }
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
         if(user.isPresent()) {
             Users userModel = user.get();
             userModel.setUsername(userDTO.getUsername());
-            userModel.setUpdateAt(new Date());
+            userModel.setUpdatedAt(LocalDateTime.now());
             userRepository.save(userModel);
             return userDTO;
         }

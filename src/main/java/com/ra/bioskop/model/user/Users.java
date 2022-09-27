@@ -1,10 +1,13 @@
 package com.ra.bioskop.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -28,13 +31,11 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Date createdAt;
+    @JsonIgnore
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_at")
-    private Date updateAt;
-
-
+    @JsonIgnore
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
 }
