@@ -20,7 +20,7 @@ public class EmailValidator implements ConstraintValidator<EmailFormat, String> 
        @Param email
        @return true
     */
-    public boolean validateEmail(String email) {
+    private boolean validateEmail(String email) {
         Pattern pattern = Pattern.compile(Constants.EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

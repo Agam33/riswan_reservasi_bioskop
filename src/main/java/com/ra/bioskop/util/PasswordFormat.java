@@ -10,8 +10,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = EmailValidator.class)
 @Documented
-public @interface EmailFormat {
-    String message() default "Invalid Email";
+public @interface PasswordFormat {
+    String message() default "Invalid Password";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

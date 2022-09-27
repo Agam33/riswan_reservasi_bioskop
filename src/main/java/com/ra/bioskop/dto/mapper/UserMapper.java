@@ -11,7 +11,6 @@ public class UserMapper {
     public static UserDTO toDto(Users user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(user.getEmail());
-        userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUsername(user.getUsername());
         return userDTO;
     }
