@@ -4,7 +4,6 @@ import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.dto.request.user.RegisRequest;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
-import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,10 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static com.ra.bioskop.exception.BioskopException.*;
+import static com.ra.bioskop.exception.BioskopException.DuplicateEntityException;
+import static com.ra.bioskop.exception.BioskopException.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -33,7 +34,7 @@ public class UserController {
             @ApiResponse(responseCode = "406", description = "email salah."),
             @ApiResponse(responseCode = "409", description = "user sudah ada.")})
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody RegisRequest regisRequest) {
+    public ResponseEntity<?> add(@RequestBody @Valid RegisRequest regisRequest) {
         try {
             userService.add(addUser(regisRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.CREATED.value(), new Date(),
