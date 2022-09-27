@@ -11,6 +11,16 @@ public class Constants {
             "(.[A-Za-z]{2,})$";
 
     /*
+   @Param email
+   @return true
+*/
+    public static boolean validateEmail(String email) {
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    /*
         Random Identifier result :
         [0] -> time_low
         [1] -> time_mid

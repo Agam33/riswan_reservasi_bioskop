@@ -35,10 +35,15 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody RegisRequest regisRequest) {
         try {
+            if(Constants.validateEmail(regisRequest.getEmail()))
+                throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
+
             userService.add(addUser(regisRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.CREATED.value(), new Date(),
                     "created", null));
         } catch (DuplicateEntityException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+        } catch (EmailValidateException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
     }
@@ -46,14 +51,20 @@ public class UserController {
     @Operation(summary = "Mengubah profile user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Berhasil"),
-            @ApiResponse(responseCode = "404", description = "User tidak ditemukan")})
+            @ApiResponse(responseCode = "404", description = "User tidak ditemukan"),
+            @ApiResponse(responseCode = "406", description = "email salah.")})
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody UserDTO userDTO) {
         try {
+            if(Constants.validateEmail(userDTO.getEmail()))
+                throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
+
             userService.updateProfile(userDTO);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "updated", null));
         } catch (EntityNotFoundException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+        } catch (EmailValidateException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
     }
@@ -65,12 +76,16 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteByEmail(@RequestParam("email") String email) {
         try {
+            if(Constants.validateEmail(email))
+                throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
             userService.deleteByEmail(email);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "deleted",
                     null));
         } catch (EntityNotFoundException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+        } catch (EmailValidateException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
     }
