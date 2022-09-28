@@ -9,6 +9,8 @@ import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +32,19 @@ public class UserController {
 
     @Operation(summary = "Menambahkan user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "user berhasil ditambahkan."),
-            @ApiResponse(responseCode = "406", description = "Email tidak valid."),
-            @ApiResponse(responseCode = "409", description = "User sudah ada.")})
+            @ApiResponse(responseCode = "201", description = "user berhasil ditambahkan.",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Response.class ))}),
+            @ApiResponse(responseCode = "406", description = "Email tidak valid.",
+                    content = {@Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ResponseError.class ))}),
+            @ApiResponse(responseCode = "409", description = "User sudah ada.",
+                    content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ResponseError.class ))})})
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody RegisRequest regisRequest) {
         try {
-            if(Constants.validateEmail(regisRequest.getEmail()))
+            if(!Constants.validateEmail(regisRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
             userService.add(addUser(regisRequest));
@@ -51,9 +59,15 @@ public class UserController {
 
     @Operation(summary = "Mengubah profile user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Berhasil"),
-            @ApiResponse(responseCode = "404", description = "User tidak ditemukan"),
-            @ApiResponse(responseCode = "406", description = "Email tidak valid.")})
+            @ApiResponse(responseCode = "200", description = "Berhasil",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Response.class ))}),
+            @ApiResponse(responseCode = "404", description = "User tidak ditemukan",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ResponseError.class ))}),
+            @ApiResponse(responseCode = "406", description = "Email tidak valid.",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ResponseError.class ))})})
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
         try {
@@ -72,9 +86,15 @@ public class UserController {
 
     @Operation(summary = "Menghapus user berdasarkan email")
     @ApiResponses(value = {
-                @ApiResponse(responseCode = "200", description = "Berhasil menghapus user"),
-                @ApiResponse(responseCode = "404", description = "User tidak ditemukan`"),
-                @ApiResponse(responseCode = "406", description = "Email tidak valid.")})
+                @ApiResponse(responseCode = "200", description = "Berhasil menghapus user",
+                        content = {@Content(mediaType = "application/json",
+                                schema = @Schema(implementation = Response.class ))}),
+                @ApiResponse(responseCode = "404", description = "User tidak ditemukan`",
+                        content = {@Content(mediaType = "application/json",
+                                schema = @Schema(implementation = ResponseError.class ))}),
+                @ApiResponse(responseCode = "406", description = "Email tidak valid.",
+                        content = {@Content(mediaType = "application/json",
+                                schema = @Schema(implementation = ResponseError.class ))})})
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteByEmail(@RequestParam("email") String email) {
         try {
