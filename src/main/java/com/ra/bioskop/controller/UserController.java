@@ -2,6 +2,7 @@ package com.ra.bioskop.controller;
 
 import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.dto.request.user.RegisRequest;
+import com.ra.bioskop.dto.request.user.UpdateUserRequest;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.exception.ExceptionType;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -30,8 +32,8 @@ public class UserController {
     @Operation(summary = "Menambahkan user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "user berhasil ditambahkan."),
-            @ApiResponse(responseCode = "406", description = "email salah."),
-            @ApiResponse(responseCode = "409", description = "user sudah ada.")})
+            @ApiResponse(responseCode = "406", description = "Email tidak valid."),
+            @ApiResponse(responseCode = "409", description = "User sudah ada.")})
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody RegisRequest regisRequest) {
         try {
@@ -52,14 +54,14 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Berhasil"),
             @ApiResponse(responseCode = "404", description = "User tidak ditemukan"),
-            @ApiResponse(responseCode = "406", description = "email salah.")})
+            @ApiResponse(responseCode = "406", description = "Email tidak valid.")})
     @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
         try {
-            if(Constants.validateEmail(userDTO.getEmail()))
+            if(Constants.validateEmail(updateUserRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
-            userService.updateProfile(userDTO);
+            userService.updateProfile(updateUser(updateUserRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "updated", null));
         } catch (EntityNotFoundException e) {
@@ -72,7 +74,8 @@ public class UserController {
     @Operation(summary = "Menghapus user berdasarkan email")
     @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Berhasil menghapus user"),
-                @ApiResponse(responseCode = "404", description = "User tidak ditemukan`")})
+                @ApiResponse(responseCode = "404", description = "User tidak ditemukan`"),
+                @ApiResponse(responseCode = "406", description = "Email tidak valid.")})
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteByEmail(@RequestParam("email") String email) {
         try {
@@ -98,6 +101,13 @@ public class UserController {
         userDTO.setPassword(regisRequest.getPassword());
         userDTO.setEmail(regisRequest.getEmail());
         userDTO.setCreatedAt(LocalDateTime.now());
+        return userDTO;
+    }
+
+    private UserDTO updateUser(UpdateUserRequest updateUserRequest) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(updateUserRequest.getEmail());
+        userDTO.setUsername(updateUserRequest.getNewUsername());
         return userDTO;
     }
 }

@@ -2,33 +2,21 @@ package com.ra.bioskop.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
 
-    public static final String USER_TAG = "user-service";
-
     @Bean
-    public OpenAPI bioskopOpenAPI() {
+    public OpenAPI bioskopOpenAPI(@Value("${app.description}") String desc,
+                                  @Value("${app.version}") String appVersion,
+                                  @Value("${app.name}") String title) {
         return new OpenAPI()
                 .info(new Info()
-                .title("Reservasi Bioskop")
-//                .version(appVersion)
-                .description("Reservasi Bioskop chapter 4 - 8"));
+                .title(title)
+                .version(appVersion)
+                .description(desc));
     }
-
-    /*
-       contains operation related to user API
-    */
-//    @Bean
-//    public GroupedOpenApi userApi() {
-//        return GroupedOpenApi.builder()
-//                .group("Test-group")
-//                .displayName("User")
-//                .packagesToScan("com.ra.bioskop.controller.UserController")
-//                .build();
-//    }
-
 }

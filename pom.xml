@@ -11,7 +11,7 @@
 	<groupId>com.ra</groupId>
 	<artifactId>nontonfilm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nontonfilm</name>
+	<name>Reservasi Bioskop</name>
 	<description>Reservasi Bioskop chapter 4 - 8</description>
 	<properties>
 		<java.version>11</java.version>
@@ -24,6 +24,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
