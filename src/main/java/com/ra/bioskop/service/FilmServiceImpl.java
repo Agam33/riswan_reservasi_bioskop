@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class  FilmServiceImpl implements FilmService {
+public class FilmServiceImpl implements FilmService {
 
     @Autowired
     private FilmRepository filmRepository;
@@ -113,7 +113,7 @@ public class  FilmServiceImpl implements FilmService {
                     .map(FilmMapper::toDto)
                     .collect(Collectors.toList());
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
     }
 
     @Override
