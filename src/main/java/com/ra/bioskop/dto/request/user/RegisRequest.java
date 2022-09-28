@@ -5,9 +5,8 @@ import com.ra.bioskop.util.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -17,13 +16,15 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RegisRequest {
 
-    @Email
+    @NotNull
     @Pattern(regexp = Constants.EMAIL_PATTERN)
     private String email;
 
+    @NotNull
     @Size(min = 5, max = 20)
     private String username;
 
+    @NotNull
     @Size(min = 7, max = 20)
     private String password;
 }
