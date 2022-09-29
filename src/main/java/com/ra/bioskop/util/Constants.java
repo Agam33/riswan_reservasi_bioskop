@@ -11,9 +11,9 @@ public class Constants {
             "(.[A-Za-z]{2,})$";
 
     /*
-   @Param email
-   @return true
-*/
+       @Param email
+       @return true
+    */
     public static boolean validateEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
@@ -33,6 +33,4 @@ public class Constants {
         UUID uuid = UUID.nameUUIDFromBytes(b);
         return uuid.toString().split("-");
     }
-
-
 }

@@ -30,4 +30,6 @@ public class Studio {
                         @JoinColumn(name = "seat_row")})
     private List<Seat> seats = new ArrayList<>();
 
+    @OneToMany(mappedBy = "studio", fetch = FetchType.LAZY)
+    private List<Schedule> schedules = new ArrayList<>();
 }

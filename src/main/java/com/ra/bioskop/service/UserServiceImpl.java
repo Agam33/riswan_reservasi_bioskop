@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         if(user.isPresent()) {
             return UserMapper.toDto(user.get());
         }
-        throw BioskopException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+        throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
     }
 
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(userModel);
             return userDTO;
         }
-        throw BioskopException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+        throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
     }
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(userModel);
             return UserMapper.toDto(userModel);
         }
-        throw BioskopException.throwException(ExceptionType.USER_NOT_FOUND, HttpStatus.NOT_FOUND,
+        throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
     }
 }

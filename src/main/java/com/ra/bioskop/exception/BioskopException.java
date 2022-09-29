@@ -10,16 +10,27 @@ public class BioskopException {
 
     public static RuntimeException throwException(ExceptionType exceptionType, HttpStatus statusCode, String msg) {
         switch (exceptionType) {
-            case USER_NOT_FOUND:
-                return new EntityNotFoundException(statusCode, msg);
             case INVALID_EMAIL:
                 return new EmailValidateException(statusCode, msg);
             case DUPLICATE_ENTITY:
                 return new DuplicateEntityException(statusCode, msg);
             case FILM_NOT_FOUND:
                 return new FilmNotFoundException(statusCode, msg);
+            case NOT_FOUND:
+                return new EntityNotFoundException(statusCode, msg);
             default:
                 return new RuntimeException(msg);
+        }
+    }
+
+    @Setter
+    @Getter
+    public static class StudioNotFoundException extends RuntimeException {
+        private HttpStatus statusCode;
+        private String msg;
+        public StudioNotFoundException(HttpStatus statusCode, String msg) {
+            super(msg);
+            this.statusCode = statusCode;
         }
     }
 

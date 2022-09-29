@@ -9,9 +9,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -19,7 +17,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class ScheduleRequest {
     @NotNull
-    private String filmId;
+    private String filmCode;
+
+    @NotNull
+    private Integer studioId;
 
     @JsonFormat(pattern = "HH:mm")
     @NotNull

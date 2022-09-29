@@ -16,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ScheduleDTO {
     private String filmId;
+    private Integer studioId;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
     @JsonFormat(pattern = "HH:mm")

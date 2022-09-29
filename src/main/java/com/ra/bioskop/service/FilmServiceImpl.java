@@ -7,8 +7,10 @@ import com.ra.bioskop.dto.model.film.ScheduleDTO;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.model.film.Film;
 import com.ra.bioskop.model.film.Schedule;
+import com.ra.bioskop.model.film.Studio;
 import com.ra.bioskop.repository.FilmRepository;
 import com.ra.bioskop.repository.ScheduleRepository;
+import com.ra.bioskop.repository.StudioRepository;
 import com.ra.bioskop.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,8 @@ public class FilmServiceImpl implements FilmService {
 
     @Autowired
     private ScheduleRepository scheduleRepository;
+    @Autowired
+    private StudioRepository studioRepository;
 
     @Override
     public FilmDTO add(FilmDTO filmDTO) {
@@ -130,12 +134,17 @@ public class FilmServiceImpl implements FilmService {
             schedule.setCreatedAt(LocalDateTime.now());
             schedule.setUpdatedAt(LocalDateTime.now());
 
+            Optional<Studio> studio = studioRepository.findById(scheduleDTO.getStudioId());
+            if(studio.isEmpty())
+                throw throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, "studio tidak ditemukan.");
+
+            schedule.setStudio(studio.get());
             filmModel.getSchedules().add(schedule);
             schedule.setFilm(filmModel);
             filmRepository.save(filmModel);
             return scheduleDTO;
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada.");
     }
 
     @Override

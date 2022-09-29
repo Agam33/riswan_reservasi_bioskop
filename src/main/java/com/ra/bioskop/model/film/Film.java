@@ -57,11 +57,4 @@ public class Film {
     @JsonIgnore
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
-
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "film_language",
-            joinColumns = @JoinColumn(name = "film_code"),
-            inverseJoinColumns = @JoinColumn(name = "language_id"))
-    private List<Language> languages = new ArrayList<>();
 }

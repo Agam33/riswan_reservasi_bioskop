@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 
 import static com.ra.bioskop.exception.BioskopException.*;
 
+@Tag(name = "Film")
 @RestController
 @RequestMapping("/api/v1/films")
 public class FilmController {
@@ -210,10 +212,12 @@ public class FilmController {
     @PostMapping("/addSchedule")
     public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
         try {
+            filmService.addSchedule(scheduleRequestToDTO(scheduleRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success",
-                    filmService.addSchedule(scheduleRequestToDTO(scheduleRequest))));
+                    "success", null));
         } catch (FilmNotFoundException e) {
+            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
         }
     }
@@ -247,7 +251,8 @@ public class FilmController {
 
     private ScheduleDTO scheduleRequestToDTO(ScheduleRequest scheduleRequest) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
-        scheduleDTO.setFilmId(scheduleRequest.getFilmId());
+        scheduleDTO.setFilmId(scheduleRequest.getFilmCode());
+        scheduleDTO.setStudioId(scheduleRequest.getStudioId());
         scheduleDTO.setShowAt(scheduleRequest.getShowAt());
         scheduleDTO.setStartTime(scheduleRequest.getStartTime());
         scheduleDTO.setEndTime(scheduleRequest.getEndTime());

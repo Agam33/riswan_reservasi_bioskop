@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.Date;
 
 import static com.ra.bioskop.exception.BioskopException.*;
 
+@Tag(name = "User")
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -34,7 +36,7 @@ public class UserController {
 
     @Operation(summary = "Menambahkan user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "user berhasil ditambahkan.",
+            @ApiResponse(responseCode = "201", description = "User berhasil ditambahkan.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Response.class ))}),
             @ApiResponse(responseCode = "406", description = "Email tidak valid.",
@@ -73,7 +75,7 @@ public class UserController {
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
         try {
-            if(Constants.validateEmail(updateUserRequest.getEmail()))
+            if(!Constants.validateEmail(updateUserRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
             userService.updateProfile(updateUser(updateUserRequest));
@@ -100,7 +102,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteByEmail(@RequestParam("email") String email) {
         try {
-            if(Constants.validateEmail(email))
+            if(!Constants.validateEmail(email))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
             userService.deleteByEmail(email);
