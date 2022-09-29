@@ -1,5 +1,6 @@
 package com.ra.bioskop.model.film;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Studio {
 
     @Id
     @Column(name = "studio_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "studio_name", length = 15)
@@ -30,6 +32,7 @@ public class Studio {
                         @JoinColumn(name = "seat_row")})
     private List<Seat> seats = new ArrayList<>();
 
-    @OneToMany(mappedBy = "studio", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "studio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
 }

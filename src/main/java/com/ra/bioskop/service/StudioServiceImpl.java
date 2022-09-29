@@ -19,11 +19,12 @@ public class StudioServiceImpl implements StudioService {
     @Autowired
     private StudioRepository studioRepository;
 
+
     @Override
     public void addStudios(List<StudioDTO> studioDTOList) {
-        studioRepository.saveAll(
-                studioDTOList.stream().map(StudioMapper::dtoToEntity)
-                        .collect(Collectors.toList()));
+        List<Studio> studios = studioDTOList.stream().map(StudioMapper::dtoToEntity)
+                .collect(Collectors.toList());
+        studioRepository.saveAll(studios);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class Schedule {
     private Film film;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "studio_id")
     private Studio studio;
 
