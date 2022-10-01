@@ -7,7 +7,7 @@
 
 ## Database Schema Challenge 5 ##
 <hr>
-<img src="https://user-images.githubusercontent.com/59663235/192108213-84bbbfb9-cfb6-4748-a730-8465a04d1718.png" alt="ERD-ch4"/>
+<img src="https://user-images.githubusercontent.com/59663235/193081090-17437edb-03a4-46e4-b838-0deed26205d0.png" alt="ERD-ch4"/>
 <br>
 <ul>
 </ul>

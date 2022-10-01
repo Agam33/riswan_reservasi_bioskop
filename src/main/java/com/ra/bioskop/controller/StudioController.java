@@ -1,6 +1,5 @@
 package com.ra.bioskop.controller;
 
-
 import com.ra.bioskop.dto.model.studio.StudioDTO;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
@@ -42,7 +41,7 @@ public class StudioController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", studioService.getAllStudio()));
         } catch (BioskopException.EntityNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 

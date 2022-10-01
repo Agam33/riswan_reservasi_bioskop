@@ -42,7 +42,7 @@ public class ScheduleController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", scheduleService.getScheduleByDate(date)));
         } catch (BioskopException.EntityNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 }

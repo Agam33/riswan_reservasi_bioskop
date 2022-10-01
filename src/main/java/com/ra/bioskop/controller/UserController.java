@@ -5,7 +5,6 @@ import com.ra.bioskop.dto.request.user.RegisRequest;
 import com.ra.bioskop.dto.request.user.UpdateUserRequest;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
-import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
@@ -36,7 +35,7 @@ public class UserController {
 
     @Operation(summary = "Menambahkan user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User berhasil ditambahkan.",
+            @ApiResponse(responseCode = "200", description = "User berhasil ditambahkan.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Response.class ))}),
             @ApiResponse(responseCode = "406", description = "Email tidak valid.",
@@ -52,12 +51,12 @@ public class UserController {
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
             userService.add(addUser(regisRequest));
-            return ResponseEntity.ok(new Response<>(HttpStatus.CREATED.value(), new Date(),
+            return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "created", null));
         } catch (DuplicateEntityException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
-        } catch (BioskopException.EmailValidateException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+        } catch (EmailValidateException e) {
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -82,9 +81,9 @@ public class UserController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "updated", null));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         } catch (EmailValidateException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -110,9 +109,9 @@ public class UserController {
                     "deleted",
                     null));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         } catch (EmailValidateException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 

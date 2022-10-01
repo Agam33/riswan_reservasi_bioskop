@@ -47,7 +47,7 @@ public class FilmController {
 
     @Operation(summary = "Mengambil semua data film")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Tidak ada film.",
+            @ApiResponse(responseCode = "404", description = "Tidak ada film.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseError.class ))}),
             @ApiResponse(responseCode = "200", description = "Berhasil menambahkan.",
@@ -60,7 +60,7 @@ public class FilmController {
                     "success",
                     filmService.getAllFilm()));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -79,7 +79,7 @@ public class FilmController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", filmService.getFilmSchedule(id)));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -98,7 +98,7 @@ public class FilmController {
                      "success",
                      filmService.detailFilm(id)));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -122,7 +122,7 @@ public class FilmController {
                     "success",
                     null));
         } catch (DuplicateEntityException e) {
-            return ResponseEntity.ok(new ResponseError(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -141,7 +141,7 @@ public class FilmController {
                     "success",
                     filmService.add(filmRequestToDto(filmRequest))));
         } catch (DuplicateEntityException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -160,7 +160,7 @@ public class FilmController {
                      "success",
                      filmService.updateName(filmUpdateRequest.getFilmCode(), filmUpdateRequest.getNewName())));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -179,7 +179,7 @@ public class FilmController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", null));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -197,7 +197,7 @@ public class FilmController {
             return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
                     "success", filmService.nowPlaying()));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
@@ -216,9 +216,9 @@ public class FilmController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", null));
         } catch (FilmNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.ok(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()));
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
 
