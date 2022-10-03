@@ -53,7 +53,7 @@ public class FilmController {
             @ApiResponse(responseCode = "200", description = "Berhasil menambahkan.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Response.class ))})})
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> getAllFilm() {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
@@ -145,7 +145,7 @@ public class FilmController {
         }
     }
 
-    @Operation(summary = "Mengambil detail dari film tertentu")
+    @Operation(summary = "Memperbarui film")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "409", description = "Film sudah ada.",
                     content = {@Content(mediaType = "application/json",
