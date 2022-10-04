@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="340" pageHeight="480" whenNoDataType="AllSectionsNoDetail" columnWidth="200" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5678a0f-8b81-4593-b266-8f27952f753f">
+    <parameter name="studioName" class="java.lang.String"/>
+    <parameter name="cstName" class="java.lang.String"/>
+    <parameter name="filmName" class="java.lang.String"/>
+    <parameter name="date" class="java.lang.String"/>
+    <parameter name="time" class="java.lang.String"/>
+    <parameter name="row" class="java.lang.String"/>
+    <parameter name="seatNo" class="java.lang.String"/>
+    <parameter name="invoiceNo" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="10" splitType="Stretch"/>
+    </title>
+    <pageHeader>
+        <band height="100" splitType="Stretch">
+            <staticText>
+                <reportElement x="8" y="28" width="89" height="65" uuid="ac5dea99-5d87-4091-ba6b-f3fb9c294492"/>
+                <textElement>
+                    <font fontName="SansSerif" size="22" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Cinema]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="0" width="93" height="35" uuid="a377ec8c-21e8-45ac-a328-7e311b2982e6"/>
+                <textElement>
+                    <font fontName="Chalkduster" size="24" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[RA]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="180" y="20" width="132" height="70" uuid="7d12c5a1-4935-43c9-b7f9-8ea06eec5080"/>
+                <textElement>
+                    <font fontName="Baghdad" size="22"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{studioName}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="330" splitType="Stretch">
+            <staticText>
+                <reportElement x="-3" y="13" width="100" height="30" uuid="a62ebd12-fa6d-42d1-b76d-4421dc60b27d"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <text><![CDATA[Cst-Name: ]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="93" y="13" width="223" height="44" uuid="b15d2ab5-a6fa-4047-9960-0d91083eec9e"/>
+                <textElement>
+                    <font fontName="SansSerif" size="14"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{cstName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="-3" y="65" width="70" height="30" uuid="7098fc08-f8ee-472c-8eb4-f9db8759c3cc"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <text><![CDATA[Film     : ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="-5" y="113" width="82" height="30" uuid="54e6de43-6c8a-4ba3-852b-0b625520da68"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <text><![CDATA[Date     : ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="-5" y="165" width="82" height="30" uuid="8f75b9f0-bc37-4b02-a41a-f2f647240727"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <text><![CDATA[Time    : ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="-4" y="218" width="81" height="30" uuid="94a009f2-5ef4-4ea8-a168-49e24c9c20ae"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <text><![CDATA[Row     : ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="149" y="219" width="70" height="21" uuid="2b51c99b-5ad9-4fd8-8746-aeea930f3a65"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <text><![CDATA[Seat    : ]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="77" y="66" width="235" height="40" uuid="631e2313-a238-43f6-8025-c3625dfa4616"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{filmName}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="77" y="115" width="235" height="30" uuid="844e1e27-878a-4a2e-8f9f-79ba69e33b99"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="77" y="165" width="235" height="40" uuid="59dacad0-a3a6-45d1-86fa-59c6444f6fde"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{time}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="76" y="220" width="60" height="30" uuid="8da0f932-74e1-4927-b00a-b5c78a27c85a"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{row}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="223" y="221" width="89" height="30" uuid="cb6549a6-5919-4314-b4a8-c2b8186806d1"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{seatNo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="-2" y="282" width="301" height="14" uuid="f7faee8d-175f-43ef-8ced-6b3364789ca1"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{invoiceNo}]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+</jasperReport>
