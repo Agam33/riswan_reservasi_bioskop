@@ -22,13 +22,13 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @GetMapping("/download")
-    public ResponseEntity<?> downloadInvoiceFile(@RequestParam String fileName) {
+    public ResponseEntity<?> downloadInvoiceFile(@RequestParam("fileName") String fileName) {
         try {
             FileDB fileDB = invoiceService.generateInvoice(fileName);
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(fileDB.getFileType()))
                     .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename\"" + fileDB.getFileName() + "\"")
+                            "attachment; filename\"" + fileName + "\"")
                     .body(new ByteArrayResource(fileDB.getData()));
         } catch (JRException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT)
