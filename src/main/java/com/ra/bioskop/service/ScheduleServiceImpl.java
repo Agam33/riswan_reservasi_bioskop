@@ -1,6 +1,5 @@
 package com.ra.bioskop.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ra.bioskop.dto.model.film.DetailScheduleDTO;
 import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.exception.ExceptionType;
@@ -18,15 +17,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
-
     @Override
     public List<DetailScheduleDTO> getScheduleByDate(String date) {
-        ObjectMapper objectMapper = new ObjectMapper();
-
         LocalDate localDate = LocalDate.parse(date);
-        List<DetailScheduleDTO> objDTO = scheduleRepository.findByShowAt(localDate);
-        if(!objDTO.isEmpty()) {
-            return objDTO;
+        List<DetailScheduleDTO> schedule = scheduleRepository.findByShowAt(localDate);
+        if(!schedule.isEmpty()) {
+            return schedule;
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, "Tidak ada jadwal film hari ini.");
     }

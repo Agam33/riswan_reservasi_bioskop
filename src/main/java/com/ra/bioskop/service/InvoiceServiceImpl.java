@@ -27,22 +27,22 @@ public class InvoiceServiceImpl implements InvoiceService {
     public FileDB generateInvoice(String filename) throws JRException {
 
         // data dummy
-        HashMap<String, Object> mp = new HashMap<>();
-        mp.put("studioName", "A");
-        mp.put("cstName", "Sophie Amundsen");
-        mp.put("filmName", "Harry Potter Deathly Hallows (2007)");
-        mp.put("date", LocalDate.now().toString());
-        mp.put("time", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        mp.put("row", "A");
-        mp.put("seatNo", "1");
-        mp.put("invoiceNo", "invoice-" + Constants.randomIdentifier("Shopie")[4]);
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("studioName", "A");
+        parameters.put("cstName", "Sophie Amundsen");
+        parameters.put("filmName", "Harry Potter Deathly Hallows (2007)");
+        parameters.put("date", LocalDate.now().toString());
+        parameters.put("time", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        parameters.put("row", "A");
+        parameters.put("seatNo", "1");
+        parameters.put("invoiceNo", "invoice-" + Constants.randomIdentifier("Sophie")[4]);
 
         JasperReport jspReport = JasperUtil.setJasperReport("/invoice.jrxml");
-        JasperPrint jspPrint = JasperUtil.setJasperPrint(jspReport, mp);
+        JasperPrint jspPrint = JasperUtil.setJasperPrint(jspReport, parameters);
 
         FileDB fileDB = new FileDB();
         fileDB.setData(JasperUtil.toPdf(jspPrint));
-        fileDB.setFileName(filename);
+        fileDB.setFileName(filename + "-invoice-" + Constants.randomIdentifier("Sophie")[4]);
         fileDB.setFileType("application/pdf");
 
         return fileDB;

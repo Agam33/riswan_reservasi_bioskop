@@ -1,9 +1,9 @@
 # Reservasi Bioskop #
 
 ## Daftar isi ##
-1. [Database Schema Challenge 5](#Database-Schema-Challenge-4)
+1. [Database Schema Challenge 5](#Database Schema Challenge 5)
 2. [Response](#Response)
-3. [Business Logic Pada Challenge 5](#Business-Logic-Pada-Challenge-4)
+3. [Tugas Pada Challenge 5](#Tugas pada Challenge 5)
 
 ## Database Schema Challenge 5 ##
 <hr>
@@ -13,6 +13,10 @@
 </ul>
 Schema akan diupdate sesuai dengan kebutuhan.
 <hr>
+
+<p> 
+    Swagger : <a>http://localhost:8080/doc/swagger-ui/index.html</a>
+</p>
 
 ## Response ##
 <hr>
@@ -45,3 +49,15 @@ Schema akan diupdate sesuai dengan kebutuhan.
     "message": "film tidak ada"
 }
 ```
+
+## Tugas pada Challenge 5 ##
+<ol>
+    <li>Menambahkan film baru (POST)</li>
+    <li>Mengupdate nama film (PUT)</li>
+    <li>Menghapus film (DELETE)</li>
+    <li>Menampilkan film yang sedang tayang (GET)</li>
+    <li>Menampilkan jadwal dari film tertentu (POST)</li>
+    <li>Menambahkan User (POST)</li>
+    <li>Mengupdate user (PUT)</li>
+    <li>Menghapus User (DELETE)</li>
+</ol>

@@ -38,7 +38,6 @@ public class FilmController {
 
     @Autowired
     private FilmService filmService;
-
     @Autowired
     private GenreRepository genreRepository;
 

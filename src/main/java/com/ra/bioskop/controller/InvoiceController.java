@@ -34,14 +34,14 @@ public class InvoiceController {
             @ApiResponse(responseCode = "204", description = "tidak ada content",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseError.class))}) })
-    @GetMapping("/download")
+    @GetMapping(value = "/download")
     public ResponseEntity<?> downloadInvoiceFile(@RequestParam("fileName") String fileName) {
         try {
             FileDB fileDB = invoiceService.generateInvoice(fileName);
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(fileDB.getFileType()))
                     .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename\"" + fileName + "\"")
+                            "attachment; filename=\"" + fileDB.getFileName() + "\"")
                     .body(new ByteArrayResource(fileDB.getData()));
         } catch (JRException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT)

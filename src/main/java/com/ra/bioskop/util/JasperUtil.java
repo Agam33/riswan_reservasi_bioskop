@@ -11,8 +11,8 @@ public class JasperUtil {
 
     // #1
     public static JasperReport setJasperReport(String pathFile) throws JRException {
-        InputStream ticketReportStream = JasperUtil.class.getResourceAsStream(pathFile);
-        return JasperCompileManager.compileReport(ticketReportStream);
+        InputStream invoiceInputStream = JasperUtil.class.getResourceAsStream(pathFile);
+        return JasperCompileManager.compileReport(invoiceInputStream);
     }
 
     // #2
