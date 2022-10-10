@@ -15,9 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByEmail(String email) {
         Optional<Users> user = userRepository.findUserByEmail(email);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             return UserMapper.toDto(user.get());
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO register(UserDTO userDTO) {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
-        if(user.isEmpty()) {
+        if (user.isEmpty()) {
             Optional<Roles> role = rolesRepository.findByName(userDTO.getRole());
             Users userModel = new Users();
             userModel.setId(userDTO.getId());
@@ -58,13 +56,13 @@ public class UserServiceImpl implements UserService {
             return userDTO;
         }
         throw BioskopException.throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT,
-                "User dengan email "+userDTO.getEmail() + " sudah ada");
+                "User dengan email " + userDTO.getEmail() + " sudah ada");
     }
 
     @Override
     public UserDTO updateProfile(UserDTO userDTO) {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             Users userModel = user.get();
             userModel.setUsername(userDTO.getUsername());
             userModel.setUpdatedAt(LocalDateTime.now());
@@ -78,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO deleteByEmail(String email) {
         Optional<Users> user = userRepository.findUserByEmail(email);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             Users userModel = user.get();
             userRepository.delete(userModel);
             return UserMapper.toDto(userModel);
@@ -90,7 +88,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO login(LoginRequest loginRequest) {
         Optional<Users> user = userRepository.findUserByEmail(loginRequest.getEmail());
-        if(user.isPresent() &&
+        if (user.isPresent() &&
                 user.get().getPassword().equals(passwordEncoder.encode(loginRequest.getPassword()))) {
 
         }
