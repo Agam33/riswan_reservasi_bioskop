@@ -2,9 +2,12 @@ package com.ra.bioskop.service;
 
 import com.ra.bioskop.dto.mapper.UserMapper;
 import com.ra.bioskop.dto.model.user.UserDTO;
+import com.ra.bioskop.dto.request.user.LoginRequest;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.exception.BioskopException;
+import com.ra.bioskop.model.user.Roles;
 import com.ra.bioskop.model.user.Users;
+import com.ra.bioskop.repository.RolesRepository;
 import com.ra.bioskop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RolesRepository rolesRepository;
 
     @Override
     public UserDTO findByEmail(String email) {
@@ -35,9 +42,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO signup(UserDTO userDTO) {
+    public UserDTO register(UserDTO userDTO) {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
         if(user.isEmpty()) {
+            Optional<Roles> role = rolesRepository.findByName(userDTO.getRole());
             Users userModel = new Users();
             userModel.setId(userDTO.getId());
             userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -45,6 +53,7 @@ public class UserServiceImpl implements UserService {
             userModel.setEmail(userDTO.getEmail());
             userModel.setCreatedAt(LocalDateTime.now());
             userModel.setUpdatedAt(LocalDateTime.now());
+            userModel.getRoles().add(role.get());
             userRepository.save(userModel);
             return userDTO;
         }
@@ -76,5 +85,16 @@ public class UserServiceImpl implements UserService {
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
+    }
+
+    @Override
+    public UserDTO login(LoginRequest loginRequest) {
+        Optional<Users> user = userRepository.findUserByEmail(loginRequest.getEmail());
+        if(user.isPresent() &&
+                user.get().getPassword().equals(passwordEncoder.encode(loginRequest.getPassword()))) {
+
+        }
+        throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
+                "User dengan email " + loginRequest.getEmail() + " tidak ditemukan");
     }
 }

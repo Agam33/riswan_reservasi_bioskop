@@ -1,13 +1,14 @@
 package com.ra.bioskop.controller;
 
+import com.ra.bioskop.dto.model.user.LoginDTO;
 import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.dto.request.user.LoginRequest;
 import com.ra.bioskop.dto.request.user.RegisRequest;
 import com.ra.bioskop.dto.request.user.UpdateUserRequest;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
-import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.exception.ExceptionType;
+import com.ra.bioskop.model.user.ERoles;
 import com.ra.bioskop.repository.RolesRepository;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
@@ -36,9 +37,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RolesRepository rolesRepository;
-
     @Operation(summary = "Daftar User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User berhasil ditambahkan.",
@@ -50,18 +48,18 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "User sudah ada.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseError.class ))})})
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody @Valid RegisRequest regisRequest) {
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody @Valid RegisRequest regisRequest) {
         try {
             if(!Constants.validateEmail(regisRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
-            userService.signup(regisUser(regisRequest));
+            userService.register(regisUser(regisRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "created", null));
-        } catch (BioskopException.DuplicateEntityException e) {
+        } catch (DuplicateEntityException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
-        } catch (BioskopException.EmailValidateException e) {
+        } catch (EmailValidateException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
@@ -73,8 +71,9 @@ public class UserController {
             @ApiResponse(responseCode = "406", description = "Email tidak valid.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseError.class))})})
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
-        return ResponseEntity.ok("OK");
+        return new ResponseEntity<>(new ResponseError(HttpStatus.NOT_FOUND.value(), new Date(), "Tidak ditemukan"), HttpStatus.NOT_FOUND);
     }
 
 
@@ -142,12 +141,15 @@ public class UserController {
 
     private UserDTO regisUser(RegisRequest regisRequest) {
         UserDTO userDTO = new UserDTO();
-        String userId = "user-"+Constants.randomIdentifier(regisRequest.getUsername())[4];
-        userDTO.setId(userId);
         userDTO.setUsername(regisRequest.getUsername());
         userDTO.setPassword(regisRequest.getPassword());
         userDTO.setEmail(regisRequest.getEmail());
         userDTO.setCreatedAt(LocalDateTime.now());
+
+        ERoles userRole = ERoles.getRole(regisRequest.getRoleName());
+        String userId = userRole.getName() + "-" + Constants.randomIdentifier(regisRequest.getEmail())[4];
+        userDTO.setId(userId);
+        userDTO.setRole(userRole);
         return userDTO;
     }
 }

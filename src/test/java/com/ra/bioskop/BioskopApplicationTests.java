@@ -1,6 +1,7 @@
 package com.ra.bioskop;
 
 import com.ra.bioskop.model.film.FilmGenre;
+import com.ra.bioskop.model.user.ERoles;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -37,5 +38,11 @@ class BioskopApplicationTests {
 //		LocalTime localDateTime = LocalTime.now();
 		System.out.print("LocalDateTime: ");
 		System.out.println(LocalDateTime.now() + " //");
+	}
+
+	@Test
+	void testRole() {
+		String role = "ROLE_".concat("ADMIN".toUpperCase().trim());
+		boolean isTrue = false;
 	}
 }
