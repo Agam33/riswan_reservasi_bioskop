@@ -28,21 +28,20 @@ class BioskopApplicationTests {
 		UUID uuid = UUID.nameUUIDFromBytes(name);
 		String[] splitUUID = uuid.toString().split("-");
 
-		System.out.println("UUID : "+uuid);
-		System.out.println("User ID : user-"+splitUUID[4]);
+		System.out.println("UUID : " + uuid);
+		System.out.println("User ID : user-" + splitUUID[4]);
 
 	}
 
 	@Test
 	void testTime() {
-//		LocalTime localDateTime = LocalTime.now();
+		// LocalTime localDateTime = LocalTime.now();
 		System.out.print("LocalDateTime: ");
 		System.out.println(LocalDateTime.now() + " //");
 	}
 
 	@Test
 	void testRole() {
-		String role = "ROLE_".concat("ADMIN".toUpperCase().trim());
-		boolean isTrue = false;
+
 	}
 }
