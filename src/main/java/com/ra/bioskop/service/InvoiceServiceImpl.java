@@ -37,7 +37,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         parameters.put("seatNo", "1");
         parameters.put("invoiceNo", "invoice-" + Constants.randomIdentifier("Sophie")[4]);
 
-        JasperReport jspReport = JasperUtil.setJasperReport("/invoice.jrxml");
+        JasperReport jspReport = JasperUtil.setJasperReport("/invoice/invoice.jrxml");
         JasperPrint jspPrint = JasperUtil.setJasperPrint(jspReport, parameters);
 
         FileDB fileDB = new FileDB();
