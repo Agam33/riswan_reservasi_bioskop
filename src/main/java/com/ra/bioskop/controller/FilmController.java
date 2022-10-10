@@ -25,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -252,9 +254,9 @@ public class FilmController {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         scheduleDTO.setFilmId(scheduleRequest.getFilmCode());
         scheduleDTO.setStudioId(scheduleRequest.getStudioId());
-        scheduleDTO.setShowAt(scheduleRequest.getShowAt());
-        scheduleDTO.setStartTime(scheduleRequest.getStartTime());
-        scheduleDTO.setEndTime(scheduleRequest.getEndTime());
+        scheduleDTO.setShowAt(LocalDate.parse(scheduleRequest.getShowAt()));
+        scheduleDTO.setStartTime(LocalTime.parse(scheduleRequest.getStartTime()));
+        scheduleDTO.setEndTime(LocalTime.parse(scheduleRequest.getEndTime()));
         scheduleDTO.setPrice(scheduleRequest.getPrice());
         return scheduleDTO;
     }
