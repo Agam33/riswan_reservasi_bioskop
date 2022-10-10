@@ -27,4 +27,7 @@ public class RegisRequest {
     @NotNull
     @Size(min = 7, max = 20)
     private String password;
+
+    @NotNull
+    private String roleName;
 }

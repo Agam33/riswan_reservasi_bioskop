@@ -8,6 +8,7 @@ import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.exception.ExceptionType;
+import com.ra.bioskop.repository.RolesRepository;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +35,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RolesRepository rolesRepository;
 
     @Operation(summary = "Daftar User")
     @ApiResponses(value = {
