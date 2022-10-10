@@ -7,11 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -25,13 +22,15 @@ public class ScheduleRequest {
     private Integer studioId;
 
     @NotNull(message = "HH:mm")
+    @Schema(description = "input: HH:mm", type = "string", example = "14:00")
     private String startTime;
 
     @NotNull(message = "HH:mm")
+    @Schema(description = "input: HH:mm", type = "string", example = "14:00")
     private String endTime;
 
     @NotNull(message = "yyyy-MM-dd")
-//    @Schema(description = "yyyy-MM-dd", type = )
+    @Schema(description = "input: yyyy-MM-dd", type = "string", example = "2022-10-10")
     private String showAt;
 
     @NotNull

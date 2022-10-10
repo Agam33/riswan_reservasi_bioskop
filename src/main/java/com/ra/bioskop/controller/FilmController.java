@@ -230,7 +230,7 @@ public class FilmController {
         filmDTO.setOverview(filmRequest.getOverview());
         filmDTO.setRuntime(filmRequest.getRuntime());
         filmDTO.setOnShow(filmRequest.isOnShow());
-        filmDTO.setReleaseDate(filmRequest.getReleaseDate());
+        filmDTO.setReleaseDate(LocalDate.parse(filmRequest.getReleaseDate()));
 
         Integer genrePos = filmRequest.getGenre();
         Genre genre = genreRepository
