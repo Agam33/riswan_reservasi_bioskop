@@ -1,10 +1,12 @@
 package com.ra.bioskop.controller;
 
 import com.ra.bioskop.dto.model.user.UserDTO;
+import com.ra.bioskop.dto.request.user.LoginRequest;
 import com.ra.bioskop.dto.request.user.RegisRequest;
 import com.ra.bioskop.dto.request.user.UpdateUserRequest;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
+import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
@@ -33,32 +35,44 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Operation(summary = "Menambahkan user")
+    @Operation(summary = "Daftar User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User berhasil ditambahkan.",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Response.class ))}),
             @ApiResponse(responseCode = "406", description = "Email tidak valid.",
                     content = {@Content(mediaType = "application/json",
-                        schema = @Schema(implementation = ResponseError.class ))}),
+                            schema = @Schema(implementation = ResponseError.class ))}),
             @ApiResponse(responseCode = "409", description = "User sudah ada.",
                     content = {@Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ResponseError.class ))})})
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody @Valid RegisRequest regisRequest) {
+                            schema = @Schema(implementation = ResponseError.class ))})})
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@RequestBody @Valid RegisRequest regisRequest) {
         try {
             if(!Constants.validateEmail(regisRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE, "Email tidak valid");
 
-            userService.add(addUser(regisRequest));
+            userService.signup(regisUser(regisRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "created", null));
-        } catch (DuplicateEntityException e) {
+        } catch (BioskopException.DuplicateEntityException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
-        } catch (EmailValidateException e) {
+        } catch (BioskopException.EmailValidateException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
     }
+
+    // TODO : Login
+    @Operation(summary = "Login user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Berhasil Login"),
+            @ApiResponse(responseCode = "406", description = "Email tidak valid.",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ResponseError.class))})})
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
+        return ResponseEntity.ok("OK");
+    }
+
 
     @Operation(summary = "Mengubah profile user")
     @ApiResponses(value = {
@@ -115,7 +129,14 @@ public class UserController {
         }
     }
 
-    private UserDTO addUser(RegisRequest regisRequest) {
+    private UserDTO updateUser(UpdateUserRequest updateUserRequest) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(updateUserRequest.getEmail());
+        userDTO.setUsername(updateUserRequest.getNewUsername());
+        return userDTO;
+    }
+
+    private UserDTO regisUser(RegisRequest regisRequest) {
         UserDTO userDTO = new UserDTO();
         String userId = "user-"+Constants.randomIdentifier(regisRequest.getUsername())[4];
         userDTO.setId(userId);
@@ -123,13 +144,6 @@ public class UserController {
         userDTO.setPassword(regisRequest.getPassword());
         userDTO.setEmail(regisRequest.getEmail());
         userDTO.setCreatedAt(LocalDateTime.now());
-        return userDTO;
-    }
-
-    private UserDTO updateUser(UpdateUserRequest updateUserRequest) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(updateUserRequest.getEmail());
-        userDTO.setUsername(updateUserRequest.getNewUsername());
         return userDTO;
     }
 }

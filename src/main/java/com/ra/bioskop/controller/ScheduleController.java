@@ -37,7 +37,7 @@ public class ScheduleController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Response.class ))})})
     @GetMapping("/date")
-    public ResponseEntity<?> getAllSchedule(@RequestParam String date) {
+    public ResponseEntity<?> getScheduleByDate(@RequestParam String date) {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", scheduleService.getScheduleByDate(date)));

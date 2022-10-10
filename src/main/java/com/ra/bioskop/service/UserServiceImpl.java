@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO add(UserDTO userDTO) {
+    public UserDTO signup(UserDTO userDTO) {
         Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
         if(user.isEmpty()) {
             Users userModel = new Users();
