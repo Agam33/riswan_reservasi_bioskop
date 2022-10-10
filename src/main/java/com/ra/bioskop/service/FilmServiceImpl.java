@@ -123,9 +123,13 @@ public class FilmServiceImpl implements FilmService {
     public ScheduleDTO addSchedule(ScheduleDTO scheduleDTO) {
         Optional<Film> film = filmRepository.findById(scheduleDTO.getFilmId());
         if(film.isPresent()) {
+
             Film filmModel = film.get();
             Schedule schedule = new Schedule();
-            schedule.setId(getScheduleId(filmModel.getFilmCode(), scheduleDTO.getStartTime(), scheduleDTO.getShowAt()));
+
+            schedule.setId(getScheduleId(filmModel.getFilmCode(),
+                    scheduleDTO.getStartTime(),
+                    scheduleDTO.getShowAt()));
             schedule.setShowAt(scheduleDTO.getShowAt());
             schedule.setStartTime(scheduleDTO.getStartTime());
             schedule.setEndTime(scheduleDTO.getEndTime());
