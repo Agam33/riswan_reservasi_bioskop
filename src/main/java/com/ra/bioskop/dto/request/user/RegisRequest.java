@@ -29,5 +29,6 @@ public class RegisRequest {
     private String password;
 
     @NotNull
+
     private String roleName;
 }
