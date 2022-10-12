@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByEmail(String email) {
-        Optional<Users> user = userRepository.findUserByEmail(email);
+        Optional<Users> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
             return UserMapper.toDto(user.get());
         }
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO register(UserDTO userDTO) {
-        Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
+        Optional<Users> user = userRepository.findByEmail(userDTO.getEmail());
         if (user.isEmpty()) {
             Optional<Roles> role = rolesRepository.findByName(userDTO.getRole());
             Users userModel = new Users();
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateProfile(UserDTO userDTO) {
-        Optional<Users> user = userRepository.findUserByEmail(userDTO.getEmail());
+        Optional<Users> user = userRepository.findByEmail(userDTO.getEmail());
         if (user.isPresent()) {
             Users userModel = user.get();
             userModel.setUsername(userDTO.getUsername());
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO deleteByEmail(String email) {
-        Optional<Users> user = userRepository.findUserByEmail(email);
+        Optional<Users> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
             Users userModel = user.get();
             userRepository.delete(userModel);
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO login(LoginRequest loginRequest) {
-        Optional<Users> user = userRepository.findUserByEmail(loginRequest.getEmail());
+        Optional<Users> user = userRepository.findByEmail(loginRequest.getEmail());
         if (user.isPresent() &&
                 user.get().getPassword().equals(passwordEncoder.encode(loginRequest.getPassword()))) {
 

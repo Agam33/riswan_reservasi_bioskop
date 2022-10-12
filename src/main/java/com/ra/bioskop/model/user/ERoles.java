@@ -2,8 +2,8 @@ package com.ra.bioskop.model.user;
 
 
 public enum ERoles {
-    ROLE_ADMIN("admin"),
-    ROLE_CUSTOMER("customer");
+    ROLE_ADMIN("ROLE_ADMIN"),
+    ROLE_CUSTOMER("ROLE_CUSTOMER");
 
     private String name;
 

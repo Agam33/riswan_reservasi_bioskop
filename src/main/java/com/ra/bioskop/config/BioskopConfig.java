@@ -9,13 +9,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class BioskopConfig {
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     /*
-        pre-populate database
+     * pre-populate database
      */
     @Bean
     public Jackson2RepositoryPopulatorFactoryBean populatorFactoryBean() {

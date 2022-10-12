@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -26,6 +28,6 @@ public class Roles {
     private ERoles name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private Set<Users> users = new HashSet<>();
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<Users> users = new ArrayList<>();
 }

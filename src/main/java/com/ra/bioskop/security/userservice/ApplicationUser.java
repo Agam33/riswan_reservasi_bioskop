@@ -1,7 +1,9 @@
 package com.ra.bioskop.security.userservice;
 
+import java.util.Arrays;
 import java.util.Collection;
 
+import com.ra.bioskop.model.user.ERoles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,10 +24,12 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String[] roles = user.getRoles()
-                                .stream()
-                                .map(Roles::getName)
-                                .toArray(String[]::new);
+        String[] roles = Arrays.stream(user.getRoles()
+                .stream()
+                .map(Roles::getName)
+                .toArray(ERoles[]::new))
+                .map(ERoles::getName)
+                .toArray(String[]::new);
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(roles);
         return authorities;
     }
@@ -59,5 +63,5 @@ public class ApplicationUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
+
 }
