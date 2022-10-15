@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        "/", "/api/v1/user/register", "/api/v1/films")
+                        "/", "/api/v1/user/login", "/api/v1/user/register")
                 .permitAll()
 
                 // Admin
@@ -45,6 +45,8 @@ public class SecurityConfig {
                 .hasRole("CUSTOMER")
 
                 .anyRequest().authenticated()
+
+                .and().httpBasic()
 
                 .and()
                 .exceptionHandling()
