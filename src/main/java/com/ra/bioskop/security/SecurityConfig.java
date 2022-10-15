@@ -3,7 +3,6 @@ package com.ra.bioskop.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -22,6 +21,9 @@ public class SecurityConfig {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthEntryPoint authEntryPoint;
 
     @Bean
     public SecurityFilterChain apiWebSecurity(HttpSecurity http) throws Exception {
@@ -50,7 +52,7 @@ public class SecurityConfig {
 
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint((req, res, e) -> res.sendError(HttpStatus.UNAUTHORIZED.value()))
+                .authenticationEntryPoint(authEntryPoint)
 
                 .and()
                 .authenticationProvider(authenticationProvider())
