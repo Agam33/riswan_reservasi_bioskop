@@ -23,26 +23,6 @@ public class SecurityConfig {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // @Override
-    // protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    // {
-    // auth.userDetailsService(userDetailService);
-    // }
-
-    // @Override
-    // protected void configure(HttpSecurity http) throws Exception {
-    // http.csrf().disable();
-    // http.authorizeRequests()
-    // .antMatchers("/", "/api/v1/user/register", "/api/v1/films").permitAll()
-
-    // .antMatchers("/api/v1/films/addAll", "/api/v1/films/add")
-    // .hasAnyRole("ADMIN")
-
-    // .anyRequest().authenticated()
-    // .and()
-    // .httpBasic();
-    // }
-
     @Bean
     public SecurityFilterChain apiWebSecurity(HttpSecurity http) throws Exception {
 
@@ -55,15 +35,16 @@ public class SecurityConfig {
                         "/", "/api/v1/user/register", "/api/v1/films")
                 .permitAll()
 
-                // Todo: Admin
-                .antMatchers("/api/v1/films/addAll", "/api/v1/films/add")
+                // Admin
+                .antMatchers("/api/v1/films/addAll", "/api/v1/films/add", "/api/v1/films/delete",
+                        "/api/v1/films/addSchedule", "/api/v1/films/update")
                 .hasRole("ADMIN")
 
-                // Todo: Customer
-                // .antMatchers("")
-                // .hasAnyRole("CUSTOMER")
+                // Customer
+                .antMatchers("/api/v1/user/update", "/api/v1/user/delete", "/api/invoice/download")
+                .hasRole("CUSTOMER")
 
-                .anyRequest().authenticated().and().httpBasic()
+                .anyRequest().authenticated()
 
                 .and()
                 .exceptionHandling()
