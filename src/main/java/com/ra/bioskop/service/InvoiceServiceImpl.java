@@ -3,7 +3,6 @@ package com.ra.bioskop.service;
 import com.ra.bioskop.dto.model.fileDB.FileDB;
 import com.ra.bioskop.util.Constants;
 import com.ra.bioskop.util.JasperUtil;
-import com.ra.bioskop.util.jasperUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
