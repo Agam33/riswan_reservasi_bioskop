@@ -5,6 +5,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.dto.request.user.LoginRequest;
 import com.ra.bioskop.dto.request.user.RegisRequest;
+import com.ra.bioskop.dto.response.JwtResponse;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.model.user.ERoles;
+import com.ra.bioskop.security.userservice.UserDetailsImpl;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
+import com.ra.bioskop.util.JwtUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,6 +47,12 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationManager authManager;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Operation(summary = "Daftar User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User berhasil ditambahkan.", content = {
@@ -48,7 +61,7 @@ public class AuthController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
             @ApiResponse(responseCode = "409", description = "User sudah ada.", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }) })
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody @Valid RegisRequest regisRequest) {
         try {
             if (!Constants.validateEmail(regisRequest.getEmail()))
@@ -69,17 +82,26 @@ public class AuthController {
         }
     }
 
-    // TODO: Login
     @Operation(summary = "Login user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Berhasil Login"),
+            @ApiResponse(responseCode = "200", description = "Berhasil Login", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }),
             @ApiResponse(responseCode = "406", description = "Email tidak valid.", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }) })
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
-        return new ResponseEntity<>(
-                new ResponseError(HttpStatus.NOT_FOUND.value(), new Date(), "Tidak ditemukan"),
-                HttpStatus.NOT_FOUND);
+        try {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            String accessToken = jwtUtil.generateJwtToken(authentication);
+            return ResponseEntity.ok(new Response<>(HttpStatus.UNAUTHORIZED.value(), new Date(),
+                    "success", new JwtResponse(userDetails.getUsername(), accessToken)));
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseError(HttpStatus.UNAUTHORIZED.value(),
+                    new Date(), e.getMessage()), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     private UserDTO regisUser(RegisRequest regisRequest) {
@@ -90,7 +112,7 @@ public class AuthController {
         userDTO.setCreatedAt(LocalDateTime.now());
 
         ERoles userRole = ERoles.getRole(regisRequest.getRoleName());
-        String userId = userRole.getName().split("_")[1] + "-" + Constants.randomIdentifier(regisRequest.getEmail())[4];
+        String userId = userRole.name().split("_")[1] + "-" + Constants.randomIdentifier(regisRequest.getEmail())[4];
         userDTO.setId(userId);
         userDTO.setRole(userRole);
         return userDTO;

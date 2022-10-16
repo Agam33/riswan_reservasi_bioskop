@@ -35,7 +35,7 @@ public class JwtUtil {
                 .setSubject(appUser.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + jwtExpirations))
-                .signWith(SignatureAlgorithm.HS512, jwtKey)
+                .signWith(SignatureAlgorithm.HS256, jwtKey)
                 .compact();
     }
 
@@ -46,6 +46,7 @@ public class JwtUtil {
 
     public boolean validateJwtToken(String authToken) {
         try {
+            Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             LOGGER.error("Invalid JWT signature: {}", e.getMessage());

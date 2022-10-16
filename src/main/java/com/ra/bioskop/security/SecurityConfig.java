@@ -3,12 +3,18 @@ package com.ra.bioskop.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.ra.bioskop.security.filter.AuthorizationJwtFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +29,9 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPoint authEntryPoint;
 
+    @Autowired
+    private AuthorizationJwtFilter jwtFilter;
+
     @Bean
     public SecurityFilterChain apiWebSecurity(HttpSecurity http) throws Exception {
 
@@ -32,7 +41,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        "/", "/api/v1/user/login", "/api/v1/user/register")
+                        "/", "/api/auth/signin", "/api/auth/signup")
                 .permitAll()
 
                 // Admin
@@ -46,7 +55,9 @@ public class SecurityConfig {
 
                 .anyRequest().authenticated()
 
-                // .and().httpBasic()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .exceptionHandling()
@@ -54,9 +65,14 @@ public class SecurityConfig {
 
                 .and()
                 .authenticationProvider(daoAuthenticationProvider())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        ;
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
