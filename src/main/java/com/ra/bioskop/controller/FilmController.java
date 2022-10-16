@@ -1,5 +1,22 @@
 package com.ra.bioskop.controller;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.ra.bioskop.dto.mapper.FilmMapper;
 import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.dto.model.film.ScheduleDTO;
@@ -8,11 +25,15 @@ import com.ra.bioskop.dto.request.film.FilmUpdateRequest;
 import com.ra.bioskop.dto.request.film.ScheduleRequest;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
+import com.ra.bioskop.exception.BioskopException.DuplicateEntityException;
+import com.ra.bioskop.exception.BioskopException.EntityNotFoundException;
+import com.ra.bioskop.exception.BioskopException.FilmNotFoundException;
 import com.ra.bioskop.model.film.Film;
 import com.ra.bioskop.model.film.Genre;
 import com.ra.bioskop.repository.GenreRepository;
 import com.ra.bioskop.service.FilmService;
 import com.ra.bioskop.util.Constants;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,18 +41,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.ra.bioskop.exception.BioskopException.*;
 
 @Tag(name = "Film")
 @RestController
@@ -40,6 +49,7 @@ public class FilmController {
 
     @Autowired
     private FilmService filmService;
+
     @Autowired
     private GenreRepository genreRepository;
 
