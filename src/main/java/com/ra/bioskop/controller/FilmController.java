@@ -11,7 +11,6 @@ import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.model.film.Film;
 import com.ra.bioskop.model.film.Genre;
 import com.ra.bioskop.repository.GenreRepository;
-import com.ra.bioskop.repository.StudioRepository;
 import com.ra.bioskop.service.FilmService;
 import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +42,6 @@ public class FilmController {
     private FilmService filmService;
     @Autowired
     private GenreRepository genreRepository;
-
-    @Autowired
-    private StudioRepository studioRepository;
 
     @Operation(summary = "Mengambil semua data film")
     @ApiResponses(value = {
