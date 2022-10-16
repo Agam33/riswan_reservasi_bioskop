@@ -3,6 +3,10 @@ app:
   description: '@description@'
   version: '@version@'
 
+  jwt:
+    key: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+    exp: 86400000 # 24 Hours 
+
 server:
   port: 8080
 

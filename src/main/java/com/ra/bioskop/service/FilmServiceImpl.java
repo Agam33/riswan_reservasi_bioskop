@@ -1,5 +1,18 @@
 package com.ra.bioskop.service;
 
+import static com.ra.bioskop.exception.BioskopException.throwException;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import com.ra.bioskop.dto.mapper.FilmMapper;
 import com.ra.bioskop.dto.model.film.FilmAndScheduleDTO;
 import com.ra.bioskop.dto.model.film.FilmDTO;
@@ -9,21 +22,8 @@ import com.ra.bioskop.model.film.Film;
 import com.ra.bioskop.model.film.Schedule;
 import com.ra.bioskop.model.film.Studio;
 import com.ra.bioskop.repository.FilmRepository;
-import com.ra.bioskop.repository.ScheduleRepository;
 import com.ra.bioskop.repository.StudioRepository;
 import com.ra.bioskop.util.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
-import static com.ra.bioskop.exception.BioskopException.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -31,8 +31,6 @@ public class FilmServiceImpl implements FilmService {
     @Autowired
     private FilmRepository filmRepository;
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
     @Autowired
     private StudioRepository studioRepository;
 
