@@ -5,7 +5,7 @@ app:
 
   jwt:
     key: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
-    exp: 86400000 # 24 Hours 
+    exp: 18000000 # 5 Hours 
 
 server:
   port: 8080
@@ -20,6 +20,6 @@ spring:
     password: password
     driver-class-name: org.postgresql.Driver
 
-springdoc:
-  swagger-ui:
-    path: /doc/swagger-ui.html
+# springdoc:
+#   swagger-ui:
+#     path: /swagger-ui.html

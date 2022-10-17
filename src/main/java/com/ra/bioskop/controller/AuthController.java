@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +52,7 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Operation(summary = "Daftar User")
+    @Operation(summary = "Regis User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User berhasil ditambahkan.", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }),
@@ -82,14 +81,14 @@ public class AuthController {
         }
     }
 
-    @Operation(summary = "Login user")
+    @Operation(summary = "Auth user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Berhasil Login", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }),
             @ApiResponse(responseCode = "406", description = "Email tidak valid.", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }) })
     @PostMapping("/signin")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
+    public ResponseEntity<?> authUser(@RequestBody @Valid LoginRequest loginRequest) {
         try {
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
