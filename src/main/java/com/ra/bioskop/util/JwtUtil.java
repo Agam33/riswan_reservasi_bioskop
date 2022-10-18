@@ -29,6 +29,7 @@ public class JwtUtil {
     private long jwtExpirations;
 
     public String generateJwtToken(Authentication authentication) {
+
         UserDetailsImpl appUser = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
@@ -53,7 +54,7 @@ public class JwtUtil {
         } catch (MalformedJwtException e) {
             LOGGER.error("Invalid JWT toke: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
-            LOGGER.error("JWT toke is expired", e.getMessage());
+            LOGGER.error("JWT token is expired", e.getMessage());
         } catch (UnsupportedJwtException e) {
             LOGGER.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {

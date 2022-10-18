@@ -26,7 +26,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
             AuthenticationException authException) throws IOException, ServletException {
 
         LOGGER.error("Unauthorized {}", authException.getMessage());
-            
+
         response.setContentType("apllication/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
@@ -34,9 +34,9 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         body.put("statusCode", HttpServletResponse.SC_UNAUTHORIZED);
         body.put("timeStamp", LocalDateTime.now().toString());
         body.put("message", authException.getMessage());
-        
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getOutputStream(), body);
     }
-    
+
 }

@@ -48,7 +48,6 @@ public class AuthorizationJwtFilter extends OncePerRequestFilter {
         setAuthentication(token, request);
 
         filterChain.doFilter(request, response);
-
     }
 
     private void setAuthentication(String token, HttpServletRequest request) {
