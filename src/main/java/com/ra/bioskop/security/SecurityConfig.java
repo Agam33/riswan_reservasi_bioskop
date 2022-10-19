@@ -21,7 +21,7 @@ import com.ra.bioskop.security.filters.AuthorizationJwtFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String[] AUTH_WHITELIST = {
+    private static final String[] NO_AUTH = {
             // -- swagger ui
             "/v2/api-docs",
             "/v3/api-docs/**",
@@ -94,6 +94,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(AUTH_WHITELIST);
+        return (web) -> web.ignoring().antMatchers(NO_AUTH);
     }
 }
