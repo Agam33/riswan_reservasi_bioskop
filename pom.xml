@@ -56,11 +56,19 @@
 			<artifactId>jasperreports</artifactId>
 			<version>6.4.0</version>
 		</dependency>
-         <repository>
+
+	</dependencies>
+
+    <repositories> 
+    <repository>
+        <id>jasperreports</id>
+        <url>http://jasperreports.sourceforge.net/maven2</url>
+    </repository>
+    <repository>
         <id>jaspersoft-third-party</id>
         <url>http://jaspersoft.artifactoryonline.com/jaspersoft/t‌​hird-party-ce-artifa‌​cts/</url>
     </repository>
-	</dependencies>
+</repositories>
 
 	<build>
 		<plugins>
