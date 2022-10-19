@@ -1,14 +1,13 @@
 package com.ra.bioskop.security.userservice;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-import com.ra.bioskop.model.user.ERoles;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ra.bioskop.model.user.Roles;
 import com.ra.bioskop.model.user.Users;
 
 import lombok.AllArgsConstructor;
@@ -18,19 +17,15 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class ApplicationUser implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private Users user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String[] roles = Arrays.stream(user.getRoles()
-                .stream()
-                .map(Roles::getName)
-                .toArray(ERoles[]::new))
-                .map(ERoles::getName)
-                .toArray(String[]::new);
-        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(roles);
+        Collection<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
         return authorities;
     }
 
@@ -62,6 +57,16 @@ public class ApplicationUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        UserDetailsImpl userImpl = (UserDetailsImpl) obj;
+        return Objects.equals(user.getId(), userImpl.user.getId());
     }
 
 }

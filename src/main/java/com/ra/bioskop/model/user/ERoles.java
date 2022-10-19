@@ -12,10 +12,6 @@ public enum ERoles {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static ERoles getRole(String role) {
         switch (role.toLowerCase().trim()) {
             case "admin":
