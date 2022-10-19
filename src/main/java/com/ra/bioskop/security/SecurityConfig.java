@@ -21,6 +21,14 @@ import com.ra.bioskop.security.filters.AuthorizationJwtFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String[] AUTH_WHITELIST = {
+            // -- swagger ui
+            "/v2/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+    };
+
     @Autowired
     private UserDetailsService userDetailService;
 
@@ -86,7 +94,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/v3/api-docs/**",
-                "/swagger-ui.html", "/swagger-ui/");
+        return (web) -> web.ignoring().antMatchers(AUTH_WHITELIST);
     }
 }
