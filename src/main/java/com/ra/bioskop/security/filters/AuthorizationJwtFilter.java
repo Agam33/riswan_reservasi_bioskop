@@ -1,4 +1,4 @@
-package com.ra.bioskop.security.filter;
+package com.ra.bioskop.security.filters;
 
 import java.io.IOException;
 
