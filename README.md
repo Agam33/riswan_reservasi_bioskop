@@ -15,7 +15,7 @@ Schema akan diupdate sesuai dengan kebutuhan.
 <hr>
 
 <p> 
-    Swagger : <a>http://localhost:8080/doc/swagger-ui/index.html</a>
+    Swagger : <a>http://localhost:8080/swagger-ui/index.html</a>
 </p>
 
 ## Response ##
