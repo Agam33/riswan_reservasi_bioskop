@@ -59,7 +59,7 @@
 
 	</dependencies>
 
-    <repositories> 
+    <!-- <repositories> 
     <repository>
         <id>jasperreports</id>
         <url>http://jasperreports.sourceforge.net/maven2</url>
@@ -68,7 +68,7 @@
         <id>jaspersoft-third-party</id>
         <url>http://jaspersoft.artifactoryonline.com/jaspersoft/t‌​hird-party-ce-artifa‌​cts/</url>
     </repository>
-</repositories>
+</repositories> -->
 
 	<build>
 		<plugins>
