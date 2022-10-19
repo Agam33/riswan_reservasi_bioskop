@@ -1,0 +1,12 @@
+[
+  {
+    "_class": "com.ra.bioskop.model.user.Roles",
+    "id": 1,
+    "name": "ROLE_ADMIN"
+  },
+  {
+    "_class": "com.ra.bioskop.model.user.Roles",
+    "id": 2,
+    "name": "ROLE_CUSTOMER"
+  }
+]

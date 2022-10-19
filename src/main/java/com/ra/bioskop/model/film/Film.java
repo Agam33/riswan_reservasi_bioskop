@@ -36,8 +36,8 @@ public class Film {
     @Column(name = "overview", columnDefinition = "TEXT")
     private String overview;
 
-    @Column(name = "rating")
-    private Double rating;
+    @Column(name = "popularity")
+    private Integer popularity;
 
     @JsonIgnore
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
