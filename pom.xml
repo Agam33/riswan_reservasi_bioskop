@@ -56,6 +56,10 @@
 			<artifactId>jasperreports</artifactId>
 			<version>6.4.0</version>
 		</dependency>
+         <repository>
+        <id>jaspersoft-third-party</id>
+        <url>http://jaspersoft.artifactoryonline.com/jaspersoft/t‌​hird-party-ce-artifa‌​cts/</url>
+    </repository>
 	</dependencies>
 
 	<build>
