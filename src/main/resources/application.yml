@@ -15,8 +15,8 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://containers-us-west-68.railway.app:6368/railway
+    url: jdbc:postgresql://${{ PGUSER }}:${{ PGPASSWORD }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
     #postgresql://localhost:5432/bioskop_db
-    username: postgres
-    password: xhtTI10rPJkQvUXUpfVz
+    username: ${{ PGUSER }}
+    password: ${{ PGPASSWORD }}
     driver-class-name: org.postgresql.Driver
