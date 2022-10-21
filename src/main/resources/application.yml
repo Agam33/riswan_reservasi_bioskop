@@ -5,8 +5,7 @@ app:
 
   jwt:
     key: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
-    exp: 600000 # 10 Minute 
-    #18000000 # 5 Hours 
+    exp: 18000000
 
 server:
   port: 8080
