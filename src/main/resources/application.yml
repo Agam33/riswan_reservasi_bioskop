@@ -18,5 +18,5 @@ spring:
     url: jdbc:postgresql://containers-us-west-68.railway.app:6368/railway
     #postgresql://localhost:5432/bioskop_db
     username: postgres
-    password: ocwBVGOXv2pVZ9gdqBvr
+    password: xhtTI10rPJkQvUXUpfVz
     driver-class-name: org.postgresql.Driver
