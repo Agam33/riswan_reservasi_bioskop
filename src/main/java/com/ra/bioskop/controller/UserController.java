@@ -22,7 +22,6 @@ import java.util.Date;
 
 import static com.ra.bioskop.exception.BioskopException.*;
 
-@CrossOrigin(origins = "*", maxAge = 3900)
 @Tag(name = "User")
 @RestController
 @RequestMapping("/api/v1/user")
