@@ -47,6 +47,7 @@ public class SecurityConfig {
         http.formLogin().disable();
 
         http
+                .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
