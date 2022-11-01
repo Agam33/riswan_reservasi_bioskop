@@ -47,9 +47,17 @@ public class DataDummyUser {
         user3.setUpdatedAt(LocalDateTime.now());
         user3.setCreatedAt(LocalDateTime.now());
 
-        user1.setRoles(ROLES);
-        user2.setRoles(ROLES);
-        user3.setRoles(ROLES);
+        user1.getRoles().add(ROLES.get(0));
+        user2.getRoles().add(ROLES.get(0));
+        user3.getRoles().add(ROLES.get(1));
+
+        ROLES.get(0).getUsers().add(user3);
+        ROLES.get(1).getUsers().add(user2);
+        ROLES.get(1).getUsers().add(user1);
+
+        USERS.add(user1);
+        USERS.add(user2);
+        USERS.add(user3);
     }
 
 
@@ -61,9 +69,9 @@ public class DataDummyUser {
         return ROLES;
     }
 
-    public Optional<Users> findById(String id) {
+    public Optional<Users> findByEmail(String email) {
         return USERS.stream()
-                .filter(users -> users.getId().equals(id))
+                .filter(users -> users.getEmail().equals(email))
                 .findFirst();
     }
 }
