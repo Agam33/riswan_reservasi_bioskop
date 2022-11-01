@@ -48,7 +48,8 @@ public class FilmServiceImpl implements FilmService {
             filmModel.setOnShow(filmDTO.isOnShow());
             filmModel.setReleaseDate(filmDTO.getReleaseDate());
             filmModel.setGenres(filmDTO.getGenres());
-            return FilmMapper.toDto(filmRepository.save(filmModel));
+            filmRepository.save(filmModel);
+            return filmDTO;
         }
         throw throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT, "film sudah ada.");
     }
@@ -63,7 +64,7 @@ public class FilmServiceImpl implements FilmService {
             filmRepository.save(filmModel);
             return FilmMapper.toDto(filmModel);
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
     }
 
     @Override

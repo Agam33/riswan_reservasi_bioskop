@@ -23,6 +23,7 @@ public class DataDummyFilm {
         film1.setReleaseDate(LocalDate.now());
         film1.setPopularity(100);
         film1.setUpdatedAt(LocalDateTime.now());
+        film1.setSchedules(new ArrayList<>());
 
         Film film2 = new Film();
         film2.setTitle("Minions: Kebangkitan Gru (2022)");
@@ -33,6 +34,7 @@ public class DataDummyFilm {
         film2.setReleaseDate(LocalDate.now());
         film2.setPopularity(100);
         film2.setUpdatedAt(LocalDateTime.now());
+        film2.setSchedules(new ArrayList<>());
 
         Film film3 = new Film();
         film3.setTitle("Jurassic World Dominion (2022)");
@@ -43,6 +45,7 @@ public class DataDummyFilm {
         film3.setReleaseDate(LocalDate.now());
         film3.setPopularity(100);
         film3.setUpdatedAt(LocalDateTime.now());
+        film3.setSchedules(new ArrayList<>());
 
         FILMS.add(film1);
         FILMS.add(film2);

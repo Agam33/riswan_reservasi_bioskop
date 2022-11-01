@@ -1,5 +1,7 @@
 package com.ra.bioskop.service;
 
+import com.ra.bioskop.dto.mapper.FilmMapper;
+import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.model.film.Film;
 import com.ra.bioskop.repository.FilmRepository;
@@ -15,11 +17,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FilmServiceImplTest {
 
@@ -39,7 +40,6 @@ class FilmServiceImplTest {
         MockitoAnnotations.initMocks(this);
         dataDummyFilm = new DataDummyFilm();
     }
-
 
     @Test
     @DisplayName("Get All Film, Positive")
@@ -65,7 +65,6 @@ class FilmServiceImplTest {
              Mockito.when(filmRepo.findAll()).thenReturn(new ArrayList<>());
              filmService.getAllFilm();
         });
-
         Assertions.assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
@@ -103,13 +102,118 @@ class FilmServiceImplTest {
     @Test
     @DisplayName("Add Film, Positive")
     public void testPositiveAddFilm() {
+        Film filmModel = dataDummyFilm.getAllFilm().get(1);
 
+        FilmDTO filmDTO = FilmMapper.toDto(filmModel);
+
+        Mockito.when(filmRepo.save(filmModel))
+                .thenReturn(filmModel);
+
+        var actualValue = filmService.add(filmDTO);
+        var expectedValue = dataDummyFilm.getAllFilm().get(1);
+
+        Assertions.assertNotNull(actualValue);
+        Assertions.assertNotNull(expectedValue);
+        Assertions.assertEquals(expectedValue.getFilmCode(), actualValue.getFilmCode());
+        Assertions.assertEquals(expectedValue.getTitle(), actualValue.getTitle());
+        Assertions.assertEquals(expectedValue.getOverview(), actualValue.getOverview());
+        Assertions.assertEquals(expectedValue.getRuntime(), actualValue.getRuntime());
     }
 
     @Test
     @DisplayName("Add film, should throw exception, Negative")
     public void testNegativeAddFilm() {
+        BioskopException.DuplicateEntityException e =
+                Assertions.assertThrows(BioskopException.DuplicateEntityException.class, () -> {
+                    Film filmModel = dataDummyFilm.getAllFilm().get(1);
 
+                    FilmDTO filmDTO = FilmMapper.toDto(filmModel);
+
+                    Mockito.when(filmRepo.findById(filmDTO.getFilmCode()))
+                                    .thenReturn(Optional.of(filmModel));
+                    filmService.add(filmDTO);
+                });
+
+        Assertions.assertEquals(HttpStatus.CONFLICT, e.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Now Playing, Positive")
+    public void testPositiveNowPlaying() {
+        List<Film> films = dataDummyFilm.getAllFilm()
+                .stream().filter(Film::isOnShow).toList();
+
+        Mockito.when(filmRepo.findAll())
+                .thenReturn(films);
+
+        var actualValue = filmService.nowPlaying();
+
+        Assertions.assertEquals(films.size(), actualValue.size());
+        Assertions.assertEquals(films.get(0).getFilmCode(), actualValue.get(0).getFilmCode());
+    }
+
+    @Test
+    @DisplayName("Update name, Positive")
+    public void testPositiveUpdateName() {
+        String newTitle = "Hello World";
+        String filmCode = "film-001";
+
+        Optional<Film> film = dataDummyFilm.getFilmById(filmCode);
+
+        Film filmModel = film.get();
+        filmModel.setTitle(newTitle);
+        filmModel.setUpdatedAt(LocalDateTime.now());
+
+        Mockito.when(filmRepo.findById(filmCode))
+                        .thenReturn(film);
+        Mockito.when(filmRepo.save(filmModel))
+                .thenReturn(filmModel);
+
+        var actualValue = filmService.updateName(filmCode, newTitle);
+
+        Assertions.assertNotNull(actualValue);
+        Assertions.assertEquals(filmModel.getFilmCode(), actualValue.getFilmCode());
+        Assertions.assertEquals(newTitle, actualValue.getTitle());
+    }
+
+    @Test
+    @DisplayName("Update name, Negative")
+    public void testNegativeUpdateName() {
+        BioskopException.FilmNotFoundException e =
+                Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
+                    String newTitle = "Hello World";
+                    String filmCode = "film-001";
+                    filmService.updateName(filmCode, newTitle);
+                });
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, e.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Get Film Schedule, Positive")
+    public void testPositiveGetFilmSchedule() {
+        String id = "film-001";
+        Optional<Film> film = dataDummyFilm.getFilmById(id);
+
+        Mockito.when(filmRepo.findById(id))
+                .thenReturn(film);
+
+        var actualValue = filmService.getFilmSchedule(id);
+        var expectedValue = film.get();
+
+        Assertions.assertEquals(expectedValue.getFilmCode(), actualValue.getFilmId());
+        Assertions.assertEquals(expectedValue.getTitle(), actualValue.getTitle());
+    }
+
+    @Test
+    @DisplayName("Get Film Schedule, Negative")
+    public void testNegativeGetFilmSchedule() {
+        BioskopException.FilmNotFoundException e =
+                Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
+                    String filmId = "film-001";
+                    filmService.getFilmSchedule(filmId);
+                });
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, e.getStatusCode());
     }
 
 }
