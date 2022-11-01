@@ -84,15 +84,4 @@ public class UserServiceImpl implements UserService {
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + email + " tidak ditemukan");
     }
-
-    @Override
-    public UserDTO login(LoginRequest loginRequest) {
-        Optional<Users> user = userRepository.findByEmail(loginRequest.getEmail());
-        if (user.isPresent() &&
-                user.get().getPassword().equals(passwordEncoder.encode(loginRequest.getPassword()))) {
-
-        }
-        throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + loginRequest.getEmail() + " tidak ditemukan");
-    }
 }

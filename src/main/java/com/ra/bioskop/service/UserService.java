@@ -12,5 +12,4 @@ public interface UserService {
 
     UserDTO deleteByEmail(String email);
 
-    UserDTO login(LoginRequest loginRequest);
 }
