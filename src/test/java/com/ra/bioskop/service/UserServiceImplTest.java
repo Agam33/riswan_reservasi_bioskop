@@ -1,5 +1,6 @@
 package com.ra.bioskop.service;
 
+
 import com.ra.bioskop.dto.mapper.UserMapper;
 import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.exception.BioskopException;
@@ -21,7 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 class UserServiceImplTest {
@@ -30,7 +31,7 @@ class UserServiceImplTest {
     private UserRepository mockUserRepo;
 
     @Mock
-    private RolesRepository mockUserRoles;
+    private RolesRepository mockRoleRepo;
 
     @Mock
     private BCryptPasswordEncoder encoder;
@@ -61,7 +62,6 @@ class UserServiceImplTest {
         Assertions.assertNotNull(expectedValue);
         Assertions.assertNotNull(actualValue);
         Assertions.assertEquals(expectedValue.getEmail(), actualValue.getEmail());
-        Assertions.assertEquals(expectedValue.getId(), actualValue.getId());
         Assertions.assertEquals(expectedValue.getUsername(), actualValue.getUsername());
     }
 
@@ -83,22 +83,19 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Register, Positive")
     public void positiveTestRegister() {
-        List<Roles> roles = dataDummyUser.getRoles();
-
-        Users users = new Users();
-        users.setId("customer-001");
-        users.getRoles().add(roles.get(1));
-        users.setCreatedAt(LocalDateTime.now());
-        users.setUpdatedAt(LocalDateTime.now());
-        users.setUsername("James");
-        users.setEmail("james@gmail.com");
-
-        Mockito.when(mockUserRoles.saveAll(roles))
-                        .thenReturn(roles);
-        Mockito.when(mockUserRepo.save(users))
-                .thenReturn(users);
+        Users users = dataDummyUser.getAllUser().get(1);
 
         UserDTO userDTO = UserMapper.toDto(users);
+
+        Roles role = new Roles();
+        role.setId(1);
+        role.setName(ERoles.ROLE_ADMIN);
+        role.setUsers(new ArrayList<>());
+
+        Mockito.when(mockRoleRepo.findByName(userDTO.getRole()))
+                .thenReturn(Optional.of(role));
+        Mockito.when(mockUserRepo.save(users))
+                .thenReturn(users);
 
         var actualValue = userService.register(userDTO);
         var expectedValue = dataDummyUser.getAllUser().get(1);
@@ -106,39 +103,101 @@ class UserServiceImplTest {
         Assertions.assertNotNull(actualValue);
         Assertions.assertNotNull(expectedValue);
         Assertions.assertEquals(expectedValue.getEmail(), actualValue.getEmail());
-        Assertions.assertEquals(expectedValue.getId(), actualValue.getId());
         Assertions.assertEquals(expectedValue.getUsername(), actualValue.getUsername());
     }
 
     @Test
-    @DisplayName("Register, Negative")
+    @DisplayName("Register, " +
+            "should throw exception Duplicate Entity with status 409, Negative")
     public void negativeTestRegister() {
-
+        BioskopException.DuplicateEntityException e =
+                Assertions.assertThrows(BioskopException.DuplicateEntityException.class, () -> {
+                    UserDTO userDTO = UserMapper.toDto(dataDummyUser
+                            .getAllUser()
+                            .get(0));
+                    Optional<Users> user = dataDummyUser.findByEmail(userDTO.getEmail());
+                    Mockito.when(mockUserRepo.findByEmail(userDTO.getEmail()))
+                                    .thenReturn(user);
+                    userService.register(userDTO);
+                });
+        Assertions.assertEquals(HttpStatus.CONFLICT ,e.getStatusCode());
     }
 
     @Test
     @DisplayName("Update User, Positive")
     public void positiveTestUpdate() {
+        Users users = dataDummyUser.getAllUser().get(0);
+        Optional<Users> userByEmail = dataDummyUser.findByEmail(users.getEmail());
 
+        String newUsername = "Sheila Amundsen";
+        UserDTO userDTO = UserMapper.toDto(users);
+        userDTO.setUsername(newUsername);
+
+        Users userModel = userByEmail.get();
+        userModel.setUsername(newUsername);
+        userModel.setUpdatedAt(LocalDateTime.now());
+
+        Mockito.when(mockUserRepo.findByEmail(userDTO.getEmail()))
+                .thenReturn(userByEmail);
+        Mockito.when(mockUserRepo.save(users))
+                .thenReturn(userModel);
+
+        var actualValue = userService.updateProfile(userDTO);
+        var expectedValue = userByEmail.get();
+
+        Assertions.assertEquals(expectedValue.getEmail(), actualValue.getEmail());
+        Assertions.assertEquals(newUsername, actualValue.getUsername());
     }
 
     @Test
-    @DisplayName("Update User, Negative")
+    @DisplayName("Update User, " +
+            "Should throw exception User Not Found with status 404, Negative")
     public void negativeTestUpdate() {
-
+        BioskopException.EntityNotFoundException e =
+                Assertions.assertThrows(BioskopException.EntityNotFoundException.class, () -> {
+                    String wrongEmail = "example@gmail.com";
+                    UserDTO userDTO = UserMapper.toDto(dataDummyUser
+                            .getAllUser()
+                            .get(0));
+                    userDTO.setEmail(wrongEmail);
+                    userService.updateProfile(userDTO);
+                });
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, e.getStatusCode());
     }
 
     @Test
     @DisplayName("Delete user by email, Positive")
     public void positiveTestDeleteByEmail() {
+        String email = "sheila@gmail.com";
+        Optional<Users> user = dataDummyUser.findByEmail(email);
 
+        Mockito.when(mockUserRepo.findByEmail(email))
+                        .thenReturn(user);
+        Mockito.doNothing()
+                .when(mockUserRepo)
+                .delete(user.get());
+
+        mockUserRepo.delete(user.get());
+
+        Mockito.verify(mockUserRepo).delete(user.get());
+
+        var actualValue = userService.deleteByEmail(email);
+        var expectedValue = user.orElse(null);
+
+        Assertions.assertEquals(expectedValue.getEmail(), actualValue.getEmail());
+        Assertions.assertEquals(expectedValue.getUsername(), actualValue.getUsername());
     }
 
     @Test
-    @DisplayName("Delete user by email, Negative")
+    @DisplayName("Delete user by email," +
+            "Should throw exception User Not Found with status 404, Negative")
     public void negativeTestDeleteByEmail() {
-
+        BioskopException.EntityNotFoundException e =
+                Assertions
+                        .assertThrows(BioskopException.EntityNotFoundException.class, () -> {
+            String email = "sophia@gmail.com";
+            userService.deleteByEmail(email);
+        });
+        Assertions.assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
     }
-
-
 }

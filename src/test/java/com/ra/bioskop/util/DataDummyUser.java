@@ -69,6 +69,12 @@ public class DataDummyUser {
         return ROLES;
     }
 
+    public Optional<Roles> getRoleByName(ERoles eRoles) {
+        return ROLES.stream()
+                .filter(roles -> roles.getName() == eRoles)
+                .findFirst();
+    }
+
     public Optional<Users> findByEmail(String email) {
         return USERS.stream()
                 .filter(users -> users.getEmail().equals(email))

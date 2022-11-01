@@ -103,7 +103,7 @@ public class FilmServiceImpl implements FilmService {
         if(film.isPresent()) {
             return FilmMapper.toDto(film.get());
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
     }
 
     @Override

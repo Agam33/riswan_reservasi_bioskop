@@ -66,8 +66,7 @@ public class UserServiceImpl implements UserService {
             Users userModel = user.get();
             userModel.setUsername(userDTO.getUsername());
             userModel.setUpdatedAt(LocalDateTime.now());
-            userRepository.save(userModel);
-            return userDTO;
+            return UserMapper.toDto(userRepository.save(userModel));
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
                 "User dengan email " + userDTO.getEmail() + " tidak ditemukan");

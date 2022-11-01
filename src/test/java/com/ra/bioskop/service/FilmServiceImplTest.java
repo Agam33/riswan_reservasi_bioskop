@@ -78,19 +78,26 @@ class FilmServiceImplTest {
         Mockito.when(filmRepo.findById(filmId))
                 .thenReturn(film);
 
-        var actualValue = filmService.getFilmSchedule(filmId);
+        var actualValue = filmService.detailFilm(filmId);
         var expectedValue = film.orElse(null);
 
         Assertions.assertNotNull(expectedValue);
         Assertions.assertNotNull(actualValue);
-        Assertions.assertEquals(actualValue.getFilmId(), expectedValue.getFilmCode());
+        Assertions.assertEquals(actualValue.getFilmCode(), expectedValue.getFilmCode());
         Assertions.assertEquals(actualValue.getTitle(), expectedValue.getTitle());
     }
 
     @Test
     @DisplayName("Get Detail Film by id, should throw exception ,Negative")
     public void testNegativeGetDetailFilmById() {
-
+        BioskopException.FilmNotFoundException e = Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
+            String filmId = "film-1000";
+            Optional<Film> film = dataDummyFilm.getFilmById(filmId);
+            Mockito.when(filmRepo.findById(filmId))
+                    .thenReturn(film);
+            filmService.detailFilm(filmId);
+        });
+        Assertions.assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
     @Test
