@@ -6,6 +6,7 @@ import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.service.UserService;
+import com.ra.bioskop.util.BaseEndPoint;
 import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,7 +25,7 @@ import static com.ra.bioskop.exception.BioskopException.*;
 
 @Tag(name = "User")
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(BaseEndPoint.USER_V1_ENDPOINT)
 public class UserController {
 
     @Autowired

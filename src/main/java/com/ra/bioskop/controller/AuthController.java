@@ -2,6 +2,7 @@ package com.ra.bioskop.controller;
 
 import javax.validation.Valid;
 
+import com.ra.bioskop.util.BaseEndPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ import java.util.Date;
 @CrossOrigin(origins = "*", maxAge = 3900)
 @Tag(name = "Auth")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(BaseEndPoint.AUTH_ENDPOINT)
 public class AuthController {
 
     @Autowired

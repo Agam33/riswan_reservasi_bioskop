@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ra.bioskop.util.BaseEndPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Film")
 @RestController
-@RequestMapping("/api/v1/films")
+@RequestMapping(BaseEndPoint.FILM_V1_ENDPOINT)
 public class FilmController {
 
     @Autowired
