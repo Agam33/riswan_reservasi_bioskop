@@ -5,7 +5,7 @@ import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.service.StudioService;
-import com.ra.bioskop.util.BaseEndPoint;
+import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Tag(name = "Studio")
 @RestController
-@RequestMapping(BaseEndPoint.STUDIO_V1_ENDPOINT)
+@RequestMapping(Constants.STUDIO_V1_ENDPOINT)
 public class StudioController {
 
     @Autowired

@@ -3,7 +3,7 @@ package com.ra.bioskop.controller;
 import com.ra.bioskop.dto.model.fileDB.FileDB;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.service.InvoiceService;
-import com.ra.bioskop.util.BaseEndPoint;
+import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,7 +23,7 @@ import java.util.Date;
 
 @Tag(name = "Invoice")
 @RestController
-@RequestMapping(BaseEndPoint.INVOICE_ENDPOINT)
+@RequestMapping(Constants.INVOICE_ENDPOINT)
 public class InvoiceController {
 
     @Autowired

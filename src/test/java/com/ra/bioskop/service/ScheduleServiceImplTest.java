@@ -34,7 +34,7 @@ class ScheduleServiceImplTest {
 
     @Test
     @DisplayName("Get Schedule by Date, Positive")
-    public void testPositiveGetScheduleByDate() {
+    void testPositiveGetScheduleByDate() {
         String date = "2022-10-31";
         LocalDate localDate = LocalDate.parse(date);
         List<DetailScheduleDTO> detailSchedules = dummySchedule.getDetailSchedules();
@@ -51,7 +51,7 @@ class ScheduleServiceImplTest {
 
     @Test
     @DisplayName("Get Schedule by Date, Negative")
-    public void testNegativeGetScheduleByDate() {
+    void testNegativeGetScheduleByDate() {
         BioskopException.EntityNotFoundException e =
                 Assertions.assertThrows(BioskopException.EntityNotFoundException.class, () -> {
                     String date = "2022-10-31";

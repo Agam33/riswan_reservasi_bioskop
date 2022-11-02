@@ -43,7 +43,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Get All Film, Positive")
-    public void testPositiveGetAllFilm() {
+    void testPositiveGetAllFilm() {
         List<Film> films = dataDummyFilm.getAllFilm();
         Mockito.when(filmRepo.findAll())
                 .thenReturn(films);
@@ -60,7 +60,7 @@ class FilmServiceImplTest {
     @Test
     @DisplayName("Get All Film, " +
             "Should throw exception with status 404, Negative")
-    public void testNegativeGetAllFilm() {
+    void testNegativeGetAllFilm() {
         BioskopException.FilmNotFoundException e = Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
              Mockito.when(filmRepo.findAll()).thenReturn(new ArrayList<>());
              filmService.getAllFilm();
@@ -70,7 +70,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Get Detail Film by id, Positive")
-    public void testPositiveGetDetailFilmById() {
+    void testPositiveGetDetailFilmById() {
         String filmId = "film-003";
         Optional<Film> film = dataDummyFilm.getFilmById(filmId);
 
@@ -88,7 +88,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Get Detail Film by id, should throw exception ,Negative")
-    public void testNegativeGetDetailFilmById() {
+    void testNegativeGetDetailFilmById() {
         BioskopException.FilmNotFoundException e = Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
             String filmId = "film-1000";
             Optional<Film> film = dataDummyFilm.getFilmById(filmId);
@@ -101,7 +101,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Add Film, Positive")
-    public void testPositiveAddFilm() {
+    void testPositiveAddFilm() {
         Film filmModel = dataDummyFilm.getAllFilm().get(1);
 
         FilmDTO filmDTO = FilmMapper.toDto(filmModel);
@@ -122,7 +122,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Add film, should throw exception, Negative")
-    public void testNegativeAddFilm() {
+    void testNegativeAddFilm() {
         BioskopException.DuplicateEntityException e =
                 Assertions.assertThrows(BioskopException.DuplicateEntityException.class, () -> {
                     Film filmModel = dataDummyFilm.getAllFilm().get(1);
@@ -139,7 +139,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Now Playing, Positive")
-    public void testPositiveNowPlaying() {
+    void testPositiveNowPlaying() {
         List<Film> films = dataDummyFilm.getAllFilm()
                 .stream().filter(Film::isOnShow).toList();
 
@@ -154,7 +154,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Update name, Positive")
-    public void testPositiveUpdateName() {
+    void testPositiveUpdateName() {
         String newTitle = "Hello World";
         String filmCode = "film-001";
 
@@ -178,7 +178,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Update name, Negative")
-    public void testNegativeUpdateName() {
+    void testNegativeUpdateName() {
         BioskopException.FilmNotFoundException e =
                 Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
                     String newTitle = "Hello World";
@@ -191,7 +191,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Get Film Schedule, Positive")
-    public void testPositiveGetFilmSchedule() {
+    void testPositiveGetFilmSchedule() {
         String id = "film-001";
         Optional<Film> film = dataDummyFilm.getFilmById(id);
 
@@ -207,7 +207,7 @@ class FilmServiceImplTest {
 
     @Test
     @DisplayName("Get Film Schedule, Negative")
-    public void testNegativeGetFilmSchedule() {
+    void testNegativeGetFilmSchedule() {
         BioskopException.FilmNotFoundException e =
                 Assertions.assertThrows(BioskopException.FilmNotFoundException.class, () -> {
                     String filmId = "film-001";

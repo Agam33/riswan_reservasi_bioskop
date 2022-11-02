@@ -49,7 +49,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("Find User by Email, Positive")
-    public void positiveTestFindUserByEmail() {
+    void positiveTestFindUserByEmail() {
         String email = "sheila@gmail.com";
         Optional<Users> user = dataDummyUser.findByEmail(email);
 
@@ -68,7 +68,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Find User by Email, " +
             "Should throw exception User Not Found with status 404, Negative")
-    public void negativeTestFindUserByEmail() {
+    void negativeTestFindUserByEmail() {
         BioskopException
                 .EntityNotFoundException e = Assertions.assertThrows(BioskopException.EntityNotFoundException.class, () -> {
                     String email = "sheilaaAaAaAaAaAaAaAa@gmail.com";
@@ -82,7 +82,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("Register, Positive")
-    public void positiveTestRegister() {
+    void positiveTestRegister() {
         Users users = dataDummyUser.getAllUser().get(1);
 
         UserDTO userDTO = UserMapper.toDto(users);
@@ -109,7 +109,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Register, " +
             "should throw exception Duplicate Entity with status 409, Negative")
-    public void negativeTestRegister() {
+    void negativeTestRegister() {
         BioskopException.DuplicateEntityException e =
                 Assertions.assertThrows(BioskopException.DuplicateEntityException.class, () -> {
                     UserDTO userDTO = UserMapper.toDto(dataDummyUser
@@ -125,7 +125,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("Update User, Positive")
-    public void positiveTestUpdate() {
+    void positiveTestUpdate() {
         Users users = dataDummyUser.getAllUser().get(0);
         Optional<Users> userByEmail = dataDummyUser.findByEmail(users.getEmail());
 
@@ -152,7 +152,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Update User, " +
             "Should throw exception User Not Found with status 404, Negative")
-    public void negativeTestUpdate() {
+    void negativeTestUpdate() {
         BioskopException.EntityNotFoundException e =
                 Assertions.assertThrows(BioskopException.EntityNotFoundException.class, () -> {
                     String wrongEmail = "example@gmail.com";
@@ -167,7 +167,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("Delete user by email, Positive")
-    public void positiveTestDeleteByEmail() {
+    void positiveTestDeleteByEmail() {
         String email = "sheila@gmail.com";
         Optional<Users> user = dataDummyUser.findByEmail(email);
 
@@ -191,7 +191,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Delete user by email," +
             "Should throw exception User Not Found with status 404, Negative")
-    public void negativeTestDeleteByEmail() {
+    void negativeTestDeleteByEmail() {
         BioskopException.EntityNotFoundException e =
                 Assertions
                         .assertThrows(BioskopException.EntityNotFoundException.class, () -> {

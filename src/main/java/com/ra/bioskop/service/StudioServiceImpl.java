@@ -23,7 +23,7 @@ public class StudioServiceImpl implements StudioService {
     @Override
     public void addStudios(List<StudioDTO> studioDTOList) {
         List<Studio> studios = studioDTOList.stream().map(StudioMapper::dtoToEntity)
-                .collect(Collectors.toList());
+                .toList();
         studioRepository.saveAll(studios);
     }
 
@@ -32,6 +32,6 @@ public class StudioServiceImpl implements StudioService {
         List<Studio> studios = studioRepository.findAll();
         if(studios.isEmpty())
             throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, "Tidak ditemukan");
-        return studios.stream().map(StudioMapper::entityToDto).collect(Collectors.toList());
+        return studios.stream().map(StudioMapper::entityToDto).toList();
     }
 }
