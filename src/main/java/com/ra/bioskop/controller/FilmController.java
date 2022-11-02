@@ -118,7 +118,7 @@ public class FilmController {
             List<Film> filmModels = filmRequests.stream()
                     .map(this::filmRequestToDto)
                     .map(FilmMapper::toModel)
-                    .collect(Collectors.toList());
+                    .toList();
             filmService.addAll(filmModels);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success",
@@ -207,14 +207,11 @@ public class FilmController {
             @ApiResponse(responseCode = "200", description = "Success", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @PostMapping("/addSchedule")
-    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
+    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) throws FilmNotFoundException {
         try {
             filmService.addSchedule(scheduleRequestToDTO(scheduleRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", null));
-        } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
-                    e.getStatusCode());
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
                     e.getStatusCode());

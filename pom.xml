@@ -52,6 +52,12 @@
 			<version>1.6.11</version>
 		</dependency>
 
+		<!--	Java 8 Date/time	-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
 		<dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
@@ -93,7 +99,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

@@ -1,5 +1,6 @@
 package com.ra.bioskop.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ra.bioskop.dto.mapper.StudioMapper;
 import com.ra.bioskop.dto.model.studio.StudioDTO;
@@ -23,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -68,6 +70,7 @@ class StudioControllerTest {
 
         Response successResponse = objMapper
                 .readValue(response.getContentAsString(), Response.class);
+
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.getStatus());
         Assertions.assertNotNull(successResponse.getData());
