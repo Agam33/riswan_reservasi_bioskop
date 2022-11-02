@@ -105,6 +105,5 @@ class UserControllerTest {
 
         Assertions.assertEquals("deleted", jsonNode.get("message").asText());
         Assertions.assertEquals(HttpStatus.OK.value(), response.getStatus());
-
     }
 }
