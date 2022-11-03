@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "binar-ra-cinema",
+  "private_key_id": "0dcedc8f73bbe9536dc0cd833617a85d70ab68af",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDUF3L3HzolOUSq\nZZO8kSzVCZePFyasPIvtKkTQqNJJDyIClsXW+BFN1gTtDSnPuV+sZXxshmq0h1A9\nWZ6rd8taCrjDieMA98kbfQRhkSHacJLvTVk3kg+JT/9D3USbxxnIKonFiaw19/+I\nFV9NAcHE5nKj/nVFUVpe+T6QZrpmTu7Cf2tbbqnqJGNkzVfz15F/csh5tUV0xaAV\n8Bw45nVETnsy/YzgCXTBdTehz6Ca0cEXb1YihZt4LsF7zzNdjhmwdtIi/BkCcgKj\nmFMdy57izQvtH7F4C8gyS/SMImkHPhOHDWP6Ux5k7ONrk7G4G71duTgr9uUUMVoz\npxLskHYFAgMBAAECggEAIxXb+WCLlGPUZaHXHj8f3QAwt8WbKqv7c9jluGTtIJPl\nyurZQJYZ+rfYacSfMZNXbeP+AM/9r+6gif2c3326QKN8bDCPwnW7KZZ1VpSVNpcf\n34F6rFQ3yL3YmwfsFR8LN08+KlT7jZQAjCkI8mrDfMiol1N9X+G04vg1btrnpAvG\nhXAe0XDsmUH0INCqFZggPM3ZwUWQecvl6Ls7bKnJO3YY/2wRZJBXSw3OxRRRlBFc\n3Fq1sDrxboyyY0Ucs3RVvtp0902b6lTrFsL0QX7vU+zw1AFun4t/u4Q59fNlKQUk\n1+hSzrF24/DL//uesFWYlhwfj1w+FhCj6zn7WK5E8wKBgQD1i0EEURvorw1Jl1nz\nezPJdaq/ADX/8uIhyuIaXXPSQOaTw7//cPBg0fK4wa03Z7h5mtj85l+it+d52G0g\nQa4s0tEn8DsmrKdsaIDXApqEZaJf3gI9NpsKfMvPUk2ahCLUrAhIalYz1tk2+vvr\n6x18+ibcrECHdILmI7VJMSODWwKBgQDdH4VsnI16tNZkY7qEYMkkHl6srz6Z/3Qe\nL3KkXTg+jtIjxunxfaZbjmMhQ7tZMVREIOV/jGTWXutMB/Bd+OQouGGOt+rRrgZv\nj3Kzhuvl5PN+keaxTrhFHgAv8Sdp/mT05gUIIOr99I1+ipmHHAHat+yRFsHj3jcO\nBaDCJgYKHwKBgQC1C6I6zpsna7r+YexfDJ5Ykrv87Ojj+XAmvnMMQY+enV/l39V3\nQQzcNrEi7RsM2Rs5/qSzhCFL1xGD08JSoFsOjbrOGeFjWLZxxnQJFNBdgprA2O8J\nt3OFvhKAoQy7O2Z7LQVGb7Fzs5yhX1nUz50Eg2WYHCHQPmYtznJiryqiNQKBgBUj\nY0TbvmahjPEx2222NuQ+BvzpD8n28qnEDWiLBMpuKsaCyHBue427EdznNay0G4Mb\nxfSofidEEahGBgNlvKHr5l+XU1pSEYlupB9nYXurpF9QIUaH6POqh4gNvJ/UUuBa\ncNazFuPKEhCrvTt+QOsgs/u2ujhHUOoFPbXxnpgvAoGBAJeGBPDZzbdfOlhtfdL3\njJ6Tcyhi+z7jYTyTQv2lMqA6+NORSH7as05J+uVgsJnfiidiz8VoYwSMozsjrqBP\n6TswEWmGLscbJwaqVxaE9rjLPPBmaR0BMSf3LW7ZLlvPEZTb1U2EUngtfaERWGEj\n5kTiP+7ZW9TbRaOUYGkVRfpi\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-3h2fx@binar-ra-cinema.iam.gserviceaccount.com",
+  "client_id": "112738751787091862050",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3h2fx%40binar-ra-cinema.iam.gserviceaccount.com"
+}
