@@ -2,8 +2,6 @@ package com.ra.bioskop.security.userservice;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,10 +21,9 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = user.getRoles().stream()
+        return user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
-        return authorities;
+                .toList();
     }
 
     @Override
@@ -69,4 +66,8 @@ public class UserDetailsImpl implements UserDetails {
         return Objects.equals(user.getId(), userImpl.user.getId());
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

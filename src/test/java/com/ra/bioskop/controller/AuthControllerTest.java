@@ -6,6 +6,8 @@ import com.ra.bioskop.dto.model.user.UserDTO;
 import com.ra.bioskop.dto.request.user.LoginRequest;
 import com.ra.bioskop.dto.request.user.RegisRequest;
 import com.ra.bioskop.model.user.ERoles;
+import com.ra.bioskop.model.user.Users;
+import com.ra.bioskop.security.userservice.UserDetailsImpl;
 import com.ra.bioskop.service.UserService;
 import com.ra.bioskop.util.Constants;
 import com.ra.bioskop.util.DataDummyUser;
@@ -23,7 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -51,8 +53,6 @@ class AuthControllerTest {
     private AuthController authController;
 
     private ObjectMapper objMapper;
-
-    private DaoAuthenticationProvider authentication;
 
     private DataDummyUser dataDummyUser;
 
@@ -108,42 +108,41 @@ class AuthControllerTest {
     @Test
     @DisplayName("/signin, Signin, Positive")
     void testPositiveSignIn() throws Exception {
+        Users user = dataDummyUser.getAllUser().get(0);
+
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setEmail("sophie@gmail.com");
-        loginRequest.setPassword("sophie123");
+        loginRequest.setEmail(user.getEmail());
+        loginRequest.setPassword(user.getPassword());
+
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
         String requestAsString = objMapper.writeValueAsString(loginRequest);
 
         var principal = mock(Principal.class);
         when(principal.getName()).thenReturn(loginRequest.getEmail());
-//
-//        var userAuth = mock(Authentication.class);
-//        when(userAuth.getAuthorities())
-//                .thenReturn(Set.of());
-//        when(userAuth.getPrincipal())
-//                .thenReturn(principal);
-//
-//
-//        Mockito.when(authManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()))
-//        ).thenReturn(userAuth);
-//
-//        SecurityContextHolder.getContext().setAuthentication(userAuth);
-//
-//        MockHttpServletResponse response =
-//                mockMvc.perform(
-//                        post(Constants.AUTH_ENDPOINT + "/signin")
-//                                .content(requestAsString)
-//                                .principal(principal)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .accept(MediaType.APPLICATION_JSON)
-//                ).andReturn().getResponse();
-//
-//        JsonNode jsonNode = objMapper.readTree(response.getContentAsString());
-//        System.out.println(jsonNode.toPrettyString());
-//        Assertions.assertEquals(HttpStatus.OK.value(), response.getStatus());
-//        Assertions.assertNotNull(response.getContentAsString());
 
+        var userAuth = mock(Authentication.class);
+
+        when(userAuth.getPrincipal())
+                .thenReturn(userDetails);
+
+
+        Mockito.when(authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()))
+        ).thenReturn(userAuth);
+
+        MockHttpServletResponse response =
+                mockMvc.perform(
+                        post(Constants.AUTH_ENDPOINT + "/signin")
+                                .content(requestAsString)
+                                .principal(principal)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                ).andReturn().getResponse();
+
+        JsonNode jsonNode = objMapper.readTree(response.getContentAsString());
+        System.out.println(jsonNode.toPrettyString());
+        Assertions.assertEquals(HttpStatus.OK.value(), response.getStatus());
+        Assertions.assertNotNull(response.getContentAsString());
     }
-
 }

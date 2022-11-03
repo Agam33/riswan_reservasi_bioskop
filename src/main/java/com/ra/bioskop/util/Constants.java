@@ -12,7 +12,6 @@ public class Constants {
     public static final String INVOICE_ENDPOINT = "/api/invoice";
     public static final String FILM_V1_ENDPOINT = "/api/v1/films";
     public static final String AUTH_ENDPOINT = "/api/auth";
-
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER = "Authorization";
 
