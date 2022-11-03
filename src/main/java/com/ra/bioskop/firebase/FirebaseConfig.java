@@ -14,19 +14,18 @@ import java.io.IOException;
 @Configuration
 public class FirebaseConfig {
 
-    @Value("{app.firebase.file}")
-    private String fbFile;
+    @Value("${app.firebase.file}")
+    private String fbFile = "";
 
     @Primary
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(
-                        new ClassPathResource(fbFile).getInputStream()))
+                        new ClassPathResource("/firebase/"+fbFile).getInputStream()))
                 .build();
         if(FirebaseApp.getApps().isEmpty())
             FirebaseApp.initializeApp(options);
         return FirebaseApp.getInstance();
     }
-    
 }
