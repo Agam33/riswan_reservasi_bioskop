@@ -18,7 +18,7 @@ spring:
     hibernate:
       ddl-auto: create
   datasource:
-    url: jdbc:postgresql://localhost:5432/bioskop_db
+    url: jdbc://postgres:xhtTI10rPJkQvUXUpfVz@containers-us-west-68.railway.app:6368/railway
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
