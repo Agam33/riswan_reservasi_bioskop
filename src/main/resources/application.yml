@@ -18,7 +18,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc://postgres:xhtTI10rPJkQvUXUpfVz@containers-us-west-68.railway.app:6368/railway
+    url: jdbc:postgresql://containers-us-west-68.railway.app:6368/railway
     username: postgres
-    password: password
+    password: xhtTI10rPJkQvUXUpfVz
     driver-class-name: org.postgresql.Driver
