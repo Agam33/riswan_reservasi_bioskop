@@ -6,6 +6,22 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
+    public static final String SUCCESS_MSG = "success";
+    public static final String CREATED_MSG = "created";
+    public static final String ERROR_MSG = "error";
+    public static final String UPDATED_MSG = "updated";
+    public static final String DELETED_MSG = "deleted";
+    public static final String NOT_FOUND_MSG = "not found";
+    public static final String ALREADY_EXIST_MSG = "already exist";
+    public static final String INVALID_EMAIL_MSG = "Invalid email";
+    public static final String USER_V1_ENDPOINT = "/api/v1/user";
+    public static final String STUDIO_V1_ENDPOINT = "/api/v1/studios";
+    public static final String SCHEDULES_V1_ENDPOINT = "/api/v1/schedules";
+    public static final String INVOICE_ENDPOINT = "/api/invoice";
+    public static final String FILM_V1_ENDPOINT = "/api/v1/films";
+    public static final String AUTH_ENDPOINT = "/api/auth";
+    public static final String NOTIFICATION_ENDPOINT = "/api/notification";
+
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER = "Authorization";
 
@@ -37,4 +53,6 @@ public class Constants {
         UUID uuid = UUID.nameUUIDFromBytes(b);
         return uuid.toString().split("-");
     }
+
+    Constants() {}
 }

@@ -34,9 +34,8 @@ public class AvailableSeat {
     private Schedule schedule;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "seat_row"),
-            @JoinColumn(name = "seat_no")})
+    @JoinColumn(name = "seat_row")
+    @JoinColumn(name = "seat_no")
     private Seat seat;
 
     @ManyToOne

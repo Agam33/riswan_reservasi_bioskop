@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Component
 public class FilmMapper {
-
+    FilmMapper() {}
     public static FilmDTO toDto(Film film) {
         FilmDTO filmDTO = new FilmDTO();
         filmDTO.setFilmCode(film.getFilmCode());

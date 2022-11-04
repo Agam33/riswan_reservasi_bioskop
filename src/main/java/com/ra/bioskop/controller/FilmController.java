@@ -1,22 +1,5 @@
 package com.ra.bioskop.controller;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ra.bioskop.dto.mapper.FilmMapper;
 import com.ra.bioskop.dto.model.film.FilmDTO;
 import com.ra.bioskop.dto.model.film.ScheduleDTO;
@@ -33,200 +16,198 @@ import com.ra.bioskop.model.film.Genre;
 import com.ra.bioskop.repository.GenreRepository;
 import com.ra.bioskop.service.FilmService;
 import com.ra.bioskop.util.Constants;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
 
 @Tag(name = "Film")
 @RestController
-@RequestMapping("/api/v1/films")
+@RequestMapping(Constants.FILM_V1_ENDPOINT)
 public class FilmController {
 
-    @Autowired
-    private FilmService filmService;
+    private final FilmService filmService;
 
-    @Autowired
-    private GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
+
+    public FilmController(FilmService filmService, GenreRepository genreRepository) {
+        this.filmService = filmService;
+        this.genreRepository = genreRepository;
+    }
 
     @Operation(summary = "Mengambil semua data film")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Tidak ada film.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Berhasil menambahkan.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "404", description = "Tidak ada film.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Berhasil menambahkan.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @GetMapping
     public ResponseEntity<?> getAllFilm() {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success",
+                    Constants.SUCCESS_MSG,
                     filmService.getAllFilm()));
         } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Mengambil schedule dari film tertentu")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Tidak ada film.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "404", description = "Tidak ada film.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @GetMapping("/detail/schedule")
     public ResponseEntity<?> getDetailFilmAndSchedule(
             @RequestParam(value = "id") String id) {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", filmService.getFilmSchedule(id)));
+                    Constants.SUCCESS_MSG, filmService.getFilmSchedule(id)));
         } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Mengambil detail dari film tertentu")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Tidak ada film.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "404", description = "Tidak ada film.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @GetMapping("/detail")
     public ResponseEntity<?> getDetailFilm(@RequestParam(value = "id") String id) {
         try {
-             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                     "success",
-                     filmService.detailFilm(id)));
+            return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
+                    Constants.SUCCESS_MSG,
+                    filmService.detailFilm(id)));
         } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Mengambil detail dari film tertentu")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "406", description = "Tidak diterima.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "406", description = "Tidak diterima.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @PostMapping("/addAll")
     public ResponseEntity<?> addAllFilm(@RequestBody List<FilmRequest> filmRequests) {
         try {
             List<Film> filmModels = filmRequests.stream()
                     .map(this::filmRequestToDto)
                     .map(FilmMapper::toModel)
-                    .collect(Collectors.toList());
+                    .toList();
             filmService.addAll(filmModels);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success",
+                    Constants.SUCCESS_MSG,
                     null));
         } catch (DuplicateEntityException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Menambahkan film")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "409", description = "Film sudah ada.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "409", description = "Film sudah ada.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @PostMapping("/add")
     public ResponseEntity<?> addFilm(@RequestBody FilmRequest filmRequest) {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success",
+                    Constants.SUCCESS_MSG,
                     filmService.add(filmRequestToDto(filmRequest))));
         } catch (DuplicateEntityException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Memperbarui film")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "409", description = "Film sudah ada.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "409", description = "Film sudah ada.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @PostMapping("/update")
     public ResponseEntity<?> updateFilmName(@RequestBody FilmUpdateRequest filmUpdateRequest) {
         try {
-             return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
-                     "success",
-                     filmService.updateName(filmUpdateRequest.getFilmCode(), filmUpdateRequest.getNewName())));
+            return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
+                    Constants.SUCCESS_MSG,
+                    filmService.updateName(filmUpdateRequest.getFilmCode(), filmUpdateRequest.getNewName())));
         } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Menghapus film berdasarkan id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Film tidak ada.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "404", description = "Film tidak ada.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteFilm(@RequestParam(value = "id") String id) {
         try {
             filmService.delete(id);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", null));
+                    Constants.SUCCESS_MSG, null));
         } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Mengambil daftar film yang sedang tayang")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Film tidak ada.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "404", description = "Film tidak ada.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @GetMapping("/nowPlaying")
     public ResponseEntity<?> nowPlaying() {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.ACCEPTED.value(), new Date(),
-                    "success", filmService.nowPlaying()));
+                    Constants.SUCCESS_MSG, filmService.nowPlaying()));
         } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
     @Operation(summary = "Menambahkan jadwal film")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Film tidak ada.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseError.class ))}),
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Response.class ))})})
+            @ApiResponse(responseCode = "404", description = "Film tidak ada.", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }),
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @PostMapping("/addSchedule")
-    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
+    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) throws FilmNotFoundException {
         try {
             filmService.addSchedule(scheduleRequestToDTO(scheduleRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", null));
-        } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+                    Constants.SUCCESS_MSG, null));
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
+            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
+                    e.getStatusCode());
         }
     }
 
@@ -250,11 +231,9 @@ public class FilmController {
 
     private String getFilmCode(String filmTitle) {
         String[] codes = Constants.randomIdentifier(filmTitle);
-        StringBuilder filmCode = new StringBuilder();
-        return filmCode.append("film")
-                .append("-")
-                .append(codes[1])
-                .toString();
+        return "film" +
+                "-" +
+                codes[1];
     }
 
     private ScheduleDTO scheduleRequestToDTO(ScheduleRequest scheduleRequest) {

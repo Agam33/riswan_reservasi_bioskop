@@ -18,6 +18,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
 @Component
+@SuppressWarnings("deprecation")
 public class JwtUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
@@ -29,9 +30,7 @@ public class JwtUtil {
     private long jwtExpirations;
 
     public String generateJwtToken(Authentication authentication) {
-
         UserDetailsImpl appUser = (UserDetailsImpl) authentication.getPrincipal();
-
         return Jwts.builder()
                 .setSubject(appUser.getUsername())
                 .setIssuedAt(new Date())
@@ -45,6 +44,7 @@ public class JwtUtil {
                 .parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody().getSubject();
     }
 
+
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(authToken);
@@ -54,7 +54,7 @@ public class JwtUtil {
         } catch (MalformedJwtException e) {
             LOGGER.error("Invalid JWT toke: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
-            LOGGER.error("JWT token is expired", e.getMessage());
+            LOGGER.error("JWT token is expired {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
             LOGGER.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {

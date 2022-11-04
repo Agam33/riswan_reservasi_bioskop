@@ -13,11 +13,9 @@ public enum ERoles {
     }
 
     public static ERoles getRole(String role) {
-        switch (role.toLowerCase().trim()) {
-            case "admin":
-                return ERoles.ROLE_ADMIN;
-            default:
-                return ERoles.ROLE_CUSTOMER;
+        if ("admin".equals(role.toLowerCase().trim())) {
+            return ERoles.ROLE_ADMIN;
         }
+        return ERoles.ROLE_CUSTOMER;
     }
 }

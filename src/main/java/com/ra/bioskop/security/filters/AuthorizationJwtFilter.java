@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,13 +22,17 @@ import com.ra.bioskop.util.JwtUtil;
 @Component
 public class AuthorizationJwtFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private UserDetailsService userDetailService;
+    private final UserDetailsService userDetailService;
+
+    public AuthorizationJwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailService = userDetailService;
+    }
 
     @Override
+
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 

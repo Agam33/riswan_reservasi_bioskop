@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,9 +39,10 @@ import static com.ra.bioskop.exception.BioskopException.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@CrossOrigin(origins = "*", maxAge = 3900)
 @Tag(name = "Auth")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(Constants.AUTH_ENDPOINT)
 public class AuthController {
 
     @Autowired
@@ -61,20 +63,16 @@ public class AuthController {
             @ApiResponse(responseCode = "409", description = "User sudah ada.", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }) })
     @PostMapping("/signup")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisRequest regisRequest) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisRequest regisRequest) throws EmailValidateException {
         try {
             if (!Constants.validateEmail(regisRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE,
-                        "Email tidak valid");
+                       Constants.INVALID_EMAIL_MSG);
 
             userService.register(regisUser(regisRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "created", null));
+                    Constants.CREATED_MSG, null));
         } catch (DuplicateEntityException e) {
-            return new ResponseEntity<>(
-                    new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
-                    e.getStatusCode());
-        } catch (EmailValidateException e) {
             return new ResponseEntity<>(
                     new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
                     e.getStatusCode());
@@ -96,7 +94,7 @@ public class AuthController {
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             String accessToken = jwtUtil.generateJwtToken(authentication);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", new JwtResponse(userDetails.getUsername(), accessToken)));
+                    Constants.SUCCESS_MSG, new JwtResponse(userDetails.getUsername(), accessToken)));
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(HttpStatus.UNAUTHORIZED.value(),
                     new Date(), e.getMessage()), HttpStatus.UNAUTHORIZED);

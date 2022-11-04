@@ -1,13 +1,10 @@
 package com.ra.bioskop.util;
 
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
-import net.sf.jasperreports.engine.util.JRSaver;
+import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
-import java.util.HashMap;
-
-import org.springframework.stereotype.Component;
+import java.util.Map;
 
 @Component
 public class JasperUtil {
@@ -20,23 +17,12 @@ public class JasperUtil {
 
     // #2
     public JasperPrint setJasperPrint(JasperReport sourceFileName,
-            HashMap<String, Object> parameters,
-            JRBeanArrayDataSource dataSource) throws JRException {
-        return JasperFillManager.fillReport(sourceFileName, parameters, dataSource);
-    }
-
-    // #2
-    public JasperPrint setJasperPrint(JasperReport sourceFileName,
-            HashMap<String, Object> parameters) throws JRException {
+            Map<String, Object> parameters) throws JRException {
         return JasperFillManager.fillReport(sourceFileName, parameters);
     }
 
     // #3
     public byte[] toPdf(JasperPrint jasperPrint) throws JRException {
         return JasperExportManager.exportReportToPdf(jasperPrint);
-    }
-
-    public void saveJasperReport(JasperReport jasperReport, String fileName) throws JRException {
-        JRSaver.saveObject(jasperReport, fileName);
     }
 }

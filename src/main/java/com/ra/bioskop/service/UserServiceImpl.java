@@ -2,14 +2,13 @@ package com.ra.bioskop.service;
 
 import com.ra.bioskop.dto.mapper.UserMapper;
 import com.ra.bioskop.dto.model.user.UserDTO;
-import com.ra.bioskop.dto.request.user.LoginRequest;
-import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.exception.BioskopException;
+import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.model.user.Roles;
 import com.ra.bioskop.model.user.Users;
 import com.ra.bioskop.repository.RolesRepository;
 import com.ra.bioskop.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ra.bioskop.util.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,17 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RolesRepository rolesRepository;
+    private final RolesRepository rolesRepository;
+
+    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, RolesRepository rolesRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.rolesRepository = rolesRepository;
+    }
 
     @Override
     public UserDTO findByEmail(String email) {
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDto(user.get());
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + email + " tidak ditemukan");
+                Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -44,19 +46,21 @@ public class UserServiceImpl implements UserService {
         Optional<Users> user = userRepository.findByEmail(userDTO.getEmail());
         if (user.isEmpty()) {
             Optional<Roles> role = rolesRepository.findByName(userDTO.getRole());
-            Users userModel = new Users();
-            userModel.setId(userDTO.getId());
-            userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            userModel.setUsername(userDTO.getUsername());
-            userModel.setEmail(userDTO.getEmail());
-            userModel.setCreatedAt(LocalDateTime.now());
-            userModel.setUpdatedAt(LocalDateTime.now());
-            userModel.getRoles().add(role.get());
-            userRepository.save(userModel);
-            return userDTO;
+            if(role.isPresent()) {
+                Users userModel = new Users();
+                userModel.setId(userDTO.getId());
+                userModel.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                userModel.setUsername(userDTO.getUsername());
+                userModel.setEmail(userDTO.getEmail());
+                userModel.setCreatedAt(LocalDateTime.now());
+                userModel.setUpdatedAt(LocalDateTime.now());
+                userModel.getRoles().add(role.get());
+                userRepository.save(userModel);
+                return userDTO;
+            }
         }
         throw BioskopException.throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT,
-                "User dengan email " + userDTO.getEmail() + " sudah ada");
+               Constants.ALREADY_EXIST_MSG);
     }
 
     @Override
@@ -66,11 +70,10 @@ public class UserServiceImpl implements UserService {
             Users userModel = user.get();
             userModel.setUsername(userDTO.getUsername());
             userModel.setUpdatedAt(LocalDateTime.now());
-            userRepository.save(userModel);
-            return userDTO;
+            return UserMapper.toDto(userRepository.save(userModel));
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
+                Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -82,17 +85,6 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDto(userModel);
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + email + " tidak ditemukan");
-    }
-
-    @Override
-    public UserDTO login(LoginRequest loginRequest) {
-        Optional<Users> user = userRepository.findByEmail(loginRequest.getEmail());
-        if (user.isPresent() &&
-                user.get().getPassword().equals(passwordEncoder.encode(loginRequest.getPassword()))) {
-
-        }
-        throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + loginRequest.getEmail() + " tidak ditemukan");
+                Constants.NOT_FOUND_MSG);
     }
 }

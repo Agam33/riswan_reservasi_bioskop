@@ -1,11 +1,14 @@
 # Reservasi Bioskop #
 
 ## Daftar isi ##
-1. [Database Schema Challenge 5](#Database Schema Challenge 5)
+1. [Database Schema Challenge 7](#Database Schema Challenge 5)
 2. [Response](#Response)
-3. [Tugas Pada Challenge 5](#Tugas pada Challenge 5)
+3. [Tugas Pada Challenge 7](#Tugas pada Challenge 7)
 
-## Database Schema Challenge 5 ##
+## Push Notification ##
+<img height="500" src="https://user-images.githubusercontent.com/59663235/199898126-3477c0c2-1451-4bc2-b15c-f4df30aabd9d.gif">
+
+## Database Schema Challenge 7 ##
 <hr>
 <img src="https://user-images.githubusercontent.com/59663235/193450349-86ca1d5e-5415-4703-819f-4db47d2d760b.png" alt="ERD-ch4"/>
 <br>
@@ -50,14 +53,9 @@ Schema akan diupdate sesuai dengan kebutuhan.
 }
 ```
 
-## Tugas pada Challenge 5 ##
+## Tugas pada Challenge 7 ##
 <ol>
-    <li>Menambahkan film baru (POST)</li>
-    <li>Mengupdate nama film (PUT)</li>
-    <li>Menghapus film (DELETE)</li>
-    <li>Menampilkan film yang sedang tayang (GET)</li>
-    <li>Menampilkan jadwal dari film tertentu (POST)</li>
-    <li>Menambahkan User (POST)</li>
-    <li>Mengupdate user (PUT)</li>
-    <li>Menghapus User (DELETE)</li>
+    <li>Mengimplementasikan Clean Code</li>
+    <li>Mengimplementasikan Unit Testing</li>
+    <li>Membuat push notification (Firebase)</li>
 </ol>

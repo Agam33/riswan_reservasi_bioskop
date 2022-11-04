@@ -1,6 +1,7 @@
 package com.ra.bioskop.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ra.bioskop.security.filters.AuthorizationJwtFilter;
+import com.ra.bioskop.util.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.ra.bioskop.security.filters.AuthorizationJwtFilter;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -29,17 +28,23 @@ public class SecurityConfig {
             "/swagger-ui/**",
     };
 
-    @Autowired
-    private UserDetailsService userDetailService;
+    private final UserDetailsService userDetailService;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthEntryPoint authEntryPoint;
+    private final AuthEntryPoint authEntryPoint;
 
-    @Autowired
-    private AuthorizationJwtFilter jwtFilter;
+    private final AuthorizationJwtFilter jwtFilter;
+
+    public SecurityConfig(AuthorizationJwtFilter jwtFilter,
+                          AuthEntryPoint authEntryPoint,
+                          BCryptPasswordEncoder passwordEncoder,
+                          UserDetailsService userDetailService) {
+        this.jwtFilter = jwtFilter;
+        this.authEntryPoint = authEntryPoint;
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailService = userDetailService;
+    }
 
     @Bean
     public SecurityFilterChain apiWebSecurity(HttpSecurity http) throws Exception {
@@ -47,6 +52,7 @@ public class SecurityConfig {
         http.formLogin().disable();
 
         http
+                .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
@@ -55,7 +61,7 @@ public class SecurityConfig {
 
                 // Admin
                 .antMatchers("/api/v1/films/addAll", "/api/v1/films/add", "/api/v1/films/delete",
-                        "/api/v1/films/addSchedule", "/api/v1/films/update")
+                        "/api/v1/films/addSchedule", "/api/v1/films/update", Constants.NOTIFICATION_ENDPOINT+"/**")
                 .hasRole("ADMIN")
 
                 // Customer
@@ -94,6 +100,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(NO_AUTH);
+        return web -> web.ignoring().antMatchers(NO_AUTH);
     }
 }

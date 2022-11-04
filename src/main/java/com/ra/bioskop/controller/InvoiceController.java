@@ -3,6 +3,7 @@ package com.ra.bioskop.controller;
 import com.ra.bioskop.dto.model.fileDB.FileDB;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.service.InvoiceService;
+import com.ra.bioskop.util.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,7 +11,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.sf.jasperreports.engine.JRException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,11 +22,14 @@ import java.util.Date;
 
 @Tag(name = "Invoice")
 @RestController
-@RequestMapping("/api/invoice")
+@RequestMapping(Constants.INVOICE_ENDPOINT)
 public class InvoiceController {
 
-    @Autowired
-    private InvoiceService invoiceService;
+    private final InvoiceService invoiceService;
+
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+    }
 
     @Operation(summary = "Download invoice file")
     @ApiResponses(value = {
@@ -45,7 +48,7 @@ public class InvoiceController {
                     .body(new ByteArrayResource(fileDB.getData()));
         } catch (JRException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ResponseError(HttpStatus.NO_CONTENT.value(), new Date(), "error"));
+                    .body(new ResponseError(HttpStatus.NO_CONTENT.value(), new Date(), Constants.ERROR_MSG));
         }
     }
 }
