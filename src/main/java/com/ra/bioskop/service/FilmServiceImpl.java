@@ -27,11 +27,14 @@ import com.ra.bioskop.util.Constants;
 @Service
 public class FilmServiceImpl implements FilmService {
 
-    @Autowired
-    private FilmRepository filmRepository;
+    private final FilmRepository filmRepository;
 
-    @Autowired
-    private StudioRepository studioRepository;
+    private final StudioRepository studioRepository;
+
+    public FilmServiceImpl(FilmRepository filmRepository, StudioRepository studioRepository) {
+        this.filmRepository = filmRepository;
+        this.studioRepository = studioRepository;
+    }
 
     @Override
     public FilmDTO add(FilmDTO filmDTO) {

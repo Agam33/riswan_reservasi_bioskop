@@ -1,15 +1,12 @@
 package com.ra.bioskop.firebase.fcm;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.ra.bioskop.firebase.model.RequestFCM;
 
+import java.util.concurrent.ExecutionException;
 
-@Service
-public class FCMService {
+public interface FCMService {
+    void topicNotification(RequestFCM requestFCM);
 
-    private Logger logger = LoggerFactory.getLogger(FCMService.class);
-
-
-
+    void tokenNotification(RequestFCM requestFCM);
 }
