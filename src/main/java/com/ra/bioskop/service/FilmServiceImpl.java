@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,8 @@ public class FilmServiceImpl implements FilmService {
             filmModel.setOnShow(filmDTO.isOnShow());
             filmModel.setReleaseDate(filmDTO.getReleaseDate());
             filmModel.setGenres(filmDTO.getGenres());
-            return FilmMapper.toDto(filmRepository.save(filmModel));
+            filmRepository.save(filmModel);
+            return filmDTO;
         }
         throw throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT, "film sudah ada.");
     }
@@ -63,7 +63,7 @@ public class FilmServiceImpl implements FilmService {
             filmRepository.save(filmModel);
             return FilmMapper.toDto(filmModel);
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
     }
 
     @Override
@@ -84,7 +84,7 @@ public class FilmServiceImpl implements FilmService {
             return films.stream()
                     .filter(Film::isOnShow)
                     .map(FilmMapper::toDto)
-                    .collect(Collectors.toList());
+                    .toList();
         }
         throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Tidak ada tayangan film");
     }
@@ -94,7 +94,7 @@ public class FilmServiceImpl implements FilmService {
         return filmRepository.saveAll(films)
                 .stream()
                 .map(FilmMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -103,7 +103,7 @@ public class FilmServiceImpl implements FilmService {
         if(film.isPresent()) {
             return FilmMapper.toDto(film.get());
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
     }
 
     @Override
@@ -112,7 +112,7 @@ public class FilmServiceImpl implements FilmService {
         if(!films.isEmpty()) {
             return films.stream()
                     .map(FilmMapper::toDto)
-                    .collect(Collectors.toList());
+                    .toList();
         }
         throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
     }
@@ -159,7 +159,6 @@ public class FilmServiceImpl implements FilmService {
 
     private String getScheduleId(String filmCode, LocalTime startTime, LocalDate showAt) {
         String[] codes = Constants.randomIdentifier(filmCode + startTime.toString() + showAt.getDayOfWeek());
-        StringBuilder scheduleId = new StringBuilder();
-        return scheduleId.append("sc-").append(codes[3]).append("-").append(codes[4]).toString();
+        return "sc-" + codes[3] + "-" + codes[4];
     }
 }

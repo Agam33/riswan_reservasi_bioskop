@@ -29,9 +29,7 @@ public class JwtUtil {
     private long jwtExpirations;
 
     public String generateJwtToken(Authentication authentication) {
-
         UserDetailsImpl appUser = (UserDetailsImpl) authentication.getPrincipal();
-
         return Jwts.builder()
                 .setSubject(appUser.getUsername())
                 .setIssuedAt(new Date())

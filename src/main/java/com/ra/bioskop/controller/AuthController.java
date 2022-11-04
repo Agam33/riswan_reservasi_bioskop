@@ -42,7 +42,7 @@ import java.util.Date;
 @CrossOrigin(origins = "*", maxAge = 3900)
 @Tag(name = "Auth")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(Constants.AUTH_ENDPOINT)
 public class AuthController {
 
     @Autowired
@@ -63,7 +63,7 @@ public class AuthController {
             @ApiResponse(responseCode = "409", description = "User sudah ada.", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseError.class)) }) })
     @PostMapping("/signup")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisRequest regisRequest) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisRequest regisRequest) throws EmailValidateException {
         try {
             if (!Constants.validateEmail(regisRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE,
@@ -73,10 +73,6 @@ public class AuthController {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "created", null));
         } catch (DuplicateEntityException e) {
-            return new ResponseEntity<>(
-                    new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
-                    e.getStatusCode());
-        } catch (EmailValidateException e) {
             return new ResponseEntity<>(
                     new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
                     e.getStatusCode());

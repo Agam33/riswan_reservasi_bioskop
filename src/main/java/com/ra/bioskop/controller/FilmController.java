@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Film")
 @RestController
-@RequestMapping("/api/v1/films")
+@RequestMapping(Constants.FILM_V1_ENDPOINT)
 public class FilmController {
 
     @Autowired
@@ -119,7 +118,7 @@ public class FilmController {
             List<Film> filmModels = filmRequests.stream()
                     .map(this::filmRequestToDto)
                     .map(FilmMapper::toModel)
-                    .collect(Collectors.toList());
+                    .toList();
             filmService.addAll(filmModels);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success",
@@ -208,14 +207,11 @@ public class FilmController {
             @ApiResponse(responseCode = "200", description = "Success", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) }) })
     @PostMapping("/addSchedule")
-    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
+    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest scheduleRequest) throws FilmNotFoundException {
         try {
             filmService.addSchedule(scheduleRequestToDTO(scheduleRequest));
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
                     "success", null));
-        } catch (FilmNotFoundException e) {
-            return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
-                    e.getStatusCode());
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
                     e.getStatusCode());
