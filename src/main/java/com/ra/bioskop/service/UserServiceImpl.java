@@ -2,14 +2,13 @@ package com.ra.bioskop.service;
 
 import com.ra.bioskop.dto.mapper.UserMapper;
 import com.ra.bioskop.dto.model.user.UserDTO;
-import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.exception.BioskopException;
+import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.model.user.Roles;
 import com.ra.bioskop.model.user.Users;
 import com.ra.bioskop.repository.RolesRepository;
 import com.ra.bioskop.repository.UserRepository;
 import com.ra.bioskop.util.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

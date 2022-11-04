@@ -4,7 +4,7 @@ import com.ra.bioskop.dto.model.studio.StudioDTO;
 import com.ra.bioskop.model.film.Studio;
 
 public class StudioMapper {
-
+    StudioMapper() {}
     public static Studio dtoToEntity(StudioDTO studioDTO) {
         Studio studio = new Studio();
         studio.setMaxSeat(studioDTO.getMaxSeat());

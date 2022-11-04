@@ -6,7 +6,6 @@ import com.ra.bioskop.util.JasperUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,15 +16,10 @@ import java.util.HashMap;
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
 
-    private final UserService userService;
-
-    private final FilmService filmService;
-
     private final JasperUtil jasperUtil;
 
-    public InvoiceServiceImpl(UserService userService, FilmService filmService, JasperUtil jasperUtil) {
-        this.userService = userService;
-        this.filmService = filmService;
+    public InvoiceServiceImpl(JasperUtil jasperUtil) {
+    ;
         this.jasperUtil = jasperUtil;
     }
 
