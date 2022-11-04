@@ -1,17 +1,5 @@
 package com.ra.bioskop.service;
 
-import static com.ra.bioskop.exception.BioskopException.throwException;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
 import com.ra.bioskop.dto.mapper.FilmMapper;
 import com.ra.bioskop.dto.model.film.FilmAndScheduleDTO;
 import com.ra.bioskop.dto.model.film.FilmDTO;
@@ -23,6 +11,16 @@ import com.ra.bioskop.model.film.Studio;
 import com.ra.bioskop.repository.FilmRepository;
 import com.ra.bioskop.repository.StudioRepository;
 import com.ra.bioskop.util.Constants;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
+
+import static com.ra.bioskop.exception.BioskopException.throwException;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -53,7 +51,7 @@ public class FilmServiceImpl implements FilmService {
             filmRepository.save(filmModel);
             return filmDTO;
         }
-        throw throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT, "film sudah ada.");
+        throw throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT, Constants.ALREADY_EXIST_MSG);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class FilmServiceImpl implements FilmService {
             filmRepository.save(filmModel);
             return FilmMapper.toDto(filmModel);
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -77,7 +75,7 @@ public class FilmServiceImpl implements FilmService {
             filmRepository.delete(film.get());
             return filmDTO;
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -89,7 +87,7 @@ public class FilmServiceImpl implements FilmService {
                     .map(FilmMapper::toDto)
                     .toList();
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, "Tidak ada tayangan film");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NO_CONTENT, Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -106,7 +104,7 @@ public class FilmServiceImpl implements FilmService {
         if(film.isPresent()) {
             return FilmMapper.toDto(film.get());
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -117,7 +115,7 @@ public class FilmServiceImpl implements FilmService {
                     .map(FilmMapper::toDto)
                     .toList();
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "Film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -140,7 +138,7 @@ public class FilmServiceImpl implements FilmService {
 
             Optional<Studio> studio = studioRepository.findById(scheduleDTO.getStudioId());
             if(studio.isEmpty())
-                throw throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, "studio tidak ditemukan.");
+                throw throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
 
             schedule.setStudio(studio.get());
             filmModel.getSchedules().add(schedule);
@@ -148,7 +146,7 @@ public class FilmServiceImpl implements FilmService {
             filmRepository.save(filmModel);
             return scheduleDTO;
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada.");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -157,7 +155,7 @@ public class FilmServiceImpl implements FilmService {
         if(film.isPresent()) {
             return FilmMapper.toFilmAndScheduleDTO(film.get());
         }
-        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, "film tidak ada");
+        throw throwException(ExceptionType.FILM_NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
     }
 
     private String getScheduleId(String filmCode, LocalTime startTime, LocalDate showAt) {

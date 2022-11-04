@@ -6,6 +6,7 @@ import com.ra.bioskop.exception.BioskopException;
 import com.ra.bioskop.exception.ExceptionType;
 import com.ra.bioskop.model.film.Studio;
 import com.ra.bioskop.repository.StudioRepository;
+import com.ra.bioskop.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class StudioServiceImpl implements StudioService {
 
-    @Autowired
-    private StudioRepository studioRepository;
+    private final StudioRepository studioRepository;
+
+    public StudioServiceImpl(StudioRepository studioRepository) {
+        this.studioRepository = studioRepository;
+    }
 
 
     @Override
@@ -31,7 +35,7 @@ public class StudioServiceImpl implements StudioService {
     public List<StudioDTO> getAllStudio() {
         List<Studio> studios = studioRepository.findAll();
         if(studios.isEmpty())
-            throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, "Tidak ditemukan");
+            throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND, Constants.NOT_FOUND_MSG);
         return studios.stream().map(StudioMapper::entityToDto).toList();
     }
 }

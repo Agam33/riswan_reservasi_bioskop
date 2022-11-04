@@ -26,8 +26,11 @@ import java.util.Date;
 @RequestMapping(Constants.INVOICE_ENDPOINT)
 public class InvoiceController {
 
-    @Autowired
-    private InvoiceService invoiceService;
+    private final InvoiceService invoiceService;
+
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+    }
 
     @Operation(summary = "Download invoice file")
     @ApiResponses(value = {
@@ -46,7 +49,7 @@ public class InvoiceController {
                     .body(new ByteArrayResource(fileDB.getData()));
         } catch (JRException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ResponseError(HttpStatus.NO_CONTENT.value(), new Date(), "error"));
+                    .body(new ResponseError(HttpStatus.NO_CONTENT.value(), new Date(), Constants.ERROR_MSG));
         }
     }
 }

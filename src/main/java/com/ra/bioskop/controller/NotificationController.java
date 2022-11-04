@@ -1,6 +1,5 @@
 package com.ra.bioskop.controller;
 
-import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ra.bioskop.dto.response.Response;
 import com.ra.bioskop.dto.response.ResponseError;
 import com.ra.bioskop.firebase.fcm.FCMServiceImpl;
@@ -27,7 +26,7 @@ public class NotificationController {
         try {
             fcmService.topicNotification(requestFCM);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(),
-                    new Date(), "success", null));
+                    new Date(), Constants.SUCCESS_MSG,  null));
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(null, new Date(), e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -38,7 +37,7 @@ public class NotificationController {
         try {
             fcmService.tokenNotification(requestFCM);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(),
-                    new Date(), "success", null));
+                    new Date(), Constants.SUCCESS_MSG, null));
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(null, new Date(), e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -26,8 +26,11 @@ import java.util.Date;
 @RequestMapping(Constants.SCHEDULES_V1_ENDPOINT)
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
+
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
+    }
 
     @Operation(summary = "Mengambil data schedule")
     @ApiResponses(value = {
@@ -41,7 +44,7 @@ public class ScheduleController {
     public ResponseEntity<?> getScheduleByDate(@RequestParam String date) {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", scheduleService.getScheduleByDate(date)));
+                    Constants.SUCCESS_MSG, scheduleService.getScheduleByDate(date)));
         } catch (BioskopException.EntityNotFoundException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }

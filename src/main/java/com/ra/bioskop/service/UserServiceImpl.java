@@ -8,6 +8,7 @@ import com.ra.bioskop.model.user.Roles;
 import com.ra.bioskop.model.user.Users;
 import com.ra.bioskop.repository.RolesRepository;
 import com.ra.bioskop.repository.UserRepository;
+import com.ra.bioskop.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,14 +20,17 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RolesRepository rolesRepository;
+    private final RolesRepository rolesRepository;
+
+    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, RolesRepository rolesRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.rolesRepository = rolesRepository;
+    }
 
     @Override
     public UserDTO findByEmail(String email) {
@@ -35,7 +39,7 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDto(user.get());
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + email + " tidak ditemukan");
+                Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         throw BioskopException.throwException(ExceptionType.DUPLICATE_ENTITY, HttpStatus.CONFLICT,
-                "User dengan email " + userDTO.getEmail() + " sudah ada");
+               Constants.ALREADY_EXIST_MSG);
     }
 
     @Override
@@ -70,7 +74,7 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDto(userRepository.save(userModel));
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + userDTO.getEmail() + " tidak ditemukan");
+                Constants.NOT_FOUND_MSG);
     }
 
     @Override
@@ -82,6 +86,6 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDto(userModel);
         }
         throw BioskopException.throwException(ExceptionType.NOT_FOUND, HttpStatus.NOT_FOUND,
-                "User dengan email " + email + " tidak ditemukan");
+                Constants.NOT_FOUND_MSG);
     }
 }

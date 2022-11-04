@@ -17,14 +17,17 @@ import java.util.HashMap;
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private FilmService filmService;
+    private final FilmService filmService;
 
-    @Autowired
-    private JasperUtil jasperUtil;
+    private final JasperUtil jasperUtil;
+
+    public InvoiceServiceImpl(UserService userService, FilmService filmService, JasperUtil jasperUtil) {
+        this.userService = userService;
+        this.filmService = filmService;
+        this.jasperUtil = jasperUtil;
+    }
 
     @Override
     public FileDB generateInvoice(String filename) throws JRException {
