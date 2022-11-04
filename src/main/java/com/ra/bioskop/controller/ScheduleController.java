@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +25,11 @@ import java.util.Date;
 @RequestMapping(Constants.SCHEDULES_V1_ENDPOINT)
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
+
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
+    }
 
     @Operation(summary = "Mengambil data schedule")
     @ApiResponses(value = {
@@ -41,7 +43,7 @@ public class ScheduleController {
     public ResponseEntity<?> getScheduleByDate(@RequestParam String date) {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", scheduleService.getScheduleByDate(date)));
+                    Constants.SUCCESS_MSG, scheduleService.getScheduleByDate(date)));
         } catch (BioskopException.EntityNotFoundException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }

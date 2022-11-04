@@ -16,14 +16,6 @@ public class Favorite {
     @Id
     private BigInteger id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "film_code")
-//    private Film filmCode;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
     @JsonIgnore
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDate createdAt;

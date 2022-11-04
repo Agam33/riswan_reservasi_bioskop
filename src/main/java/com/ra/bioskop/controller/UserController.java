@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +27,11 @@ import static com.ra.bioskop.exception.BioskopException.*;
 @RequestMapping(Constants.USER_V1_ENDPOINT)
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Operation(summary = "Mengubah profile user")
     @ApiResponses(value = {
@@ -44,11 +46,11 @@ public class UserController {
         try {
             if (!Constants.validateEmail(updateUserRequest.getEmail()))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE,
-                        "Email tidak valid");
+                        Constants.INVALID_EMAIL_MSG);
             UserDTO userDTO = updateUser(updateUserRequest);
             userService.updateProfile(userDTO);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "updated", null));
+                    Constants.UPDATED_MSG, null));
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(
                     new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()),
@@ -69,11 +71,11 @@ public class UserController {
         try {
             if (!Constants.validateEmail(email))
                 throw throwException(ExceptionType.INVALID_EMAIL, HttpStatus.NOT_ACCEPTABLE,
-                        "Email tidak valid");
+                        Constants.INVALID_EMAIL_MSG);
 
             userService.deleteByEmail(email);
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "deleted",
+                    Constants.DELETED_MSG,
                     null));
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(

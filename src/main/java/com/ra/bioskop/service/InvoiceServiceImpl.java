@@ -6,7 +6,6 @@ import com.ra.bioskop.util.JasperUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,14 +16,12 @@ import java.util.HashMap;
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
 
-    @Autowired
-    private UserService userService;
+    private final JasperUtil jasperUtil;
 
-    @Autowired
-    private FilmService filmService;
-
-    @Autowired
-    private JasperUtil jasperUtil;
+    public InvoiceServiceImpl(JasperUtil jasperUtil) {
+    ;
+        this.jasperUtil = jasperUtil;
+    }
 
     @Override
     public FileDB generateInvoice(String filename) throws JRException {

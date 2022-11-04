@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +24,11 @@ import java.util.List;
 @RequestMapping(Constants.STUDIO_V1_ENDPOINT)
 public class StudioController {
 
-    @Autowired
-    private StudioService studioService;
+    private final StudioService studioService;
+
+    public StudioController(StudioService studioService) {
+        this.studioService = studioService;
+    }
 
     @Operation(summary = "Mengambil semua data studio")
     @ApiResponses(value = {
@@ -40,7 +42,7 @@ public class StudioController {
     public ResponseEntity<?> getStudios() {
         try {
             return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(),
-                    "success", studioService.getAllStudio()));
+                    Constants.SUCCESS_MSG, studioService.getAllStudio()));
         } catch (BioskopException.EntityNotFoundException e) {
             return new ResponseEntity<>(new ResponseError(e.getStatusCode().value(), new Date(), e.getMessage()), e.getStatusCode());
         }
@@ -54,7 +56,7 @@ public class StudioController {
     @PostMapping("/addAll")
     public ResponseEntity<?> addStudios(@RequestBody List<StudioDTO> studioDTOList) {
         studioService.addStudios(studioDTOList);
-        return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(), "success", null));
+        return ResponseEntity.ok(new Response<>(HttpStatus.OK.value(), new Date(), Constants.SUCCESS_MSG, null));
     }
 
 }
