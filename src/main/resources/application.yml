@@ -16,7 +16,7 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc://postgres:xhtTI10rPJkQvUXUpfVz@containers-us-west-68.railway.app:6368/railway
     username: postgres
