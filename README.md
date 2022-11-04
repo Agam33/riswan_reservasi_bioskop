@@ -6,7 +6,7 @@
 3. [Tugas Pada Challenge 7](#Tugas pada Challenge 7)
 
 ## Push Notification ##
-<img height="500" src="https://user-images.githubusercontent.com/59663235/199898126-3477c0c2-1451-4bc2-b15c-f4df30aabd9d.gif">
+<img height="600" width="300" src="https://user-images.githubusercontent.com/59663235/199898126-3477c0c2-1451-4bc2-b15c-f4df30aabd9d.gif">
 
 ## Database Schema Challenge 7 ##
 <hr>
