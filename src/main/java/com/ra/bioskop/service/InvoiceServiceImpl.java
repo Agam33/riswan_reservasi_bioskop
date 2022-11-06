@@ -19,7 +19,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final JasperUtil jasperUtil;
 
     public InvoiceServiceImpl(JasperUtil jasperUtil) {
-    ;
         this.jasperUtil = jasperUtil;
     }
 
