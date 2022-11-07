@@ -16,9 +16,11 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   datasource:
-    url: jdbc:postgresql://containers-us-west-68.railway.app:6368/railway
+    url: jdbc:postgresql://localhost:5432/bioskop_db
+    # jdbc:postgresql://containers-us-west-68.railway.app:6368/railway
+    # password : xhtTI10rPJkQvUXUpfVz
     username: postgres
-    password: xhtTI10rPJkQvUXUpfVz
+    password: password
     driver-class-name: org.postgresql.Driver

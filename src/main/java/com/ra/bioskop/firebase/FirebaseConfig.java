@@ -20,7 +20,6 @@ public class FirebaseConfig {
     @Primary
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        System.out.println(fbFile);
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(
                         new ClassPathResource("/firebase/"+fbFile).getInputStream()))
