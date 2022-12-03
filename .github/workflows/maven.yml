@@ -9,7 +9,7 @@ on:
       - ch7 
   pull_request:
     branches: 
-      - c7
+      - ch7
 
 jobs:
   build:
