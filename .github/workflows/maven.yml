@@ -7,9 +7,11 @@ on:
   push:
     branches: 
       - main
+      - ch7
   pull_request:
     branches: 
       - main
+      - ch7
 
 jobs:
   build:
